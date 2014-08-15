@@ -24,5 +24,14 @@ void extendedEuclidean (int a, int b, int &x, int &y, int &r) {
         t0 = aux;
     }
     if(r0 < 0) r0 = -r0, s0 = -s0, t0 = -t0;
-    r = r0, x = s0, y = t0;    
+    r = r0, x = s0, y = t0;
+}
+
+long long multInverse(long long a, long long n)
+{
+    long long x, y, d;
+    extendedEuclid(a, n, x, y, d);
+    while (x < 0)
+        x += n;
+    return x % MOD;
 }
