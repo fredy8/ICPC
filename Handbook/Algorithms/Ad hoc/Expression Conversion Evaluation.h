@@ -38,7 +38,16 @@ string convert(string infix, int conversionTo) {
             if(token == '(') token = ')';
             else if(token == ')') token = '(';
         }
-        if(isOperand(token)) result += token;
+        if(isOperand(token)){ 
+            while(isOperand(token)) {
+                result += token;
+                if(++i == infix.length())
+                    break;
+                token = infix[i];
+            }
+            --i;
+            result += " ";
+        }
         else if(token == '(') st.push(token);
         else if(token == ')')
             while((token = pop(st)) != '(')
@@ -47,7 +56,7 @@ string convert(string infix, int conversionTo) {
         {
             while(!st.empty() && isOperator(st.top()) &&
                     (_operator[st.top()].priority > _operator[token].priority ||
-                    conversionTo == POSTFIX && _operator[st.top()].priority == _operator[token].priority))
+                    (conversionTo == POSTFIX && _operator[st.top()].priority == _operator[token].priority)))
                 result += pop(st);
             st.push(token);
         }
@@ -60,11 +69,23 @@ string convert(string infix, int conversionTo) {
 }
 
 int evaluate(string postfix) {
+    if(_operator.size() == 0)
+        initOperators();
     stack<int> st;
     for(int i=0; i<postfix.length(); i++) {
         char token = postfix[i];
-        if(isOperand(token))
-            st.push(token-'0');
+        if(isOperand(token)) {
+            int num = 0;
+            while(token != ' ') {
+                num *= 10;
+                num += token - '0';
+                if(++i == postfix.length()) {
+                    break;
+                }
+                token = postfix[i];
+            }
+            st.push(num);
+        }
         else if(isOperator(token))
         {
             int b = pop(st), a = pop(st);

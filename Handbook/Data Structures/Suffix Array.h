@@ -69,4 +69,33 @@ void buildLCP(char S[], int n) {
         plcp[i] = L;
         L = max(L-1, 0);
     }
-    FOR(i
+    FOR(i, 0, n) LCP[i] = plcp[SA[i]];
+}
+
+int main() {
+    char S[MAX_N];
+    scanf("%s", S);
+    int n = strlen(S);
+    S[n] = '$';
+    n++;
+    buildSA(S, n);
+    buildLCP(S, n);
+
+    FOR(i, 0, n)
+        cout << i << " " << LCP[i] << " " << S+SA[i] << endl;
+
+    FOR(i, 1, n)
+    {
+        if(LCP[i])
+        {
+            int l = i-1;
+            while(LCP[l] >= LCP[i]) l--;
+            int j = l;
+            while(j<=i || (j<n && LCP[j] >= LCP[i])) j++;
+            
+            int freq = j-l;
+            int len = LCP[i];
+            int startIndex = SA[i]
+        }
+    }
+}
