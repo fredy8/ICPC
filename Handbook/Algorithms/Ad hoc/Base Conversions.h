@@ -12,8 +12,7 @@ long long toBase10(string num, int b) {
     long long res = 0, k = 1;
     for(int i=num.length()-1; i>=0; i--) {
         char c = toUpper(num[i]);
-        int value = c > '9' ? c - 'A' + 10 : c - '0';
-        res += (value)*k;
+        res += (c > '9' ? c - 'A' + 10 : c - '0')*k;
         k*=b;
     }
     return res;
