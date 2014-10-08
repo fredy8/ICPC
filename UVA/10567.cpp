@@ -23,36 +23,8 @@
 using namespace std; typedef pair<int, int> ii; typedef vector<int> vi; typedef vector<ii> vii; typedef vector<vi> vvi;
 typedef long long ll;
 
-#define SEARCH(i, j) searchm(memo, s, sub, (i), (j))
 
-ii searchm(unordered_map<ll, ii> memo, const string &s, 
-	const string &sub, int i, int j);
-
-ii ksearch(unordered_map<ll, ii> memo, 
-const string &s, const string &sub, int i, int j) {
-	if(j >= sub.size() || i >= s.size()) {
-		return ii(-1, -1);
-	}
-	
-	if(s[i] == sub[j]) {
-		ii include(i, 
-			j == sub.size() - 1 ? i : SEARCH(i + 1, j + 1).second);
-		if(include.second == -1) return SEARCH(i + 1, j);
-		else return include;
-	} else return SEARCH(i + 1, j);
-	
-}
-
-ii searchm(unordered_map<ll, ii> memo, const string &s, 
-	const string &sub, int i, int j) {
-	ll key = i * 128 + j;
-	auto res = memo.find(key); 
-	
-	if(res != memo.end())
-		return res->second;
-	
-	else return memo[key] = ksearch(memo, s, sub, i, j);
-}
+int nxt[1000001][60];
 
 int main() {
 	string s;
@@ -60,18 +32,56 @@ int main() {
 	cin >> s;
 	int t; cin >> t;
 	
+	FOR(i, 0, 60) nxt[s.size()-1][i] = -1;
+	
+	for(int i = s.size() - 2; i >= 0; i--) {
+		FOR(j, 0, 60) {
+			if(s[i] == 'A' + j)
+				nxt[i][j] = i;
+			else nxt[i][j] = i < s.size() - 1 ? nxt[i+1][j] : -1;	
+		}
+		
+	}
+	
 	while(t--) {
 		string sub;
 		cin >> sub;
 		unordered_map<ll, ii> memo;
 		
-		ii r = SEARCH(0, 0);
+		int ms = -1, me = -1, j = 0;
 		
-		if(r.second == -1) {
-			cout << "Not matched" << endl;
-		} else {
-			cout << "Matched " << r.first << " " << r.second << endl;
+		/*FOR(i, 0, s.size()) {
+			if(s[i] == sub[j]) {
+				if(j == 0) ms = i;
+				if(j == sub.size() - 1) {
+					me = i;
+					break;
+				}
+				
+				j++;
+			}
+		}*/
+		
+		int i = 0;
+		while(j < sub.size() && i < s.size()) {
+			i = nxt[i][sub[j] - 'A'];
+			if(i != -1) {
+				//cout << "m " << j << "-"<< sub[j] << endl;
+				if(j == 0) ms = i;
+				if(j == sub.size() - 1) {
+					me = i;
+					break;
+				}
+				i++;
+				j++;
+			}
 		}
+		
+		if(me == -1) cout << "Not matched" << endl;
+		else cout << "Matched " << ms << " " << me << endl;
+		continue;
+		
+		
 	}
 }
 // a b a b a3

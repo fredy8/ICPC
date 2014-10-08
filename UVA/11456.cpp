@@ -20,67 +20,53 @@
 #define pb push_back
 using namespace std; typedef pair<int, int> ii; typedef vector<int> vi; typedef vector<ii> vii; typedef vector<vi> vvi;
 
-double adj[21][21][21];
-int last[21][21][21];
+vi LongestIncreasingSubsequence(vi v) {
+	if(v.size() == 0) return vi();
+    vi lis(v.size());
+    
+    lis[0] = 1;
+    
+    FOR(i, 0, v.size()) {
+		lis[i] = 1;
+		FOR(j, 0, i) {
+			if(v[i] > v [j]) lis[i] = max(lis[i], 1 + lis[j]);
+		}
+	}
+	return lis;
+}
 
-void printseq(int steps, int i, int j) {
-	if(steps) printseq(steps - 1, i, last[steps][i][j]);
-	cout << (j + 1) << " ";
+vi LongestDecreasingSubsequence(vi v) {
+	if(v.size() == 0) return vi();
+    vi lis(v.size());
+    
+    lis[0] = 1;
+    
+    FOR(i, 0, v.size()) {
+		lis[i] = 1;
+		FOR(j, 0, i) {
+			if(v[i] < v [j]) lis[i] = max(lis[i], 1 + lis[j]);
+		}
+	}
+	return lis;
 }
 
 int main() {
-	int n;
-	int cs = 0;
+	int t; cin >> t;
 	
-	while(cin >> n) {
-		FOR(i, 0, n) {
-			FOR(j, 0, n) {
-				last[1][i][j] = i;
-				if(i != j) {
-					cin >> adj[1][i][j];
-				} else {
-					adj[1][i][j] = 1.0;
-				}
-				
-				FOR(steps, 2, n + 1) {
-					last[steps][i][j] = i;
-					adj[steps][i][j] = 0.0;
-				}
-			}
+	while(t--) {
+		int n; cin >> n;
+		
+		vi cars;
+		while(n--) {int x; cin >> x; cars.pb(x);}
+		
+		reverse(cars.begin(), cars.end());
+		vi lis = LongestIncreasingSubsequence(cars), 
+			lds = LongestDecreasingSubsequence(cars);
+		
+		int ans = 0;
+		FOR(i, 0, cars.size()) {
+			ans = max(ans, lis[i] + lds[i] - 1);
 		}
-		
-		FOR(steps, 2, n + 1) {
-			FOR(k, 0, n) {
-				FOR(i, 0, n) {
-					FOR(j, 0, n) {
-						double profit = adj[steps - 1][i][k] * adj[1][k][j];
-						
-						//if(stp < steps[i][j] || (stp == steps[i][j] && profit > adj[i][j])) {
-						//if(profit > adj[i][j] || (profit == adj[i][j] && stp < steps[i][j])) {
-						//if(profit > adj[i][j] && stp <= steps[i][j]) {
-						if(profit > adj[steps][i][j]) {
-							//cout << "i " << i << " k " << k << " j " << j << endl;
-							adj[steps][i][j] = profit;
-							last[steps][i][j] = k;
-						}
-					}
-				}
-			}
-		}
-		
-		FOR(steps, 2, n + 1) {
-			FOR(i, 0, n) {
-				if(adj[steps][i][i] > 1.01) {
-					printseq(steps - 1, i, last[steps][i][i]);
-					cout << (i + 1);
-					goto end;
-				}
-			}
-		}
-		
-		cout << "no arbitrage sequence exists";
-		
-		end:
-		cout << endl;
+		cout << ans << endl;
 	}
 }

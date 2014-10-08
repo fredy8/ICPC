@@ -24,46 +24,46 @@ int wind[11][1001];
 int cost[11][1001];
 
 int main() {
-	int n; cin >> n;
-	
-	while(n--) {
-		int x; cin >> x; x /= 100;
-		
-		for(int i = 9; i >= 0; i--) {
-			FOR(j, 0, x) {
-				cin >> wind[i][j];
-			}
-		}
-		
-		FOR(i, 0, 10) cost[i][0] = INF;
-		cost[0][0] = 0;
-		
-		FOR(j, 1, x+1) {
-			FOR(i, 0, 10) {
-				cost[i][j] = cost[i][j-1] + 30 - wind[i][j-1];
-				
-				
-				if(i < 9)
-					cost[i][j] 
-						= min(cost[i][j], 
-						cost[i + 1][j-1] + 20 - wind[i + 1][j-1]);
-				
-				if(i > 0)
-					cost[i][j] 
-						= min(cost[i][j], 
-						cost[i - 1][j-1] + 60 - wind[i - 1][j-1]);
-				else if(j < x) { // i == 0, j < x
-					cost[i][j] = INF; // no tocar el suelo hasta aterrizar
-				}
-			}
-		}
-		
-		FOR(i, 0, 9) 
-		{ FOR(j, 0, x+1) cout << cost[i][j] << " "; cout <<endl;}
-		
-		cout << cost[0][x] << endl;
-		if(n) cout << endl;
-	}
+    int n; cin >> n;
+
+    while(n--) {
+        int x; cin >> x; x /= 100;
+
+        for(int i = 9; i >= 0; i--) {
+            FOR(j, 0, x) {
+                cin >> wind[i][j];
+            }
+        }
+
+        FOR(i, 0, 10) cost[i][0] = INF;
+        cost[0][0] = 0;
+
+        FOR(j, 1, x+1) {
+            FOR(i, 0, 10) {
+                cost[i][j] = cost[i][j-1] + 30 - wind[i][j-1];
+
+
+                if(i < 9)
+                    cost[i][j] = 
+                        min(cost[i][j], 
+                            cost[i + 1][j-1] + 20 - wind[i + 1][j-1]);
+
+                if(i > 0)
+                    cost[i][j] = 
+                        min(cost[i][j], 
+                            cost[i - 1][j-1] + 60 - wind[i - 1][j-1]);
+                else if(j < x) { // i == 0, j < x
+                    cost[i][j] = INF; // no tocar el suelo hasta aterrizar
+                }
+            }
+        }
+
+        //FOR(i, 0, 9) 
+        //{ FOR(j, 0, x+1) cout << cost[i][j] << " "; cout <<endl;}
+
+        cout << cost[0][x] << endl;
+        cout << endl;
+    }
 }
 
 /*

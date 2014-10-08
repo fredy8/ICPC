@@ -27,25 +27,43 @@ typedef long long ll;
 int main() {
 	int cs; cin >> cs;
 	
-	FOR(cs, 1, cs + 1) {
+	FOR(c, 1, cs + 1) {
 		int b; cin >> b;
 		
-		vi h(b), w(b), im(b, -1), iw(b,0), dm(b, INF), dw(b,0);
+		vi h(b), w(b), /*ih(b, -1), */iw(b,0), /*dh(b, INF),*/ dw(b,0);
 		;
 		
 		FOR(i, 0, b) cin >> h[i];
 		FOR(i, 0, b) cin >> w[i];
 		
 		FOR(i, 0, b) {
-			im[i] = h[i], iw[i] = w[i];
+			iw[i] = dw[i] = w[i];
 			
 			FOR(j, 0, i) {
-				if(h[i] > im[j]) {
-					if(iw[j] + w[i] > iw[i]) {
-						
-					}
+				if(h[i] > h[j]) {
+					iw[i] = max(iw[i], iw[j] + w[i]);
+				} else if (h[i] < h[j]) {
+					dw[i] = max(dw[i], dw[j] + w[i]);
 				}
 			}
 		}
+		int maxdw = 0, maxiw = 0;
+		
+		FOR(i, 0, b) {
+			maxdw = max(maxdw, dw[i]);
+			maxiw = max(maxiw, iw[i]);
+		}
+		
+		if(maxiw < maxdw) {
+			cout << "Case " << c 
+				 << ". Decreasing (" << maxdw << ")"
+				 << ". Increasing (" << maxiw << ")."
+				 << endl;
+		} else {
+			cout << "Case " << c 
+				 << ". Increasing (" << maxiw << ")"
+				 << ". Decreasing (" << maxdw << ")."
+				 << endl;
+		} 
 	}
 }
