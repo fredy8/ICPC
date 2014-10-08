@@ -1,15 +1,8 @@
-//max 25
-long long fact(int n) {
-	long long res = 1;
-	FOR(i, 2, n+1) res*=i;
+//max n=61
+int nCr(int n, int r) {
+	int res = 1;
+	FOR(i, 0, r) res = res*(n-i)/(i+1);
 	return res;
-}
-
-int nCr(long long n, long long r) {
-	long long res = 1;
-	for(int i=0; i>=1-r; i--) 
-		res *= n + i;
-	return res/fact(r);
 }
 
 #define MAXN 68
