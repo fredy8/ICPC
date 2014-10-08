@@ -35,6 +35,7 @@ QUERY 0 9
 using namespace std; typedef long long ll; typedef pair<ll, ll> ii; typedef vector<ll> vi; typedef vector<ii> vii; typedef vector<vi> vvi;
 
 struct Node {
+    ii left, ii right, ii MAX;
     Node() {}
     Node(int pos, int value) {}
     int ans() {

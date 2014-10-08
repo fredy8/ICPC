@@ -1,6 +1,5 @@
 /*
-4 1 4 2 3
-5 1 4 2 -1 6
+1
 */
 #include <algorithm>
 #include <bitset>
@@ -28,16 +27,7 @@ typedef int mint;
 #define int ll
 using namespace std; typedef long long ll; typedef pair<int, int> ii; typedef vector<int> vi; typedef vector<ii> vii; typedef vector<vi> vvi;
 
-int rangeOR(int A, int B) {
-    int value = 0;
-    for(int i= 1<<(sizeof(int)-1); i; i >>= 1) {
-        value <<= 1;
-        value += A/i&1 || B/i&1 || A/i != B/i;
-    }
-    return value;
-}
-
 mint main() {
-    cout << rangeOR(3, 10) << endl;
-    cout << (3 | 4 | 5 | 6 | 7 | 8 | 9 | 10) << endl;
+	int x = 0b0101010;
+	cout << x << endl;
 }

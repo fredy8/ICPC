@@ -1,20 +1,19 @@
-vi dijkstra(Graph &g, int source) {
-    vi distanceTo(g.V, INF);
-    distanceTo[source] = 0;
-    priority_queue<ii, vii, greater<ii> > pq;
-    pq.push(ii(0, source));
-    while(!pq.empty()) {
-        int currentVertex = pq.top().second;
-        int d = pq.top().first;
-        pq.pop();
-        if(d > distanceTo[currentVertex]) continue;
-        FOR(i, 0, g.edges[currentVertex].size()) {
-            int neighbor = g.edges[currentVertex][i].to;
-            if(distanceTo[neighbor] > distanceTo[currentVertex] + g.edges[currentVertex][i].weight) {
-                distanceTo[neighbor] = distanceTo[currentVertex] + g.edges[currentVertex][i].weight;
-                pq.push(ii(distanceTo[neighbor], neighbor));
-            }
-        }
-    }
-    return distanceTo;
+vi dijkstra(Graph &g, int src) {
+	vi dist(g.V, INF);
+	dist[src] = 0;
+	priority_queue<ii, vii, greater<ii> > pq;
+	pq.push(ii(0, src));
+	while(!pq.empty()) {
+		int cv = pq.top().second;
+		int d = pq.top().first;
+		pq.pop();
+		if(d > dist[cv]) continue;
+		FORC(g.edges[cv], edge)
+			if(dist[edge->to] > dist[cv] + edge->weight) {
+				dist[edge->to] = dist[cv] + edge->weight;
+				pq.push(ii(dist[edge->to], edge->to));
+			}
+		}
+	}
+	return dist;
 }
