@@ -4,22 +4,18 @@
 #define TREE 0 // Edge from explored to unvisited
 #define BACK 1 // Edge that is part of a cycle (not including bidirectional edges). From explored to explored
 #define FORWARD 2 // Edge from explored to visited
-void dfs(Graph &g, int currentVertex, vi &parent, vi &state) {
-    state[currentVertex] = EXPLORED;
-    FOR(i, 0, g.edges[currentVertex].size()) {
-        int neighbor = g.edges[currentVertex][i].to;
-        if(state[neighbor] == UNVISITED) {
-            g.edges[currentVertex][i].type = TREE;
-            parent[neighbor] = currentVertex;
-            dfs(g, neighbor, parent, state);
-        } else if(state[neighbor] == EXPLORED) {
-            if(neighbor != parent[currentVertex]) //if they are equal it is a bidirectional edge
-                g.edges[currentVertex][i].type = BACK;
-        }
-        else if(state[neighbor] == VISITED)
-            g.edges[currentVertex][i].type = FORWARD;
-    }
-    state[currentVertex] = VISITED;
+void dfs(Graph &g, int cv, vi &parent, vi &state) {
+    state[cv] = EXPLORED;
+    FORC(g.edges[cv], edge)
+        if(state[edge->to] == UNVISITED) {
+            edge->type = TREE;
+            parent[edge->to] = cv;
+            dfs(g, edge->to, parent, state);
+        } else if(state[edge->to] == EXPLORED)
+            edge->type = BACK; //if(edge->to == parent[cv]) //bidirectional
+        else if(state[edge->to] == VISITED)
+            edge->type = FORWARD;
+    state[cv] = VISITED;
 }
 
 void edgeProperties(Graph &g) {

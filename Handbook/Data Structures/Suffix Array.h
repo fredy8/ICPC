@@ -95,7 +95,7 @@ int main() {
             
             int freq = j-l;
             int len = LCP[i];
-            int startIndex = SA[i]
+            int startIndex = SA[i];
         }
     }
 }

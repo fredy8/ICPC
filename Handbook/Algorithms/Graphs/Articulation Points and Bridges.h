@@ -1,27 +1,23 @@
+//edges[from].back().backEdge = edges[aux].size() - 1; //add this to Graph.connect
+//edges[aux].back().backEdge = edges[from].size() - 1; //at the end, inside the if
 vi low, num, parent, strongPoints;
 int counter, root, rootChildren;
-
 void dfs(Graph &g, int v) {
     low[v] = num[v] = counter++;
-    FOR(i, 0, g.edges[v].size()) {
-        int neighbor = g.edges[v][i].to;
-        if(num[neighbor] == -1) {
-            parent[neighbor] = v;
-            if(v == root)
-                rootChildren++;
-            dfs(g, neighbor);
-            if(low[neighbor] >= num[v])
-                strongPoints[v] = true;
-            if(low[neighbor] > num[v])
-                g.edges[v][i].strong = true;
-            low[v] = min(low[v], low[neighbor]);
-        } else if(neighbor != parent[v])
-            low[v] = min(low[v], num[neighbor]);
+    FORC(g.edges[v], edge) {
+        if(num[edge->to] == -1) {
+            parent[edge->to] = v;
+            if(v == root) rootChildren++;
+            dfs(g, edge->to);
+            if(low[edge->to] >= num[v]) strongPoints[v] = true;
+            if(low[edge->to] > num[v]) edge->strong = g.edges[edge->to][edge->backEdge].strong = true;
+            low[v] = min(low[v], low[edge->to]);
+        } else if(edge->to != parent[v])
+            low[v] = min(low[v], num[edge->to]);
     }
 }
 
-//Must be an undirected graph
-vi articulationPointsAndBridges(Graph &g) {
+vi articulationPointsAndBridges(Graph &g /*Undirected*/) {
     counter = 0;
     num = vi(g.V, -1), low = vi(g.V, 0), parent = vi(g.V, -1), strongPoints = vi(g.V, 0);
     FOR(i, 0, g.V)

@@ -18,7 +18,7 @@ vi find(string& text, string& pattern) {
         while(j >= 0 && text[i] != pattern[j]) j = table[j];
         i++, j++;
         if(j == m) {
-            matches.push_back(i-j);
+            matches.pb(i-j);
             j = table[j];
         }
     }
