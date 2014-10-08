@@ -38,6 +38,27 @@ vii primeFactorization(long long N) {
     return factors;
 }
 
+void getDivisors(vii pf, long long d, int index, vi &div)
+{
+    if (index == pf.size()) {
+        div.pb(d);
+        return;
+    }
+    for (int i = 0; i <= pf[index].second; i++) {
+        getDivisors(pf, d, index+1, div);
+        d *= pf[index].first;
+    }
+    return;
+}
+
+vi divisors(int N) {
+    vii pf = primeFactorization(N);
+    vi div;
+    getDivisors(pf, 1ll, 0, div);
+    sort(div.begin(), div.end());
+    return div;
+}
+
 bool isPrime(long long n) {
     if(n < 2) return false;
     if(n == 2 || n == 3) return true;
