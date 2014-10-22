@@ -3,8 +3,8 @@
 int RA[MAX_N], SA[MAX_N], LCP[MAX_N];
 
 void countingSort(int k, char S[], int n) {
-	vi c(max(300, n), 0), tempSA(n);
-	int sum = 0, maxi = max(300, n);
+	vi c(max(int(300), n), 0), tempSA(n);
+	int sum = 0, maxi = max(int(300), n);
 	FOR(i, 0, n) c[i+k<n ? RA[i+k]:0]++;
 	FOR(i, 0, maxi) {
 		sum += c[i];
@@ -67,17 +67,14 @@ void buildLCP(char S[], int n) {
 		if(phi[i] == -1) { plcp[i] = 0; continue; }
 		while(S[i+L] == S[phi[i]+L]) L++;
 		plcp[i] = L;
-		L = max(L-1, 0);
+		L = max(L-1, int(0));
 	}
 	FOR(i, 0, n) LCP[i] = plcp[SA[i]];
 }
 
-int main() {
-	char S[MAX_N];
-	scanf("%s", S);
+mint main() {
+	char S[7] = "ababc$";
 	int n = strlen(S);
-	S[n] = '$';
-	n++;
 	buildSA(S, n);
 	buildLCP(S, n);
 

@@ -18,4 +18,4 @@ void toGregorian(int julian, int &day, int &month, int &year) {
 	year = 100 * (n - 49) + i + x;
 }
 
-bool isLeap(int year) { return year%4 == 0 && year%100 != 0 || year%400 == 0; }
+bool isLeap(int year) { return (year%4 == 0 && year%100 != 0) || year%400 == 0; }

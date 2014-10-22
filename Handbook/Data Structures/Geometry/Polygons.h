@@ -81,11 +81,11 @@ Polygon cutPolygon(Point a, Point b, const Polygon &Q) {
 	for (int i = 0; i < (int)Q.size(); i++) {
 		double left1 = cross(toVec(a, b), toVec(a, Q[i+1])), left2 = 0;
 		if (i != (int)Q.size()-1) left2 = cross(toVec(a, b), toVec(a, Q[i+1]));
-		if (left1 > -EPS) P.push_back(Q[i]);
+		if (left1 > -EPS) P.pb(Q[i]);
 		if (left * left2 < -EPS)
-			P.push_back(lineIntersectSeg(Q[i], Q[i+1], a, b));
+			P.pb(lineIntersectSeg(Q[i], Q[i+1], a, b));
 	}
 	if (!P.empty() && !(P.back() == P.front()))
-		P.push_back(P.front());
+		P.pb(P.front());
 	return P;
 }

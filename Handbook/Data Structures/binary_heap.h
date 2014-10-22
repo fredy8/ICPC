@@ -10,7 +10,7 @@ struct Heap {
 	}
 	void pop() {
 		swap(tree[--last], tree[1]);
-		for(int i=1; (i<<1) < last && tree[i] < tree[i<<1] || (i<<1)+1 < last && tree[i] < tree[(i<<1)+1];) {
+		for(int i=1; ((i<<1) < last && tree[i] < tree[i<<1]) || ((i<<1)+1 < last && tree[i] < tree[(i<<1)+1]);) {
 			int k = ((i<<1) + ((i<<1)+1 < last && tree[(i<<1)+1] > tree[i<<1]));
 			swap(tree[i], tree[k]);
 			i=k;

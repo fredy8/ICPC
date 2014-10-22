@@ -1,7 +1,3 @@
-#define bits(a) __builtin_popcount(a)
-#define toggleBit(n, b) ((n) ^= (p2((b))))
-#define LSB(n) ((n) & (-(n)))
-//returns nearest power of two, choose the bigger one if both have the same difference
 #define turnOffLastBit(S) ((S) & (S - 1))
 #define turnOnLastZero(S) ((S) | (S + 1))
 #define turnOffLastConsecutiveBits(S) ((S) & (S + 1))

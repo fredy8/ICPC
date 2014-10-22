@@ -17,7 +17,7 @@ void buildPrimesList() {
 	primesList.reserve(MAX/log(MAX));
 	FOR(i, 2, MAX+1)
 		if(sieve[i])
-			primesList.push_back(i);
+			primesList.pb(i);
 }
 
 vii primeFactorization(long long N) {
@@ -29,11 +29,11 @@ vii primeFactorization(long long N) {
 			if(factors.size() && factors.back().first == pf)
 				factors.back().second++;
 			else
-				factors.push_back(ii(pf, 1));
+				factors.pb(ii(pf, 1));
 		}
 		pf = primesList[++idx];
 	}
-	if(N!=1) factors.push_back(ii(N, 1));
+	if(N!=1) factors.pb(ii(N, 1));
 	return factors;
 }
 

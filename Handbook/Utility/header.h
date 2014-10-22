@@ -25,7 +25,3 @@
 typedef int mint;
 #define int ll
 using namespace std; typedef long long ll; typedef pair<int, int> ii; typedef vector<int> vi; typedef vector<ii> vii; typedef vector<vi> vvi;
-
-mint main() {
-	
-}

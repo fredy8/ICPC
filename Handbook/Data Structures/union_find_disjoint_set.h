@@ -1,6 +1,6 @@
 struct UnionFindDS {
 	vi tree;
-	UnionFindDS(int n) { FOR(i, 0, n) tree.push_back(i); }
+	UnionFindDS(int n) { FOR(i, 0, n) tree.pb(i); }
 	int root(int i) { return tree[i] == i ? i : tree[i] = root(tree[i]); }
 	bool connected(int i, int j) {return root(i) == root(j);}
 	void connect(int i, int j) { tree[root(i)] = tree[root(j)]; }

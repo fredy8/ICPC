@@ -13,7 +13,7 @@ vi LongestIncreasingSubsequence(vi v) {
 		#endif
 		if (it == best.end()) {
 			parent[i] = (best.size() == 0 ? -1 : best.back().second);
-			best.push_back(item);
+			best.pb(item);
 		} else {
 			parent[i] = parent[it->second];
 			*it = item;
@@ -21,7 +21,7 @@ vi LongestIncreasingSubsequence(vi v) {
 	}
 	vi lis;
 	for(int i=best.back().second; i >= 0; i=parent[i])
-		lis.push_back(v[i]);
+		lis.pb(v[i]);
 	reverse(lis.begin(), lis.end());
 	return lis;
 }

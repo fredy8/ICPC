@@ -1,11 +1,10 @@
-typedef long long ll;
-ll mod(ll a, ll b) {
-  return ((a%b)+b)%b;
+int mod(int a, int b) {
+	return ((a%b)+b)%b;
 }
 
-ll modpow(ll base, ll exp, ll modulus) {
+int modpow(int base, int exp, int modulus) {
 	base = mod(base, modulus);
-	ll result = 1;
+	int result = 1;
 	while (exp) {
 		if (exp & 1) result = mod(result * base, modulus);
 		base = mod(base * base, modulus);
