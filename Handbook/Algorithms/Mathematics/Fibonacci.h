@@ -10,10 +10,10 @@ void buildFibonacci() {
 }
 
 long long fibonacci(int n) {
-	Matriz m(2, 2);
+	Matrix m = CREATE(2, 2);
 	m[0][0] = 1, m[0][1] = 1, m[1][0] = 1, m[1][1] = 0;
-	Matriz fib0(2, 1);
+	Matrix fib0 = CREATE(2, 1);
 	fib0[0][0] = 1, fib0[1][0] = 1; //fib0 y fib1
-	Matriz r = multiply(pow(m, n), fib0);
+	Matrix r = multiply(pow(m, n), fib0);
 	return r[1][0];
 }

@@ -27,8 +27,8 @@ void extendedEuclidean (int a, int b, int &x, int &y, int &r) {
 	r = r0, x = s0, y = t0;
 }
 
-long long multInverse(long long a, long long n)
-{
+const int MOD = 13;
+long long multInverse(long long a, long long n) {
 	long long x, y, d;
 	extendedEuclid(a, n, x, y, d);
 	while (x < 0)

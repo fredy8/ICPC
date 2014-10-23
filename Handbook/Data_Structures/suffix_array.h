@@ -72,6 +72,7 @@ void buildLCP(char S[], int n) {
 	FOR(i, 0, n) LCP[i] = plcp[SA[i]];
 }
 
+/*
 mint main() {
 	char S[7] = "ababc$";
 	int n = strlen(S);
@@ -96,3 +97,4 @@ mint main() {
 		}
 	}
 }
+*/

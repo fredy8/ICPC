@@ -6,10 +6,10 @@ struct UnionFindDS {
 	void connect(int i, int j) { tree[root(i)] = tree[root(j)]; }
 };
 
-struct UnionFindDS {
+struct UnionFindDS2 {
 	vi tree, sizes;
 	int N;
-	UnionFindDS(int n) : N(n) {
+	UnionFindDS2(int n) : N(n) {
 		tree.reserve(n);
 		FOR(i, 0, n) tree[i] = i;
 		sizes.assign(n, 1);

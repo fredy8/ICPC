@@ -1,9 +1,9 @@
-int *comparator;
-bool compare(int a, int b) { return comparator[a] < comparator[b]; }
+int *comparator1;
+bool compare(int a, int b) { return comparator1[a] < comparator1[b]; }
 vi kruskal(vii &edges, int weight[], int V) {
 	vi order(edges.size()), minTree;    
 	UnionFindDS ds(V);
-	comparator = weight;
+	comparator1 = weight;
 	FOR(i, 0, order.size()) order[i] = i;
 	sort(order.begin(), order.end(), compare);
 	for(int i=0; i<int(edges.size()) && int(minTree.size()) < V - 1; i++)
@@ -14,20 +14,20 @@ vi kruskal(vii &edges, int weight[], int V) {
 	return minTree;
 }
 
-Graph* comparator;
-struct Compare { bool operator()(ii a, ii b) { return comparator->edges[a.first][a.second].weight > comparator->edges[b.first][b.second].weight;} };
+Graph* comparator2;
+struct Compare { bool operator()(ii a, ii b) { return comparator2->edges[a.first][a.second].weight > comparator2->edges[b.first][b.second].weight;} };
 vii prim(Graph &g) {
 	vi visited(g.V, 0);
 	visited[0] = 1;
 	vii tree; //list of edges in the MST
 	int visitedNodes = 1;
-	comparator = &g;
+	comparator2 = &g;
 	priority_queue<ii, vector<ii>, Compare> pq;
 	int cv = 0;
 	while(visitedNodes != g.V) {
 		FORC(g.edges[cv], edge)
 			if(!visited[edge->to])
-				pq.push(ii(cv, i));
+				pq.push(ii(cv, edge - g.edges[cv].begin()));
 		ii nextEdge;
 		do {
 			nextEdge = pq.top();

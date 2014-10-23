@@ -1,5 +1,5 @@
 typedef vector<vector<double> > Matrix;
-
+#define EPS 1E-7
 #define CREATE(R, C) Matrix(R, vector<double>(C));
 
 Matrix identity(int n) {

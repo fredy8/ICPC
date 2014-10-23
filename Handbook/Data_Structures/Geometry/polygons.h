@@ -1,5 +1,4 @@
 typedef vector<Point> Polygon;
-typedef long long ll;
 
 ll cross(const Point &O, const Point &A, const Point &B) {
 	return (A.x - O.x) * (B.y - O.y) - (A.y - O.y) * (B.x - O.x);
@@ -82,7 +81,7 @@ Polygon cutPolygon(Point a, Point b, const Polygon &Q) {
 		double left1 = cross(toVec(a, b), toVec(a, Q[i+1])), left2 = 0;
 		if (i != (int)Q.size()-1) left2 = cross(toVec(a, b), toVec(a, Q[i+1]));
 		if (left1 > -EPS) P.pb(Q[i]);
-		if (left * left2 < -EPS)
+		if (left1 * left2 < -EPS)
 			P.pb(lineIntersectSeg(Q[i], Q[i+1], a, b));
 	}
 	if (!P.empty() && !(P.back() == P.front()))

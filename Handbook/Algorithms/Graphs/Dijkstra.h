@@ -13,7 +13,6 @@ vi dijkstra(Graph &g, int src) {
 				dist[edge->to] = dist[cv] + edge->weight;
 				pq.push(ii(dist[edge->to], edge->to));
 			}
-		}
 	}
 	return dist;
 }

@@ -7,7 +7,7 @@ vi bellmanFord(Graph &g, int source, bool &negativeCycle) {
 				distanceTo[edge->to] = min(distanceTo[edge->to], distanceTo[j] + edge->weight);
 	//to detect negative weight cycles:
 	FOR(i, 0, g.V)
-		FORC(g.edges[i], edges)
+		FORC(g.edges[i], edge)
 			if(distanceTo[edge->to] > distanceTo[i] + edge->weight)
 				negativeCycle = true;
 	return distanceTo;

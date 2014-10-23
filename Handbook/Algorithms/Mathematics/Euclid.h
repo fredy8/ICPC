@@ -1,8 +1,3 @@
-// return a % b (positive value)
-int mod(int a, int b) {
-	return ((a%b)+b)%b;
-}
-
 // computes gcd(a,b)
 int gcd(int a, int b) {
 	int tmp;
@@ -29,9 +24,9 @@ int extended_euclid(int a, int b, int &x, int &y) {
 }
 
 // finds all solutions to ax = b (mod n)
-VI modular_linear_equation_solver(int a, int b, int n) {
+vi modular_linear_equation_solver(int a, int b, int n) {
 	int x, y;
-	VI solutions;
+	vi solutions;
 	int d = extended_euclid(a, n, x, y);
 	if (!(b%d)) {
 		x = mod (x*(b/d), n);

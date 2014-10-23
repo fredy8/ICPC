@@ -1,6 +1,7 @@
 struct Edge {
 	int to, weight;
-	Edge(int to, int weight = 1) : to(to), weight(weight) {}
+    int backEdge, strong, type, visited; //optional
+	Edge(int to, int weight = 1) : to(to), weight(weight), strong(0), visited(0) {}
 };
 struct Graph {
 	int V; bool undirected;
@@ -12,6 +13,8 @@ struct Graph {
 			int aux = edge.to;
 			edge.to = from;
 			edges[aux].pb(edge);
+            edges[from].back().backEdge = edges[aux].size() - 1; //optional
+            edges[aux].back().backEdge = edges[from].size() - 1; //optional
 		}
 	}
 };

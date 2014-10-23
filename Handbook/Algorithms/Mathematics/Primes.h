@@ -1,12 +1,12 @@
-#define MAX 1000000
-bitset<MAX> sieve;
+#define SIZE 1000000
+bitset<SIZE> sieve;
 void buildSieve() {
 	sieve.set();
 	sieve[0] = sieve[1] = 0;
-	int root = sqrt(MAX);
-	FOR(i, 2, MAX)
+	int root = sqrt(SIZE);
+	FOR(i, 2, SIZE)
 		if (sieve[i] && i <= root)
-			for(int j = i*i; j < MAX; j+=i)
+			for(int j = i*i; j < SIZE; j+=i)
 				sieve[j] = 0;
 }
 
@@ -14,8 +14,8 @@ vi primesList;
 void buildPrimesList() {
 	if(!sieve[2])
 		buildSieve();
-	primesList.reserve(MAX/log(MAX));
-	FOR(i, 2, MAX+1)
+	primesList.reserve(SIZE/log(SIZE));
+	FOR(i, 2, SIZE+1)
 		if(sieve[i])
 			primesList.pb(i);
 }

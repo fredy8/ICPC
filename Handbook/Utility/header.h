@@ -9,6 +9,7 @@
 #include <iomanip>
 #include <iostream>
 #include <queue>
+#include <list>
 #include <map>
 #include <numeric>
 #include <set>

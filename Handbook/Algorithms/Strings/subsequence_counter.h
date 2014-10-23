@@ -4,8 +4,9 @@ int subseqCounter(string seq, string subseq) {
 	vi sub(m, 0);
 	FOR(i, 0, n)
 		for(int j = m-1; j >= 0; j--)
-			if(seq[i] == subseq[j])
+			if(seq[i] == subseq[j]) {
 				if(j == 0) sub[0]++;
 				else sub[j] += sub[j-1];
+            }
 	return sub[m-1];
 }

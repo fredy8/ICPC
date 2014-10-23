@@ -1,7 +1,11 @@
-unsigned long long nthCatalan(int n) {
+int fact(int n) {
+    return n ? n*fact(n-1) : 1;
+}
+
+int nthCatalan(int n) {
 	return 2*fact(n)/(pow(fact(n), 2)*(n+1));
 }
 
-unsigned long long nextCatalan(int n, unsigned long long previous) {
+int nextCatalan(int n, int previous) {
 	return previous*2*(2*n+1)/(n+1);
 }

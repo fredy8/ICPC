@@ -1,11 +1,11 @@
-struct Edge {
+struct MatrixEdge {
 	int weight;
-	Edge(int weight = 1) : weight(weight) { }
+	MatrixEdge(int weight = 1) : weight(weight) { }
 };
-struct Graph {
+struct MatrixGraph {
 	int V; bool undirected;
 	vector<vector<Edge> > edges;
-	Graph(int v, bool undirected) : V(v), undirected(undirected) {
+	MatrixGraph(int v, bool undirected) : V(v), undirected(undirected) {
 		edges.assign(V, vector<Edge>(V, Edge(0)));
 	}
 	void connect(int from, int to, int weight = 1) {

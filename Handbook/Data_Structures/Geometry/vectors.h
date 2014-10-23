@@ -23,12 +23,12 @@ double norm_sq(Vec v) {
 
 //angle in radians
 Vec rotate(Vec v, double angle) {
-	Matrix rotation(2, 2);
+	Matrix rotation = CREATE(2, 2);
 	rotation[0][0] = rotation[1][1] = cos(angle);
 	rotation[1][0] = sin(angle);
 	rotation[0][1] = -rotation[1][0];
 
-	Matrix vec(2, 1);
+	Matrix vec = CREATE(2, 1);
 	vec[0][0] = v.x, vec[0][1] = v.y;
 
 	Matrix res = multiply(rotation, vec);
