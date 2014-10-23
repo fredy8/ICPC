@@ -4,7 +4,6 @@
 #include "Utility/header.h"
 
 #include "Algorithms/Sorting/quicksort.h"
-
 TEST_CASE("quicksort") {
 	int arr[10] = { 4, -2, 3, 0, 5, 2, 8, -9, 3, 7 };
 	int sorted[10] = { -9, -2, 0, 2, 3, 3, 4, 5, 7, 8 }; 
@@ -14,7 +13,6 @@ TEST_CASE("quicksort") {
 }
 
 #include "Algorithms/Sorting/mergesort.h"
-
 TEST_CASE("mergesort") {
 	int arr[10] = { 4, -2, 3, 0, 5, 2, 8, -9, 3, 7 };
 	int sorted[10] = { -9, -2, 0, 2, 3, 3, 4, 5, 7, 8 }; 
@@ -25,7 +23,6 @@ TEST_CASE("mergesort") {
 }
 
 #include "Algorithms/Search/binary_search.h"
-
 TEST_CASE("binarySearch") {
 	int sorted[10] = { -9, -2, 0, 2, 3, 3, 4, 5, 7, 8 }; 
 	REQUIRE(binarySearch(sorted, 4, 0, 9) == 6);
@@ -35,7 +32,6 @@ TEST_CASE("binarySearch") {
 }
 
 #include "Algorithms/Ad_hoc/maximum_subarray.h"
-
 TEST_CASE("maximumSubarray") {
 	int arr[10] = { 4, -2, 3, 0, 5, 2, 8, -9, 3, -7 };
 	REQUIRE(maximumSubarray(arr, 10) == 20);
@@ -43,13 +39,11 @@ TEST_CASE("maximumSubarray") {
 }
 
 #include "Algorithms/Ad_hoc/range_or.h"
-
 TEST_CASE("rangeOr") {
 	REQUIRE(rangeOR(2, 6) == (2 | 3 | 4 | 5 | 6));
 }
 
 #include "Algorithms/Ad_hoc/dates.h"
-
 TEST_CASE("dates") {
 	int dayDif = toJulian(21, 10, 2014) - toJulian(5, 2, 1994); 
 	REQUIRE(dayDif == 7563);
@@ -67,7 +61,6 @@ TEST_CASE("dates") {
 }
 
 #include "Algorithms/Ad_hoc/bit_manipulation.h"
-
 TEST_CASE("bitManipulation") {
 	REQUIRE(turnOffLastBit(6) == 4);
 	REQUIRE(turnOnLastZero(6) == 7);
@@ -77,7 +70,6 @@ TEST_CASE("bitManipulation") {
 }
 
 #include "Algorithms/Ad_hoc/base_conversions.h"
-
 TEST_CASE("baseConversions") {
 	REQUIRE(toBaseN(12, 8) == "14");
 	REQUIRE(toBaseN(0, 8) == "0");
@@ -85,7 +77,6 @@ TEST_CASE("baseConversions") {
 }
 
 #include "Data_Structures/lists_graph.h"
-
 TEST_CASE("lists graph") {
 	Graph g(4, true);
 	g.connect(1, Edge(3, 2));
@@ -117,7 +108,6 @@ TEST_CASE("lists graph") {
 }
 
 #include "Algorithms/Graphs/articulation_points_and_bridges.h"
-
 TEST_CASE("Articulation Points and Bridges") {
 	Graph g(5, true);
 	g.connect(0, Edge(1));
@@ -145,7 +135,6 @@ TEST_CASE("Articulation Points and Bridges") {
 }
 
 #include "Data_Structures/union_find_disjoint_sets.h"
-
 TEST_CASE("Union Find Disjoint Sets") {
 	UnionFindDS ds(4);
 	REQUIRE(ds.connected(0, 1) == false);
@@ -166,7 +155,6 @@ TEST_CASE("Union Find Disjoint Sets") {
 }
 
 #include "Algorithms/Graphs/bellman_ford.h"
-
 TEST_CASE("Bellman Ford") {
 	Graph g(5, false);
 	g.connect(0, Edge(1, 5));
@@ -195,7 +183,6 @@ TEST_CASE("Bellman Ford") {
 }
 
 #include "Algorithms/Graphs/dijkstra.h"
-
 TEST_CASE("Dijkstra") {
 	Graph g(5, true);
 	g.connect(0, Edge(1, 5));
@@ -215,30 +202,47 @@ TEST_CASE("Dijkstra") {
 #include "Algorithms/Graphs/DAGs/topological_sort.h"
 TEST_CASE("Topological Sort") {
 	Graph g(8, false);
-	g.connect(0, Edge(3));
+	g.connect(0, Edge(1));
 	g.connect(0, Edge(4));
-	g.connect(1, Edge(3));
-	g.connect(2, Edge(4));
-	g.connect(2, Edge(7));
-	g.connect(3, Edge(5));
-	g.connect(3, Edge(6));
-	g.connect(4, Edge(6));
+	g.connect(3, Edge(1));
+	g.connect(6, Edge(4));
+	g.connect(6, Edge(7));
+	g.connect(1, Edge(2));
+	g.connect(1, Edge(5));
+	g.connect(4, Edge(5));
 	vi ts = topologicalSort(g);
 #define find(a) (find(ts.begin(), ts.end(), (a)))
-	REQUIRE(find(0) < find(3));
+	REQUIRE(find(0) < find(1));
 	REQUIRE(find(0) < find(4));
-	REQUIRE(find(1) < find(3));
-	REQUIRE(find(2) < find(3));
-	REQUIRE(find(2) < find(7));
-	REQUIRE(find(3) < find(5));
-	REQUIRE(find(3) < find(6));
-	REQUIRE(find(4) < find(6));
+	REQUIRE(find(3) < find(1));
+	REQUIRE(find(6) < find(1));
+	REQUIRE(find(6) < find(7));
+	REQUIRE(find(1) < find(2));
+	REQUIRE(find(1) < find(7));
+	REQUIRE(find(4) < find(5));
 #undef find
 }
 
 #include "Algorithms/Graphs/DAGs/shortest-longest_path.h"
 TEST_CASE("Shortest Path in a DAG") {
-	
+	Graph g(8, false);
+	g.connect(0, Edge(1));
+	g.connect(0, Edge(4));
+	g.connect(3, Edge(1));
+	g.connect(6, Edge(4));
+	g.connect(6, Edge(7));
+	g.connect(1, Edge(2));
+	g.connect(1, Edge(5));
+	g.connect(4, Edge(5));
+	vi distance = shortestPath(g);
+	REQUIRE(distance[0] == 0);
+	REQUIRE(distance[1] == 1);
+	REQUIRE(distance[2] == 2);
+	REQUIRE(distance[3] == 0);
+	REQUIRE(distance[4] == 1);
+	REQUIRE(distance[5] == 2);
+	REQUIRE(distance[6] == 0);
+	REQUIRE(distance[7] == 1);
 }
 
 #include "Algorithms/Graphs/edge_property_check.h"
