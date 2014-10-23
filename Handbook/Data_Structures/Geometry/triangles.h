@@ -1,6 +1,6 @@
 struct Triangle {
 	Point A, B, C;
-	Triangle() : A(Point()), B(Point()), C(Point()) {}
+	Triangle() {}
 	Triangle(Point A, Point B, Point C) : A(A), B(B), C(C) {}
 };
 
