@@ -1,4 +1,4 @@
- -------- ./Algorithms/Ad hoc/Base Conversions.h -------- 
+ -------- Handbook/Algorithms/Ad_hoc/base_conversions.h -------- 
 string toBaseN(int num, int N) {
 	string converted = num ? "" : "0";
 	for(int div=abs(num); div; div /= N) {
@@ -7,11 +7,7 @@ string toBaseN(int num, int N) {
 	}
 	return converted;
 }
- -------- ./Algorithms/Ad hoc/Bit Manipulation.h -------- 
-#define bits(a) __builtin_popcount(a)
-#define toggleBit(n, b) ((n) ^= (p2((b))))
-#define LSB(n) ((n) & (-(n)))
-//returns nearest power of two, choose the bigger one if both have the same difference
+ -------- Handbook/Algorithms/Ad_hoc/bit_manipulation.h -------- 
 #define turnOffLastBit(S) ((S) & (S - 1))
 #define turnOnLastZero(S) ((S) | (S + 1))
 #define turnOffLastConsecutiveBits(S) ((S) & (S + 1))
@@ -23,13 +19,7 @@ int MSB(int x) {
 	while(x>>1) x>>=1, ans<<=1;
 	return ans;
 }
- -------- ./Algorithms/Ad hoc/C++ Regex.h -------- 
-regmatch_t matches[1];
-regcomp(&reg, pattern.c_str(), REG_EXTENDED|REG_ICASE);
-if(regexec(&reg, str.c_str(), 1, matches, 0) == 0)
-	cout << "match" << endl;
-regfree(&reg);
- -------- ./Algorithms/Ad hoc/Dates.h -------- 
+ -------- Handbook/Algorithms/Ad_hoc/dates.h -------- 
 int toJulian(int day, int month, int year) {
 	return 1461 * (year + 4800 + (month - 14) / 12) / 4 + 367 * (month - 2 -
 		(month - 14) / 12 * 12) / 12 - 3 * ((year + 4900 + (month - 14) / 12)
@@ -50,24 +40,8 @@ void toGregorian(int julian, int &day, int &month, int &year) {
 	year = 100 * (n - 49) + i + x;
 }
 
-bool isLeap(int year) { return year%4 == 0 && year%100 != 0 || year%400 == 0; }
- -------- ./Algorithms/Ad hoc/IO.h -------- 
-const int BUFFSIZE = 10240;
-char BUFF[BUFFSIZE + 1], *ppp = BUFF;
-int RR, CHAR, SIGN, BYTES = 0;
-#define GETCHAR(c) { \
-	if(ppp-BUFF==BYTES && (BYTES==0 || BYTES==BUFFSIZE)) { BYTES = fread(BUFF,1,BUFFSIZE,stdin); ppp=BUFF; } \
-	if(ppp-BUFF==BYTES && (BYTES>0 && BYTES<BUFFSIZE)) { BUFF[0] = 0; ppp=BUFF; } \
-	c = *ppp++; \
-}
-#define DIGIT(c) (((c) >= '0') && ((c) <= '9'))
-#define MINUS(c) ((c)== '-')
-#define GETNUMBER(n) { \
-	n = 0; SIGN = 1; do { GETCHAR(CHAR); } while(!(DIGIT(CHAR) || MINUS(CHAR))); \
-	if(MINUS(CHAR)) { SIGN = -1; GETCHAR(CHAR); } \
-	while(DIGIT(CHAR)) { n = 10*n + CHAR-'0'; GETCHAR(CHAR); } if(SIGN == -1) { n = -n; } \
-}
- -------- ./Algorithms/Ad hoc/Longest Increasing Subsequence.h -------- 
+bool isLeap(int year) { return (year%4 == 0 && year%100 != 0) || year%400 == 0; }
+ -------- Handbook/Algorithms/Ad_hoc/longest_increasing_subsequence.h -------- 
 #define STRICTLY_INCREASING
 vi LongestIncreasingSubsequence(vi v) {
 	vii best;
@@ -83,7 +57,7 @@ vi LongestIncreasingSubsequence(vi v) {
 		#endif
 		if (it == best.end()) {
 			parent[i] = (best.size() == 0 ? -1 : best.back().second);
-			best.push_back(item);
+			best.pb(item);
 		} else {
 			parent[i] = parent[it->second];
 			*it = item;
@@ -91,11 +65,11 @@ vi LongestIncreasingSubsequence(vi v) {
 	}
 	vi lis;
 	for(int i=best.back().second; i >= 0; i=parent[i])
-		lis.push_back(v[i]);
+		lis.pb(v[i]);
 	reverse(lis.begin(), lis.end());
 	return lis;
 }
- -------- ./Algorithms/Ad hoc/Maximum Subarray.h -------- 
+ -------- Handbook/Algorithms/Ad_hoc/maximum_subarray.h -------- 
 int maximumSubarray(int numbers[], int N) {
 	int maxSoFar = numbers[0], maxEndingHere = numbers[0];
 	FOR(i, 1, N) {
@@ -105,39 +79,16 @@ int maximumSubarray(int numbers[], int N) {
 	}
 	return maxSoFar;
 }
- -------- ./Algorithms/Ad hoc/Range OR.h -------- 
+ -------- Handbook/Algorithms/Ad_hoc/range_or.h -------- 
 int rangeOR(int A, int B) {
 	int value = 0;
-	for(int i= 1<<(sizeof(int)-1); i; i >>= 1) {
+	for(int i=1<<(sizeof(int)-1); i; i >>= 1) {
 		value <<= 1;
 		value += A/i&1 || B/i&1 || A/i != B/i;
 	}
 	return value;
 }
- -------- ./Algorithms/Ad hoc/Roman Numerals.h -------- 
-string fill(char c, int n) {
-	string s;
-	while(n--) s += c;
-	return s;
-}
-
-string toRoman(int n) {
-	if( n < 4 ) return fill( 'i', n );
-	if( n < 6 ) return fill( 'i', 5 - n ) + "v";
-	if( n < 9 ) return string( "v" ) + fill( 'i', n - 5 );
-	if( n < 11 ) return fill( 'i', 10 - n ) + "x";
-	if( n < 40 ) return fill( 'x', n / 10 ) + toRoman( n % 10 );
-	if( n < 60 ) return fill( 'x', 5 - n / 10 ) + 'l' + toRoman( n % 10 );
-	if( n < 90 ) return string( "l" ) + fill( 'x', n / 10 - 5 ) + toRoman( n % 10 );
-	if( n < 110 ) return fill( 'x', 10 - n / 10 ) + "c" + toRoman( n % 10 );
-	if( n < 400 ) return fill( 'c', n / 100 ) + toRoman( n % 100 );
-	if( n < 600 ) return fill( 'c', 5 - n / 100 ) + 'd' + toRoman( n % 100 );
-	if( n < 900 ) return string( "d" ) + fill( 'c', n / 100 - 5 ) + toRoman( n % 100 );
-	if( n < 1100 ) return fill( 'c', 10 - n / 100 ) + "m" + toRoman( n % 100 );
-	if( n < 4000 ) return fill( 'm', n / 1000 ) + toRoman( n % 1000 );
-	return "?";
-}
- -------- ./Algorithms/Ad hoc/Shunting Yard.cpp -------- 
+ -------- Handbook/Algorithms/Ad_hoc/shunting_yard.h -------- 
 
 void output(string x) {
     cout << x << " ";
@@ -182,45 +133,38 @@ void shunting() {
         output(ops.top()), ops.pop(); 
     }
 }
- -------- ./Algorithms/Ad hoc/String-Number Conversion.h -------- 
-template <typename T>
-string toString(T n) { ostringstream ss; ss << n; return ss.str(); }
-
-template <typename T>
-T toNum(const string &Text) { istringstream ss(Text); T result; return ss >> result ? result : 0; }
- -------- ./Algorithms/Ad hoc/untitled -------- 
- -------- ./Algorithms/Graphs/Articulation Points and Bridges.h -------- 
+ -------- Handbook/Algorithms/Graphs/articulation_points_and_bridges.h -------- 
 //edges[from].back().backEdge = edges[aux].size() - 1; //add this to Graph.connect
 //edges[aux].back().backEdge = edges[from].size() - 1; //at the end, inside the if
-vi low, num, parent, strongPoints;
-int counter, root, rootChildren;
-void dfs(Graph &g, int v) {
-	low[v] = num[v] = counter++;
+vi low2, num2, parent, strongPoints;
+int counter2, root, rootChildren;
+void dfs1(Graph &g, int v) {
+	low2[v] = num2[v] = counter2++;
 	FORC(g.edges[v], edge) {
-		if(num[edge->to] == -1) {
+		if(num2[edge->to] == -1) {
 			parent[edge->to] = v;
 			if(v == root) rootChildren++;
-			dfs(g, edge->to);
-			if(low[edge->to] >= num[v]) strongPoints[v] = true;
-			if(low[edge->to] > num[v]) edge->strong = g.edges[edge->to][edge->backEdge].strong = true;
-			low[v] = min(low[v], low[edge->to]);
+			dfs1(g, edge->to);
+			if(low2[edge->to] >= num2[v]) strongPoints[v] = true;
+			if(low2[edge->to] > num2[v]) edge->strong = g.edges[edge->to][edge->backEdge].strong = true;
+			low2[v] = min(low2[v], low2[edge->to]);
 		} else if(edge->to != parent[v])
-			low[v] = min(low[v], num[edge->to]);
+			low2[v] = min(low2[v], num2[edge->to]);
 	}
 }
 
 vi articulationPointsAndBridges(Graph &g /*Undirected*/) {
-	counter = 0;
-	num = vi(g.V, -1), low = vi(g.V, 0), parent = vi(g.V, -1), strongPoints = vi(g.V, 0);
+	counter2 = 0;
+	num2 = vi(g.V, -1), low2 = vi(g.V, 0), parent = vi(g.V, -1), strongPoints = vi(g.V, 0);
 	FOR(i, 0, g.V)
-		if(num[i] == -1) {
+		if(num2[i] == -1) {
 			root = i, rootChildren = 0;
-			dfs(g, i);
+			dfs1(g, i);
 			strongPoints[root] = rootChildren > 1;
 		}
 	return strongPoints;
 }
- -------- ./Algorithms/Graphs/Bellman Ford.h -------- 
+ -------- Handbook/Algorithms/Graphs/bellman_ford.h -------- 
 vi bellmanFord(Graph &g, int source, bool &negativeCycle) {
 	vi distanceTo(g.V, INF);
 	distanceTo[source] = 0;
@@ -230,25 +174,26 @@ vi bellmanFord(Graph &g, int source, bool &negativeCycle) {
 				distanceTo[edge->to] = min(distanceTo[edge->to], distanceTo[j] + edge->weight);
 	//to detect negative weight cycles:
 	FOR(i, 0, g.V)
-		FORC(g.edges[i], edges)
+		FORC(g.edges[i], edge)
 			if(distanceTo[edge->to] > distanceTo[i] + edge->weight)
 				negativeCycle = true;
 	return distanceTo;
 }
- -------- ./Algorithms/Graphs/DAGs/Shortest-Longest Path.h -------- 
+ -------- Handbook/Algorithms/Graphs/DAGs/shortest-longest_path.h -------- 
 vi shortestPath(Graph &g) {
 	vi order = topologicalSort(g);
-	vi distanceTo(g.V, INF);
+	vi distanceTo(g.V, 0);
 	FOR(i, 0, g.V) {
-		if(g.nodes[order[i]].inDegree == 0)
-			distanceTo[order[i]] = 0;
 		int cv = order[i];
-		FORC(g.edges[cv], edge)
+		FORC(g.edges[cv], edge) {
+			if(distanceTo[edge->to] == 0)
+				distanceTo[edge->to] = INF;
 			distanceTo[edge->to] = min(distanceTo[edge->to], edge->weight + distanceTo[cv]);
+		}
 	}
 	return distanceTo;
 }
- -------- ./Algorithms/Graphs/DAGs/Topological Sort.h -------- 
+ -------- Handbook/Algorithms/Graphs/DAGs/topological_sort.h -------- 
 vi topologicalSort(Graph &g) {
 	vi order, inDegree(g.V, 0);
 	FOR(i, 0, g.V)
@@ -281,7 +226,7 @@ vi topologicalSort2(Graph &g) {
 	reverse(order.begin(), order.end());
 	return order;
 }
- -------- ./Algorithms/Graphs/Dijkstra.h -------- 
+ -------- Handbook/Algorithms/Graphs/dijkstra.h -------- 
 vi dijkstra(Graph &g, int src) {
 	vi dist(g.V, INF);
 	dist[src] = 0;
@@ -297,24 +242,23 @@ vi dijkstra(Graph &g, int src) {
 				dist[edge->to] = dist[cv] + edge->weight;
 				pq.push(ii(dist[edge->to], edge->to));
 			}
-		}
 	}
 	return dist;
 }
- -------- ./Algorithms/Graphs/Edge Property Check.h -------- 
+ -------- Handbook/Algorithms/Graphs/edge_property_check.h -------- 
 #define UNVISITED 0 
 #define EXPLORED 1 //visited but not completed
 #define VISITED 2 //visited and completed
 #define TREE 0 // Edge from explored to unvisited
 #define BACK 1 // Edge that is part of a cycle (not including bidirectional edges). From explored to explored
 #define FORWARD 2 // Edge from explored to visited
-void dfs(Graph &g, int cv, vi &parent, vi &state) {
+void dfs3(Graph &g, int cv, vi &parent, vi &state) {
 	state[cv] = EXPLORED;
 	FORC(g.edges[cv], edge)
 		if(state[edge->to] == UNVISITED) {
 			edge->type = TREE;
 			parent[edge->to] = cv;
-			dfs(g, edge->to, parent, state);
+			dfs3(g, edge->to, parent, state);
 		} else if(state[edge->to] == EXPLORED)
 			edge->type = BACK; //if(edge->to == parent[cv]) //bidirectional
 		else if(state[edge->to] == VISITED)
@@ -326,199 +270,9 @@ void edgeProperties(Graph &g) {
 	vi state(g.V, UNVISITED), parent(g.V, 0);
 	FOR(i, 0, g.V)
 		if(state[i] == UNVISITED)
-			dfs(g, i, parent, state);
+			dfs3(g, i, parent, state);
 }
- -------- ./Algorithms/Graphs/Eulerian Path.h -------- 
-void dfs(Graph &g, list<int> &path, list<int>::iterator it, int cv) {
-	bool last = true;
-	FORC(g.edges[cv], edge) {
-		if(!edge->visited) {
-			last = false;
-			edge->visited = 1;
-			FORC(g.edges[edge->to], neighborEdge) {
-				if(neighborEdge->to == cv && !neighborEdge->visited) {
-					g.edges[edge->to][j].visited = 1;
-					break;
-				}
-			}
-			dfs(g, path, path.insert(it, cv), edge->to);
-		}
-	}
-	if(last) path.insert(path.begin(), cv);
-}
-
-vi getEulerianPath(Graph &g/*undirected*/, int initial) {
-	list<int> path;
-	dfs(g, path, path.begin(), initial);
-	vi p;
-	FORC(path, it)
-		p.pb(*it);
-	return reverse(p.begin(), p.end()), p;
-}
- -------- ./Algorithms/Graphs/Floyd-Warshall.h -------- 
-#define MAX_V 400
-void floydWarshall(Graph &g, int distance[MAX_V][MAX_V]) {
-	FOR(i, 0, g.V-1)
-		FOR(j, i, g.V)
-			distance[i][j] = distance[j][i] = INF*(i != j);
-	FOR(i, 0, g.V)
-		FOR(j, 0, g.edges[i].size())
-			distance[i][g.edges[i][j].to] = g.edges[i][j].weight;
-	FOR(i, 0, g.V)
-		FOR(j, 0, g.V)
-			FOR(k, 0, g.V)
-				distance[j][k] = min(distance[j][k], distance[j][i] + distance[i][k]);
-}
- -------- ./Algorithms/Graphs/Lowest Common Ancestor.h -------- 
-struct LCA {
-	vi order, height, index;
-	SparseTable *st;
-	LCA(Graph &g, int root) {
-		index.assign(g.V, -1);
-		dfs(g, root, 0, index);
-		st = new SparseTable(height);
-	}
-	~LCA() { delete st; }
-	void dfs(Graph &g, int cv, int h, vi &index) {
-		index[cv] = order.size();
-		order.pb(cv), height.pb(h);
-		FORC(g.edges[cv], edge)
-			if(index[edge->to] == -1) {
-				dfs(g, edge->to, height.back() + edge->weight, index);
-				order.pb(cv), height.pb(h);
-			}
-	}
-	int query(int i, int j) { return order[st->query(index[i], index[j])]; }
-	int distance(int i, int j) { return height[index[i]] + height[index[j]] - 2*(height[index[query(i, j)]]); }
-};
- -------- ./Algorithms/Graphs/Maximum Bipartite Matching.h -------- 
-int augment(Graph &g, int cv, vi &match, vi &visited) {
-	if(visited[cv]) return 0;
-	visited[cv] = 1;
-	FORC(g.edges[cv], edge)
-		if(match[edge->to] == -1 || augment(g, match[edge->to], match, visited))
-			match[edge->to] = cv; return 1;
-	return 0;
-}
-
-//nodes in the left set must be nodes [0, left)
-//g must be unweighted directed bipartite graph
-int maxBipartiteMatching(Graph &g, int left) {
-	int MCBM = 0;
-	vi match(g.V, -1);
-	FOR(cv, 0, left) {
-		vi visited(left, 0);
-		MCBM += augment(g, cv, match, visited);
-	}
-	return MCBM;
-}
- -------- ./Algorithms/Graphs/Minimum Spanning Tree.h -------- 
-int *comparator;
-bool compare(int a, int b) { return comparator[a] < comparator[b]; }
-vi kruskal(vii &edges, int weight[], int V) {
-	vi order(edges.size()), minTree;    
-	UnionFindDS ds(V);
-	comparator = weight;
-	FOR(i, 0, order.size()) order[i] = i;
-	sort(order.begin(), order.end(), compare);
-	for(int i=0; i<int(edges.size()) && int(minTree.size()) < V - 1; i++)
-		if(!ds.connected(edges[order[i]].first, edges[order[i]].second)) {
-			ds.connect(edges[order[i]].first, edges[order[i]].second);
-			minTree.pb(order[i]);
-		}
-	return minTree;
-}
-
-Graph* comparator;
-struct Compare { bool operator()(ii a, ii b) { return comparator->edges[a.first][a.second].weight > comparator->edges[b.first][b.second].weight;} };
-vii prim(Graph &g) {
-	vi visited(g.V, 0);
-	visited[0] = 1;
-	vii tree; //list of edges in the MST
-	int visitedNodes = 1;
-	comparator = &g;
-	priority_queue<ii, vector<ii>, Compare> pq;
-	int cv = 0;
-	while(visitedNodes != g.V) {
-		FORC(g.edges[cv], edge)
-			if(!visited[edge->to])
-				pq.push(ii(cv, i));
-		ii nextEdge;
-		do {
-			nextEdge = pq.top();
-			pq.pop();
-		} while(visited[g.edges[nextEdge.first][nextEdge.second].to] && !pq.empty());
-		tree.pb(nextEdge);
-		cv = g.edges[nextEdge.first][nextEdge.second].to;
-		visitedNodes++;
-		visited[cv] = 1;
-	}
-	return tree;
-}
- -------- ./Algorithms/Graphs/Networks/Dinic.cpp -------- 
-/////UNTESTED/////
-bool buildLevelGraph(Graph &g, int S, int T, vi &level) {
-	queue<int> q; q.push(S);
-	level[S] = 1;
-	while(!q.empty()) {
-		int cv = q.front(); q.pop();
-		FOR(to, 0, g.V)
-			if(g.edges[cv][to].cap - g.edes[cv][to].flow > 0 || g.edges[to][cv].flow > 0 && !level[to])
-				q.push(to), level[to] = level[cv] + 1;
-	}
-	return level[T];
-}
-
-int constructBlockingFlow(Graph &g, int S, int T) {
-	int flow = 0;
-	stack<int> st; st.push(S);
-	vi visited(g.V, 0);
-	while(!st.empty()) {
-		int cv = st.top(); st.pop();
-		if(cv != T) {
-			FOR(to, 0, g.V) {
-				if(st.top() != T) {
-					if(!visited[to] && level[to] == level[cv] + 1) {
-						if(g.edges[cv][to].cap - g.edges[cv][to].flow > 0)
-							st.push(next), path[next] = cv;
-						else if(g.edges[to][cv].flow)
-							st.push(next), path[next] = -cv;
-					}
-				}
-			}
-			if(st.top() == cv)
-				st.pop(), visited[cv] = 1;
-		} else {
-			int F = INF, bottleneck;
-			for(int cur = T; cur != S; cur = abs(path[cur]))
-				F = min(F, path[cur] > 0 ? g.edges[path[cur]][cur].cap - g.edges[path[cur]][cur].flow : g.edges[cur][-path[cur]].flow);
-			for(int cur = T; cur != S; cur = abs(path[cur])) {
-				if(path[cur] > 0) {
-					g.edges[path[cur]][cur] += F;
-					if(g.edges[path[cur]][cur].cap - g.edges[path[cur]][cur].flow)
-						bottleneck = path[cur];
-				} else {
-					g.edges[path[cur]][cur] += F;
-					if(g.edges[cur][-path[cur]] == 0)
-						bottleneck = -path[cur];
-				}
-			}
-			while(!st.empty() && st.top() != bottleneck)
-				st.pop();
-			flow += F;
-		}
-	}
-	return flow;
-}
-
-int Dinic(Graph &g, int S, int T) {
-	int mf = 0;
-	vi level;
-	while(level.assign(g.V, 0), buildLevelGraph(g, S, T, level))
-		mf += constructBlockingFlow(g, S, T);
-	return mf;
-}
- -------- ./Algorithms/Graphs/Networks/Edmonds Karp.h -------- 
+ -------- Handbook/Algorithms/Graphs/edmonds_karp.h -------- 
 int augment(Graph &g, int flow, vi &parent, int source, int cv, int minEdge) {
 	if(cv == source)
 		return minEdge;
@@ -549,23 +303,152 @@ int maxFlow(Graph &g, int source, int sink) {
 	}
 	return mf;
 }
- -------- ./Algorithms/Graphs/Strongly Connected Components.h -------- 
-vi low, num, components;
-int counter, SCCindex;
+ -------- Handbook/Algorithms/Graphs/eulerian_path.h -------- 
+void dfs2(Graph &g, list<int> &path, list<int>::iterator it, int cv) {
+	bool last = true;
+	FORC(g.edges[cv], edge) {
+		if(!edge->visited) {
+			last = false;
+			edge->visited = 1;
+			g.edges[edge->to][edge->backEdge].visited = 1;
+			/*FORC(g.edges[edge->to], neighborEdge) {
+				if(neighborEdge->to == cv && !neighborEdge->visited) {
+					g.edges[edge->to][neighborEdge - g.edges[edge->to].begin()].visited = 1;
+					break;
+				}
+			}*/
+			dfs2(g, path, path.insert(it, cv), edge->to);
+		}
+	}
+	if(last) path.insert(path.begin(), cv);
+}
+
+//At most two vertices can have odd degree
+vi getEulerianPath(Graph &g/*undirected*/, int initial) {
+	list<int> path;
+	dfs2(g, path, path.begin(), initial);
+	vi p;
+	FORC(path, it)
+		p.pb(*it);
+	return reverse(p.begin(), p.end()), p;
+}
+ -------- Handbook/Algorithms/Graphs/floyd_warshall.h -------- 
+#define MAX_V 400
+void floydWarshall(Graph &g, int distance[MAX_V][MAX_V]) {
+	FOR(i, 0, g.V-1)
+		FOR(j, i, g.V)
+			distance[i][j] = distance[j][i] = INF*(i != j);
+	FOR(i, 0, g.V)
+		FOR(j, 0, g.edges[i].size())
+			distance[i][g.edges[i][j].to] = g.edges[i][j].weight;
+	FOR(i, 0, g.V)
+		FOR(j, 0, g.V)
+			FOR(k, 0, g.V)
+				distance[j][k] = min(distance[j][k], distance[j][i] + distance[i][k]);
+}
+ -------- Handbook/Algorithms/Graphs/lowest_common_ancestor.h -------- 
+struct LCA {
+	vi order, height, index;
+	SparseTable *st;
+	LCA(Graph &g, int root) {
+		index.assign(g.V, -1);
+		dfs(g, root, 0, index);
+		st = new SparseTable(height);
+	}
+	~LCA() { delete st; }
+	void dfs(Graph &g, int cv, int h, vi &index) {
+		index[cv] = order.size();
+		order.pb(cv), height.pb(h);
+		FORC(g.edges[cv], edge)
+			if(index[edge->to] == -1) {
+				dfs(g, edge->to, height.back() + edge->weight, index);
+				order.pb(cv), height.pb(h);
+			}
+	}
+	int query(int i, int j) { return order[st->query(index[i], index[j])]; }
+	int distance(int i, int j) { return height[index[i]] + height[index[j]] - 2*(height[index[query(i, j)]]); }
+};
+ -------- Handbook/Algorithms/Graphs/maximum_bipartite_matching.h -------- 
+int augment(Graph &g, int cv, vi &match, vi &visited) {
+	if(visited[cv]) return 0;
+	visited[cv] = 1;
+	FORC(g.edges[cv], edge)
+		if(match[edge->to] == -1 || augment(g, match[edge->to], match, visited))
+			match[edge->to] = cv; return 1;
+	return 0;
+}
+
+//nodes in the left set must be nodes [0, left)
+//g must be unweighted directed bipartite graph
+int maxBipartiteMatching(Graph &g, int left) {
+	int MCBM = 0;
+	vi match(g.V, -1);
+	FOR(cv, 0, left) {
+		vi visited(left, 0);
+		MCBM += augment(g, cv, match, visited);
+	}
+	return MCBM;
+}
+ -------- Handbook/Algorithms/Graphs/minimum_spanning_tree.h -------- 
+int *comparator1;
+bool compare(int a, int b) { return comparator1[a] < comparator1[b]; }
+vi kruskal(vii &edges, int weight[], int V) {
+	vi order(edges.size()), minTree;    
+	UnionFindDS ds(V);
+	comparator1 = weight;
+	FOR(i, 0, order.size()) order[i] = i;
+	sort(order.begin(), order.end(), compare);
+	for(int i=0; i<int(edges.size()) && int(minTree.size()) < V - 1; i++)
+		if(!ds.connected(edges[order[i]].first, edges[order[i]].second)) {
+			ds.connect(edges[order[i]].first, edges[order[i]].second);
+			minTree.pb(order[i]);
+		}
+	return minTree;
+}
+
+Graph* comparator2;
+struct Compare { bool operator()(ii a, ii b) { return comparator2->edges[a.first][a.second].weight > comparator2->edges[b.first][b.second].weight;} };
+vii prim(Graph &g) {
+	vi visited(g.V, 0);
+	visited[0] = 1;
+	vii tree; //list of edges in the MST
+	int visitedNodes = 1;
+	comparator2 = &g;
+	priority_queue<ii, vector<ii>, Compare> pq;
+	int cv = 0;
+	while(visitedNodes != g.V) {
+		FORC(g.edges[cv], edge)
+			if(!visited[edge->to])
+				pq.push(ii(cv, edge - g.edges[cv].begin()));
+		ii nextEdge;
+		do {
+			nextEdge = pq.top();
+			pq.pop();
+		} while(visited[g.edges[nextEdge.first][nextEdge.second].to] && !pq.empty());
+		tree.pb(nextEdge);
+		cv = g.edges[nextEdge.first][nextEdge.second].to;
+		visitedNodes++;
+		visited[cv] = 1;
+	}
+	return tree;
+}
+ -------- Handbook/Algorithms/Graphs/strongly_connected_components.h -------- 
+vi low1, num1, components;
+int counter1, SCCindex;
 vector<bool> visited;
 stack<int> S;
 
 void dfs(Graph &g, int cv) {
-	low[cv] = num[cv] = counter++;
+	low1[cv] = num1[cv] = counter1++;
 	S.push(cv);
 	visited[cv] = true;
 	FORC(g.edges[cv], edge) {
-		if(num[edge->to] == -1)
+		if(num1[edge->to] == -1)
 			dfs(g, edge->to);
 		if(visited[edge->to])
-			low[cv] = min(low[cv], low[edge->to]);        
+			low1[cv] = min(low1[cv], low1[edge->to]);        
 	}
-	if(low[cv] == num[cv]) {
+	if(low1[cv] == num1[cv]) {
 		int index = SCCindex++;
 		while(true) {
 			int v = S.top(); S.pop(); visited[v] = 0;
@@ -577,16 +460,29 @@ void dfs(Graph &g, int cv) {
 }
 
 vi stronglyConnectedComponents(Graph &g/*directed*/) {
-	counter = 0, SCCindex = 0;
+	counter1 = 0, SCCindex = 0;
 	visited = vector<bool>(g.V, 0);
-	num = vi(g.V, -1), low = vi(g.V, 0), components = vi(g.V, 0);
+	num1 = vi(g.V, -1), low1 = vi(g.V, 0), components = vi(g.V, 0);
 	S = stack<int>();
 	FOR(i, 0, g.V)
-		if(num[i] == -1)
+		if(num1[i] == -1)
 			dfs(g, i);
 	return components;
 }
- -------- ./Algorithms/Graphs/Tree Height For Each Root.cpp -------- 
+ -------- Handbook/Algorithms/Graphs/tree_hash.h -------- 
+const int INIT = 191, P1 = 701, P2 = 34943;
+
+int hs(vector<vi> &children, int root) {
+	int value = INIT;
+	vi sub;
+	FORC(children[root], it)
+		sub.pb(hs(children, *it));
+	sort(sub.begin(), sub.end());
+	FORC(sub, it)
+		value = ((value * P1) ^ *it) % P2;
+	return value % P2;
+}
+ -------- Handbook/Algorithms/Graphs/tree_height_for_each_root.h -------- 
 int getLongestPathDown(Graph &g, int cv, vii &longestPathDown, vii &secondLongestPathDown, vi &parent) {
 	FORC(g.edges[cv], edge) {
 		if(edge->to != parent[cv]) {
@@ -633,20 +529,7 @@ void getLongestPath(Graph &g /*unrooted tree*/, vii &longestPath) {
 		}
 	}
 }
- -------- ./Algorithms/Graphs/TreeHash.cpp -------- 
-const int INIT = 191, P1 = 701, P2 = 34943;
-
-int treeStructureHash(vector<vi> &children, int root) {
-	int value = INIT;
-	vi sub;
-	FORC(children[root], it)
-		sub.pb(hs(children, *it));
-	sort(sub.begin(), sub.end());
-	FORC(sub, it)
-		value = ((value * P1) ^ *it) % P2;
-	return value % P2;
-}
- -------- ./Algorithms/Mathematics/Binomial Coefficients.h -------- 
+ -------- Handbook/Algorithms/Mathematics/binomial_coefficients.h -------- 
 //max n=61
 int nCr(int n, int r) {
 	int res = 1;
@@ -661,15 +544,20 @@ void buildPascal() {
 		FOR(r, 0, n+1)
 			pascal[n][r] = (r == 0 || r == n) ? 1 : pascal[n-1][r-1] + pascal[n-1][r];
 }
- -------- ./Algorithms/Mathematics/Catalan Numbers.h -------- 
-unsigned long long nthCatalan(int n) {
+ -------- Handbook/Algorithms/Mathematics/catalan_numbers.h -------- 
+int fact(int n) {
+    return n ? n*fact(n-1) : 1;
+}
+
+int nthCatalan(int n) {
 	return 2*fact(n)/(pow(fact(n), 2)*(n+1));
 }
 
-unsigned long long nextCatalan(int n, unsigned long long previous) {
+int nextCatalan(int n, int previous) {
 	return previous*2*(2*n+1)/(n+1);
 }
- -------- ./Algorithms/Mathematics/Cycle Finding.h -------- 
+ -------- Handbook/Algorithms/Mathematics/cycle_finding.h -------- 
+int f(int i) { return i; }
 // x[i] = f(x[i-1])
 ii floydCycleFinding(int x0) {
 	int tortoise = f(x0), hare = f(f(x0));  //Encontrar el primer xi = x2i
@@ -680,12 +568,7 @@ ii floydCycleFinding(int x0) {
 	while (tortoise != hare) { hare = f(hare); lambda++; }
 	return ii(mu, lambda);
 }
- -------- ./Algorithms/Mathematics/Euclid.h -------- 
-// return a % b (positive value)
-int mod(int a, int b) {
-	return ((a%b)+b)%b;
-}
-
+ -------- Handbook/Algorithms/Mathematics/euclid.h -------- 
 // computes gcd(a,b)
 int gcd(int a, int b) {
 	int tmp;
@@ -712,14 +595,14 @@ int extended_euclid(int a, int b, int &x, int &y) {
 }
 
 // finds all solutions to ax = b (mod n)
-VI modular_linear_equation_solver(int a, int b, int n) {
+vi modular_linear_equation_solver(int a, int b, int n) {
 	int x, y;
-	VI solutions;
+	vi solutions;
 	int d = extended_euclid(a, n, x, y);
 	if (!(b%d)) {
 		x = mod (x*(b/d), n);
-		for (int i = 0; i < d; i++)
-			solutions.push_back(mod(x + i*(n/d), n));
+		FOR(i, 0, d)
+			solutions.pb(mod(x + i*(n/d), n));
 	}
 	return solutions;
 }
@@ -731,7 +614,7 @@ int mod_inverse(int a, int n) {
 	if (d > 1) return -1;
 	return mod(x,n);
 }
- -------- ./Algorithms/Mathematics/Extended Euclidean.h -------- 
+ -------- Handbook/Algorithms/Mathematics/extended_euclidean.h -------- 
 //d = ax + by
 void extendedEuclid(int a, int b, int &x, int &y, int &d) {
 	if(!b) { x = 1; y = 0; d = a; return; }
@@ -761,22 +644,33 @@ void extendedEuclidean (int a, int b, int &x, int &y, int &r) {
 	r = r0, x = s0, y = t0;
 }
 
-long long multInverse(long long a, long long n)
-{
+const int MOD = 13;
+long long multInverse(long long a, long long n) {
 	long long x, y, d;
 	extendedEuclid(a, n, x, y, d);
 	while (x < 0)
 		x += n;
 	return x % MOD;
 }
- -------- ./Algorithms/Mathematics/Fast Exponentiation.h -------- 
+ -------- Handbook/Algorithms/Mathematics/factmod.h -------- 
+int factmod (int n, int p) {
+	int res = 1;
+	while(n > 1) {
+		res = (res * modpow (p-1, n/p, p)) % p;
+		for(int i = 2; i <= n%p; i++)
+			res = (res * i) % p;
+		n /= p;
+	}
+	return res % p;
+}
+ -------- Handbook/Algorithms/Mathematics/fast_exponentiation.h -------- 
 double fastPow(double a, int n) {
 	if(n == 0) return 1;
 	if(n == 1) return a;
 	double t = fastPow(a, n>>1);
 	return t*t*fastPow(a, n&1);
 }
- -------- ./Algorithms/Mathematics/Fibonacci.h -------- 
+ -------- Handbook/Algorithms/Mathematics/fibonacci.h -------- 
 long long fibn(int n) { //max 91
 	double goldenRatio = (1+sqrt(5))/2;
 	return round((pow(goldenRatio, n+1) - pow(1-goldenRatio, n+1))/sqrt(5));
@@ -789,16 +683,16 @@ void buildFibonacci() {
 }
 
 long long fibonacci(int n) {
-	Matriz m(2, 2);
+	Matrix m = CREATE(2, 2);
 	m[0][0] = 1, m[0][1] = 1, m[1][0] = 1, m[1][1] = 0;
-	Matriz fib0(2, 1);
+	Matrix fib0 = CREATE(2, 1);
 	fib0[0][0] = 1, fib0[1][0] = 1; //fib0 y fib1
-	Matriz r = multiply(pow(m, n), fib0);
+	Matrix r = multiply(pow(m, n), fib0);
 	return r[1][0];
 }
- -------- ./Algorithms/Mathematics/Matrices.h -------- 
+ -------- Handbook/Algorithms/Mathematics/matrices.h -------- 
 typedef vector<vector<double> > Matrix;
-
+#define EPS 1E-7
 #define CREATE(R, C) Matrix(R, vector<double>(C));
 
 Matrix identity(int n) {
@@ -894,15 +788,14 @@ int rref(Matrix &a) {
 	}
 	return r;
 }
- -------- ./Algorithms/Mathematics/ModPow.h -------- 
-typedef long long ll;
-ll mod(ll a, ll b) {
-  return ((a%b)+b)%b;
+ -------- Handbook/Algorithms/Mathematics/modpow.h -------- 
+int mod(int a, int b) {
+	return ((a%b)+b)%b;
 }
 
-ll modpow(ll base, ll exp, ll modulus) {
+int modpow(int base, int exp, int modulus) {
 	base = mod(base, modulus);
-	ll result = 1;
+	int result = 1;
 	while (exp) {
 		if (exp & 1) result = mod(result * base, modulus);
 		base = mod(base * base, modulus);
@@ -910,26 +803,23 @@ ll modpow(ll base, ll exp, ll modulus) {
 	}
 	return result;
 }
- -------- ./Algorithms/Mathematics/Nth Permutation.h -------- 
-//seq must be sorted
-string nthPermutation(string seq, long long permNum) {
-	if(!seq.length())
-		return "";
-	long long f = fact(seq.length() - 1);
-	int q = permNum / f;
-	long long r = permNum % f;
+ -------- Handbook/Algorithms/Mathematics/nth_permutation.h -------- 
+string nthPermutation(string seq/*sorted*/, int permNum) {
+	if(!seq.length()) return "";
+	int f = fact(seq.length() - 1);
+	int q = permNum/f, r = permNum%f;
 	return seq[q] + nthPermutation(seq.substr(0, q) + seq.substr(q+1), r);
 }
- -------- ./Algorithms/Mathematics/Primes.h -------- 
-#define MAX 1000000
-bitset<MAX> sieve;
+ -------- Handbook/Algorithms/Mathematics/primes.h -------- 
+#define SIZE 1000000
+bitset<SIZE> sieve;
 void buildSieve() {
 	sieve.set();
 	sieve[0] = sieve[1] = 0;
-	int root = sqrt(MAX);
-	FOR(i, 2, MAX)
+	int root = sqrt(SIZE);
+	FOR(i, 2, SIZE)
 		if (sieve[i] && i <= root)
-			for(int j = i*i; j < MAX; j+=i)
+			for(int j = i*i; j < SIZE; j+=i)
 				sieve[j] = 0;
 }
 
@@ -937,10 +827,10 @@ vi primesList;
 void buildPrimesList() {
 	if(!sieve[2])
 		buildSieve();
-	primesList.reserve(MAX/log(MAX));
-	FOR(i, 2, MAX+1)
+	primesList.reserve(SIZE/log(SIZE));
+	FOR(i, 2, SIZE+1)
 		if(sieve[i])
-			primesList.push_back(i);
+			primesList.pb(i);
 }
 
 vii primeFactorization(long long N) {
@@ -952,11 +842,11 @@ vii primeFactorization(long long N) {
 			if(factors.size() && factors.back().first == pf)
 				factors.back().second++;
 			else
-				factors.push_back(ii(pf, 1));
+				factors.pb(ii(pf, 1));
 		}
 		pf = primesList[++idx];
 	}
-	if(N!=1) factors.push_back(ii(N, 1));
+	if(N!=1) factors.pb(ii(N, 1));
 	return factors;
 }
 
@@ -990,37 +880,35 @@ bool isPrime(long long n) {
 		if(!(n%(i-1)) || !(n%(i+1))) return false;
 	return true;
 }
- -------- ./Algorithms/Search/Binary Search.h -------- 
-#define ANY
-int binarySearch(int array[], int searchValue, int left, int right) {
+ -------- Handbook/Algorithms/Search/binary_search.h -------- 
+const int UPPERBOUND = 0, LOWERBOUND = 1, ANY = 2;
+int binarySearch(int array[], int searchValue, int left, int right, int type = ANY) {
 	int leftBound = left, rightBound = right;
 	while(left <= right) {
-		int mid = (left+right)>>1;
+        int mid = (left+right)/1;
 		if(searchValue > array[mid]) left = mid+1;
 		else if (searchValue < array[mid]) right = mid-1;
 		else {
-			#ifdef UPPERBOUND
-				if(mid == rightBound || array[mid+1] != array[mid])
-					return mid;
-			left = mid+1;
-			#endif
-			#ifdef LOWERBOUND
-				if(mid == leftBound || array[mid-1] != array[mid])
-					return mid;
-			right = mid-1;
-			#endif
-			#ifdef ANY
-				return mid;
-			#endif
+            if(type == UPPERBOUND) {
+                if(mid == rightBound || array[mid+1] != array[mid])
+                    return mid;
+                left = mid+1;
+            } else if(type == LOWERBOUND) {
+                if(mid == leftBound || array[mid-1] != array[mid])
+                    return mid;
+                right = mid-1;
+            } else {
+                return mid;
+            }
 		}
 	}
 	return -1;
 }
- -------- ./Algorithms/Sorting/Merge Sort.h -------- 
-int merge(int array[], int N, int low, int mid, int high) {
+ -------- Handbook/Algorithms/Sorting/mergesort.h -------- 
+int merge(int array[], int low, int mid, int high) {
 	int inversions = 0;
-	int sorted[N];
-	int p1 = low, p2 = mid+1, psorted = low; //pointer to arr 1, to arr2 and to sorted arr
+	int sorted[high-low+1];
+	int p1 = low, p2 = mid+1, psorted = 0;
 	while(p1 <= mid && p2 <= high) {
 		if(array[p1] <= array[p2])
 			sorted[psorted++] = array[p1++];
@@ -1031,20 +919,20 @@ int merge(int array[], int N, int low, int mid, int high) {
 	}
 	while(p1 <= mid) sorted[psorted++] = array[p1++];
 	while(p2 <= high) sorted[psorted++] = array[p2++];
-	FOR(i, low, high+1) array[i] = sorted[i];
+	FOR(i, low, high+1) array[i] = sorted[i-low];
 	return inversions;
 }
 
 //returns the number of inversions
-int mergeSort(int array[], int N, int low, int high) {
+int mergeSort(int array[], int low, int high) {
 	if(low < high) {
 		int mid = (low + high)/2;
-		int inversions = mergeSort(array, N, low, mid) + mergeSort(array, N, mid+1, high);
-		return inversions + merge(array, N, low, mid, high);
+		int inversions = mergeSort(array, low, mid) + mergeSort(array, mid+1, high);
+		return inversions + merge(array, low, mid, high);
 	}
 	return 0;
 }
- -------- ./Algorithms/Sorting/Quick Sort.h -------- 
+ -------- Handbook/Algorithms/Sorting/quicksort.h -------- 
 void quickSort(int arr[], int left, int right) {
 	int pivot = arr[(left+right)/2];
 	int i = left, j = right;
@@ -1056,7 +944,7 @@ void quickSort(int arr[], int left, int right) {
 	if(left < j) quickSort(arr, left, j);
 	if(i < right) quickSort(arr, i, right);
 }
- -------- ./Algorithms/Strings/Edit Distance.h -------- 
+ -------- Handbook/Algorithms/Strings/edit_distance.h -------- 
 int editDistance(string A, string B) {
 	int n = A.length(), m = B.length();
 	int dist[n+1][m+1];
@@ -1068,7 +956,7 @@ int editDistance(string A, string B) {
 			dist[i][j] = min(dist[i-1][j-1] + (A[i-1] != B[j-1]), min(dist[i-1][j] + 1, dist[i][j-1] + 1));
 	return dist[n][m];
 }
- -------- ./Algorithms/Strings/Longest Common Subsequence.h -------- 
+ -------- Handbook/Algorithms/Strings/longest_common_subsequence.h -------- 
 string LCS(string a, string b) {
 	int n = a.length(), m = b.length();
 	int D[n][m];
@@ -1091,7 +979,7 @@ string LCS(string a, string b) {
 	}
 	return lcs;
 }
- -------- ./Algorithms/Strings/String Matching.h -------- 
+ -------- Handbook/Algorithms/Strings/string_matching.h -------- 
 vi buildTable(string& pattern) {
 	vi table(pattern.length());
 	int i = 0, j = -1, m = pattern.length();
@@ -1118,19 +1006,20 @@ vi find(string& text, string& pattern) {
 	}
 	return matches;
 }
- -------- ./Algorithms/Strings/Subsequence Counter.h -------- 
+ -------- Handbook/Algorithms/Strings/subsequence_counter.h -------- 
 // Regresa cuantas veces subseq es subsequence de seq
 int subseqCounter(string seq, string subseq) {
 	int n = seq.length(), m = subseq.length();
 	vi sub(m, 0);
 	FOR(i, 0, n)
 		for(int j = m-1; j >= 0; j--)
-			if(seq[i] == subseq[j])
+			if(seq[i] == subseq[j]) {
 				if(j == 0) sub[0]++;
 				else sub[j] += sub[j-1];
+            }
 	return sub[m-1];
 }
- -------- ./Data Structures/Balanced Binary Search Tree.h -------- 
+ -------- Handbook/Data_Structures/balanced_binary_search_tree.h -------- 
 #define LCHILD(n) ((n)->parent->left == (n))
 template< typename K, typename Compare = less<K> >
 class SplayTree {
@@ -1228,7 +1117,7 @@ public:
 	void erase(K key) { if(root) erase(root, key); }
 	bool contains(K key) { return root && find(root, key)->key == key; }
 };
- -------- ./Data Structures/Binary Heap.h -------- 
+ -------- Handbook/Data_Structures/binary_heap.h -------- 
 template <typename T>
 struct Heap {
 	vector<T> tree;
@@ -1241,7 +1130,7 @@ struct Heap {
 	}
 	void pop() {
 		swap(tree[--last], tree[1]);
-		for(int i=1; (i<<1) < last && tree[i] < tree[i<<1] || (i<<1)+1 < last && tree[i] < tree[(i<<1)+1];) {
+		for(int i=1; ((i<<1) < last && tree[i] < tree[i<<1]) || ((i<<1)+1 < last && tree[i] < tree[(i<<1)+1]);) {
 			int k = ((i<<1) + ((i<<1)+1 < last && tree[(i<<1)+1] > tree[i<<1]));
 			swap(tree[i], tree[k]);
 			i=k;
@@ -1251,7 +1140,7 @@ struct Heap {
 	bool empty() { return last == 1; }
 	bool size() { return last - 1; }
 };
- -------- ./Data Structures/Fenwick Tree.h -------- 
+ -------- Handbook/Data_Structures/fenwick_tree.h -------- 
 struct FenwickTree {
 	vi ft;
 	FenwickTree(int N) { ft.assign(N, 0); }
@@ -1277,7 +1166,7 @@ struct FenwickTree2D {
 				ft[r][j] += val;
 	}
 };
- -------- ./Data Structures/Geometry/Lines.h -------- 
+ -------- Handbook/Data_Structures/Geometry/lines.h -------- 
 struct Line {
 	double a, b, c;
 	Line() : a(0), b(0), c(0) {}
@@ -1334,16 +1223,26 @@ double distToLineSegment(Point p, Point a, Point b, Point &c) {
 	return distToLine(p, a, b, c);
 }
 
- -------- ./Data Structures/Geometry/Point.h -------- 
+ -------- Handbook/Data_Structures/Geometry/point.h -------- 
+const double PI = 2*asin(1);
+bool eq(double a, double b) { return fabs(a-b) < EPS; }
+bool les(double a, double b) { return !eq(a, b) && a < b; }
 struct Point {
 	double x, y, z;
 	Point() : x(0), y(0), z(0) {}
 	Point(double x, double y) : x(x), y(y), z(0) {}
 	Point(double x, double y, double z) : x(x), y(y), z(z) {}
 	bool operator <(const Point &p) const {
-		return x < p.x || (x == p.x && y < p.y) || (x == p.x && y == p.y && z < p.z);
+        return les(x, p.x) || (eq(x, p.x) && les(y, p.y)) || (eq(x, p.x) && eq(y, p.y) && les(z, p.z));
 	}
+    bool operator==(const Point &p) {
+        return eq(x, p.x) && eq(y, p.y) && eq(z, p.z);
+    }
 };
+
+double DEG_to_RAD(double deg) {
+    return deg/180*2*asin(1);
+}
 
 double dist(Point p1, Point p2) {
 	return sqrt(pow(p1.x-p2.x, 2) + pow(p1.y-p2.y, 2) + pow(p1.z-p2.z, 2)); }
@@ -1363,9 +1262,8 @@ double angulo(Point p) {
 		d += 2*PI;
 	return ANG(d);
 }
- -------- ./Data Structures/Geometry/Polygons.h -------- 
+ -------- Handbook/Data_Structures/Geometry/polygons.h -------- 
 typedef vector<Point> Polygon;
-typedef long long ll;
 
 ll cross(const Point &O, const Point &A, const Point &B) {
 	return (A.x - O.x) * (B.y - O.y) - (A.y - O.y) * (B.x - O.x);
@@ -1447,18 +1345,18 @@ Polygon cutPolygon(Point a, Point b, const Polygon &Q) {
 	for (int i = 0; i < (int)Q.size(); i++) {
 		double left1 = cross(toVec(a, b), toVec(a, Q[i+1])), left2 = 0;
 		if (i != (int)Q.size()-1) left2 = cross(toVec(a, b), toVec(a, Q[i+1]));
-		if (left1 > -EPS) P.push_back(Q[i]);
-		if (left * left2 < -EPS)
-			P.push_back(lineIntersectSeg(Q[i], Q[i+1], a, b));
+		if (left1 > -EPS) P.pb(Q[i]);
+		if (left1 * left2 < -EPS)
+			P.pb(lineIntersectSeg(Q[i], Q[i+1], a, b));
 	}
 	if (!P.empty() && !(P.back() == P.front()))
-		P.push_back(P.front());
+		P.pb(P.front());
 	return P;
 }
- -------- ./Data Structures/Geometry/Triangles.h -------- 
+ -------- Handbook/Data_Structures/Geometry/triangles.h -------- 
 struct Triangle {
 	Point A, B, C;
-	Triangle() : A(Point()), B(Point()), C(Point()) {}
+	Triangle() {}
 	Triangle(Point A, Point B, Point C) : A(A), B(B), C(C) {}
 };
 
@@ -1494,7 +1392,7 @@ Point circumcenter(Point A, Point B, Point C) {
 	double AA = A.x*A.x + A.y*A.y, BB = B.x*B.x + B.y*B.y, CC = C.x*C.x + C.y*C.y;
 	return Point((AA*(B.y - C.y) + BB*(C.y - A.y) + CC*(A.y - B.y)) / D, (AA*(C.x - B.x) + BB*(A.x - C.x) + CC*(B.x - A.x)) / D);
 }
- -------- ./Data Structures/Geometry/Vectors.h -------- 
+ -------- Handbook/Data_Structures/Geometry/vectors.h -------- 
 struct Vec {
 	double x, y, z;
 	Vec(double x, double y, double z) : x(x), y(y), z(z) {}
@@ -1520,12 +1418,12 @@ double norm_sq(Vec v) {
 
 //angle in radians
 Vec rotate(Vec v, double angle) {
-	Matrix rotation(2, 2);
+	Matrix rotation = CREATE(2, 2);
 	rotation[0][0] = rotation[1][1] = cos(angle);
 	rotation[1][0] = sin(angle);
 	rotation[0][1] = -rotation[1][0];
 
-	Matrix vec(2, 1);
+	Matrix vec = CREATE(2, 1);
 	vec[0][0] = v.x, vec[0][1] = v.y;
 
 	Matrix res = multiply(rotation, vec);
@@ -1546,7 +1444,7 @@ double angle(Point a, Point o, Point b) { // returns angle aob in rad
 	Vec oa = toVec(o, a), ob = toVec(o, b);
 	return acos(dot(oa, ob) / sqrt(norm_sq(oa) * norm_sq(ob)));
 }
- -------- ./Data Structures/Interval Tree.h -------- 
+ -------- Handbook/Data_Structures/interval_tree.h -------- 
 #define LCHILD(n) ((n)->parent->left == (n))
 class IntervalTree {
 	struct Node {
@@ -1614,10 +1512,11 @@ public:
 	void erase(int interval, int a, int b) { erase(root, interval, a, b+1, -INF, INF); }
 	int getArea() { if(root) return root->area - 1; return 0; }
 };
- -------- ./Data Structures/Lists Graph.h -------- 
+ -------- Handbook/Data_Structures/lists_graph.h -------- 
 struct Edge {
 	int to, weight;
-	Edge(int to, int weight = 1) : to(to), weight(weight) {}
+    int backEdge, strong, type, visited; //optional
+	Edge(int to, int weight = 1) : to(to), weight(weight), strong(0), visited(0) {}
 };
 struct Graph {
 	int V; bool undirected;
@@ -1629,18 +1528,20 @@ struct Graph {
 			int aux = edge.to;
 			edge.to = from;
 			edges[aux].pb(edge);
+            edges[from].back().backEdge = edges[aux].size() - 1; //optional
+            edges[aux].back().backEdge = edges[from].size() - 1; //optional
 		}
 	}
 };
- -------- ./Data Structures/Matrix Graph.h -------- 
-struct Edge {
+ -------- Handbook/Data_Structures/matrix_graph.h -------- 
+struct MatrixEdge {
 	int weight;
-	Edge(int weight = 1) : weight(weight) { }
+	MatrixEdge(int weight = 1) : weight(weight) { }
 };
-struct Graph {
+struct MatrixGraph {
 	int V; bool undirected;
 	vector<vector<Edge> > edges;
-	Graph(int v, bool undirected) : V(v), undirected(undirected) {
+	MatrixGraph(int v, bool undirected) : V(v), undirected(undirected) {
 		edges.assign(V, vector<Edge>(V, Edge(0)));
 	}
 	void connect(int from, int to, int weight = 1) {
@@ -1648,7 +1549,7 @@ struct Graph {
 		if(undirected) edges[to][from].weight = weight;
 	}
 };
- -------- ./Data Structures/Segment Tree.h -------- 
+ -------- Handbook/Data_Structures/segment_tree.h -------- 
 struct Node {
 	Node() {}
 	Node(int pos, int value) {}
@@ -1703,7 +1604,7 @@ struct SegmentTree {
 	void pointUpdate(int i, int k) { Node n(i, k); values[i] = k; pointUpdate(1, 0, values.size()-1, i, n); }
 	int query(int from, int to) { return query(1, 0, values.size()-1, from, to).ans(); }
 };
- -------- ./Data Structures/Sparse Table.h -------- 
+ -------- Handbook/Data_Structures/sparse_table.h -------- 
 struct SparseTable {
 	vi A; vvi M;
 	int log2(int n) { int i=0; while(n >>= 1) i++; return i; }
@@ -1731,14 +1632,14 @@ struct SparseTable {
 		return M[j-(1 << k)+1][k];
 	}
 };
- -------- ./Data Structures/Suffix Array.h -------- 
+ -------- Handbook/Data_Structures/suffix_array.h -------- 
 #define MAX_N 100010
 
 int RA[MAX_N], SA[MAX_N], LCP[MAX_N];
 
 void countingSort(int k, char S[], int n) {
-	vi c(max(300, n), 0), tempSA(n);
-	int sum = 0, maxi = max(300, n);
+	vi c(max(int(300), n), 0), tempSA(n);
+	int sum = 0, maxi = max(int(300), n);
 	FOR(i, 0, n) c[i+k<n ? RA[i+k]:0]++;
 	FOR(i, 0, maxi) {
 		sum += c[i];
@@ -1801,17 +1702,15 @@ void buildLCP(char S[], int n) {
 		if(phi[i] == -1) { plcp[i] = 0; continue; }
 		while(S[i+L] == S[phi[i]+L]) L++;
 		plcp[i] = L;
-		L = max(L-1, 0);
+		L = max(L-1, int(0));
 	}
 	FOR(i, 0, n) LCP[i] = plcp[SA[i]];
 }
 
-int main() {
-	char S[MAX_N];
-	scanf("%s", S);
+/*
+mint main() {
+	char S[7] = "ababc$";
 	int n = strlen(S);
-	S[n] = '$';
-	n++;
 	buildSA(S, n);
 	buildLCP(S, n);
 
@@ -1833,7 +1732,8 @@ int main() {
 		}
 	}
 }
- -------- ./Data Structures/Trie.h -------- 
+*/
+ -------- Handbook/Data_Structures/trie.h -------- 
 #define ALPHABET_SIZE 52
 int getIndex(char c) {
 	if(c >= 'A' && c <= 'Z')
@@ -1874,19 +1774,19 @@ struct Trie {
 		return edges[index]->countPrefix(word, pos+1);
 	}
 };
- -------- ./Data Structures/Union Find Disjoint Sets.h -------- 
+ -------- Handbook/Data_Structures/union_find_disjoint_sets.h -------- 
 struct UnionFindDS {
 	vi tree;
-	UnionFindDS(int n) { FOR(i, 0, n) tree.push_back(i); }
+	UnionFindDS(int n) { FOR(i, 0, n) tree.pb(i); }
 	int root(int i) { return tree[i] == i ? i : tree[i] = root(tree[i]); }
 	bool connected(int i, int j) {return root(i) == root(j);}
 	void connect(int i, int j) { tree[root(i)] = tree[root(j)]; }
 };
 
-struct UnionFindDS {
+struct UnionFindDS2 {
 	vi tree, sizes;
 	int N;
-	UnionFindDS(int n) : N(n) {
+	UnionFindDS2(int n) : N(n) {
 		tree.reserve(n);
 		FOR(i, 0, n) tree[i] = i;
 		sizes.assign(n, 1);
@@ -1905,7 +1805,134 @@ struct UnionFindDS {
 	}
 };
 
- -------- ./Utility/header.h -------- 
+ -------- Handbook/External/edmonds_graph_matching.cpp -------- 
+struct edge {
+   int v, nx;
+};
+const int MAXN = 1000, MAXE = 2000;
+edge graph[MAXE];
+int last[MAXN], match[MAXN], px[MAXN], base[MAXN], N, edges;
+bool used[MAXN], blossom[MAXN], lused[MAXN];
+inline void add_edge(int u, int v) {
+   graph[edges] = (edge) {v, last[u]};
+   last[u] = edges++;
+   graph[edges] = (edge) {u, last[v]};
+   last[v] = edges++;
+}
+void mark_path(int v, int b, int children) {
+   while (base[v] != b) {
+      blossom[base[v]] = blossom[base[match[v]]] = true;
+      px[v] = children;
+      children = match[v];
+      v = px[match[v]];
+   }
+}
+int lca(int a, int b) {
+   memset(lused, 0, N);
+   while (1) {
+      lused[a = base[a]] = true;
+      if (match[a] == -1)
+         break;
+      a = px[match[a]];
+   }
+   while (1) {
+      b = base[b];
+      if (lused[b])
+         return b;
+      b = px[match[b]];
+   }
+}
+int find_path(int root) {
+   memset(used, 0, N);
+   memset(px, -1, sizeof(int) * N);
+   for (int i = 0; i < N; ++i)
+      base[i] = i;
+   used[root] = true;
+   queue<int> q;
+   q.push(root);
+   int v, e, to, i;
+   while (!q.empty()) {
+      v = q.front(); q.pop();
+      for (e = last[v]; e >= 0; e = graph[e].nx) {
+         to = graph[e].v;
+         if (base[v] == base[to] || match[v] == to)
+            continue;
+         if (to == root || (match[to] != -1 && px[match[to]] != -1)) {
+            int curbase = lca(v, to);
+            memset(blossom, 0, N);
+            mark_path(v, curbase, to);
+            mark_path(to, curbase, v);
+            for (i = 0; i < N; ++i)
+               if (blossom[base[i]]) {
+                  base[i] = curbase;
+                  if (!used[i]) {
+                     used[i] = true;
+                     q.push(i);
+                  }
+               }
+         } else if (px[to] == -1) {
+            px[to] = v;
+            if (match[to] == -1)
+               return to;
+            to = match[to];
+            used[to] = true;
+            q.push(to);
+         }
+      }
+   }
+   return -1;
+}
+void build_pre_matching() {
+   int u, e, v;
+   for (u = 0; u < N; ++u)
+      if (match[u] == -1)
+         for (e = last[u]; e >= 0; e = graph[e].nx) {
+            v = graph[e].v;
+            if (match[v] == -1) {
+               match[u] = v;
+               match[v] = u;
+               break;
+            }
+         }
+}
+void edmonds() {
+   memset(match, 0xff, sizeof(int) * N);
+   build_pre_matching();
+   int i, v, pv, ppv;
+   for (i = 0; i < N; ++i)
+      if (match[i] == -1) {
+         v = find_path(i);
+         while (v != -1) {
+            pv = px[v], ppv = match[pv];
+            match[v] = pv, match[pv] = v;
+            v = ppv;
+         }
+      }
+}
+ -------- Handbook/External/roman_numerals.h -------- 
+string fill(char c, int n) {
+	string s;
+	while(n--) s += c;
+	return s;
+}
+
+string toRoman(int n) {
+	if( n < 4 ) return fill( 'i', n );
+	if( n < 6 ) return fill( 'i', 5 - n ) + "v";
+	if( n < 9 ) return string( "v" ) + fill( 'i', n - 5 );
+	if( n < 11 ) return fill( 'i', 10 - n ) + "x";
+	if( n < 40 ) return fill( 'x', n / 10 ) + toRoman( n % 10 );
+	if( n < 60 ) return fill( 'x', 5 - n / 10 ) + 'l' + toRoman( n % 10 );
+	if( n < 90 ) return string( "l" ) + fill( 'x', n / 10 - 5 ) + toRoman( n % 10 );
+	if( n < 110 ) return fill( 'x', 10 - n / 10 ) + "c" + toRoman( n % 10 );
+	if( n < 400 ) return fill( 'c', n / 100 ) + toRoman( n % 100 );
+	if( n < 600 ) return fill( 'c', 5 - n / 100 ) + 'd' + toRoman( n % 100 );
+	if( n < 900 ) return string( "d" ) + fill( 'c', n / 100 - 5 ) + toRoman( n % 100 );
+	if( n < 1100 ) return fill( 'c', 10 - n / 100 ) + "m" + toRoman( n % 100 );
+	if( n < 4000 ) return fill( 'm', n / 1000 ) + toRoman( n % 1000 );
+	return "?";
+}
+ -------- Handbook/Utility/header.h -------- 
 /*
 */
 #include <algorithm>
@@ -1917,6 +1944,7 @@ struct UnionFindDS {
 #include <iomanip>
 #include <iostream>
 #include <queue>
+#include <list>
 #include <map>
 #include <numeric>
 #include <set>
@@ -1933,11 +1961,47 @@ struct UnionFindDS {
 typedef int mint;
 #define int ll
 using namespace std; typedef long long ll; typedef pair<int, int> ii; typedef vector<int> vi; typedef vector<ii> vii; typedef vector<vi> vvi;
-
-mint main() {
-	
+ -------- Handbook/Utility/io.h -------- 
+const int BUFFSIZE = 10240;
+char BUFF[BUFFSIZE + 1], *ppp = BUFF;
+int RR, CHAR, SIGN, BYTES = 0;
+#define GETCHAR(c) { \
+	if(ppp-BUFF==BYTES && (BYTES==0 || BYTES==BUFFSIZE)) { BYTES = fread(BUFF,1,BUFFSIZE,stdin); ppp=BUFF; } \
+	if(ppp-BUFF==BYTES && (BYTES>0 && BYTES<BUFFSIZE)) { BUFF[0] = 0; ppp=BUFF; } \
+	c = *ppp++; \
 }
- -------- ./Utility/tricks.cpp -------- 
+#define DIGIT(c) (((c) >= '0') && ((c) <= '9'))
+#define MINUS(c) ((c)== '-')
+#define GETNUMBER(n) { \
+	n = 0; SIGN = 1; do { GETCHAR(CHAR); } while(!(DIGIT(CHAR) || MINUS(CHAR))); \
+	if(MINUS(CHAR)) { SIGN = -1; GETCHAR(CHAR); } \
+	while(DIGIT(CHAR)) { n = 10*n + CHAR-'0'; GETCHAR(CHAR); } if(SIGN == -1) { n = -n; } \
+}
+ -------- Handbook/Utility/notes.txt -------- 
+Primes less than 1000:
+     2     3     5     7    11    13    17    19    23    29    31    37
+    41    43    47    53    59    61    67    71    73    79    83    89
+    97   101   103   107   109   113   127   131   137   139   149   151
+   157   163   167   173   179   181   191   193   197   199   211   223
+   227   229   233   239   241   251   257   263   269   271   277   281
+   283   293   307   311   313   317   331   337   347   349   353   359
+   367   373   379   383   389   397   401   409   419   421   431   433
+   439   443   449   457   461   463   467   479   487   491   499   503
+   509   521   523   541   547   557   563   569   571   577   587   593
+   599   601   607   613   617   619   631   641   643   647   653   659
+   661   673   677   683   691   701   709   719   727   733   739   743
+   751   757   761   769   773   787   797   809   811   821   823   827
+   829   839   853   857   859   863   877   881   883   887   907   911
+   919   929   937   941   947   953   967   971   977   983   991   997
+ -------- Handbook/Utility/run.sh -------- 
+clear;g++ $1 -op&&python -c"import re;print(re.search(r'^/\*\n((?s).*)\*/',open('$1').read()).group(1))"|./p;rm p
+ -------- Handbook/Utility/string_number_conversion.h -------- 
+template <typename T>
+string toString(T n) { ostringstream ss; ss << n; return ss.str(); }
+
+template <typename T>
+T toNum(const string &Text) { istringstream ss(Text); T result; return ss >> result ? result : 0; }
+ -------- Handbook/Utility/tricks.cpp -------- 
 //tokenize a string
 char str[100] = "jkans asjna asjnxa asmx", del[2] = " ";
 for(char *tk = strtok(str, del); tk; tk = strtok(0, del))
@@ -1948,3 +2012,9 @@ MVC = MCBM
 MIS = V - MCBM
 
 printf("%ld\n", strtol("222", 0, x)); //base x to long
+
+regmatch_t matches[1];
+regcomp(&reg, pattern.c_str(), REG_EXTENDED|REG_ICASE);
+if(regexec(&reg, str.c_str(), 1, matches, 0) == 0)
+cout << "match" << endl;
+regfree(&reg);

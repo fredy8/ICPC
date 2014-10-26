@@ -247,17 +247,59 @@ TEST_CASE("Shortest Path in a DAG") {
 
 #include "Algorithms/Graphs/edge_property_check.h"
 TEST_CASE("Edge Property Check") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Graphs/eulerian_path.h"
 TEST_CASE("Eulerian Path") {
-	REQUIRE("TO DO" == "");
+	Graph g(6, true);
+	g.connect(0, Edge(2));
+	g.connect(0, Edge(3));
+	g.connect(1, Edge(2));
+	g.connect(1, Edge(3));
+	g.connect(1, Edge(4));
+	g.connect(1, Edge(5));
+	g.connect(2, Edge(4));
+	g.connect(2, Edge(5));
+	g.connect(3, Edge(4));
+	g.connect(3, Edge(5));
+	g.connect(4, Edge(5));
+	vi path = getEulerianPath(g, 0);
+	FORC(path, a) cout << *a << " "; cout << endl;
+	map<set<int>, int> m;
+	FOR(i, 1, path.size()) {
+		set<int> s;
+		s.insert(path[i-1]);
+		s.insert(path[i]);
+		m[s]++;
+		REQUIRE(m[s] == 1);
+	}
+	FOR(i, 0, g.V)
+		FORC(g.edges[i], edge) {
+			set<int> s;
+			s.insert(i);
+			s.insert(edge->to);
+			REQUIRE(m[s] == 1);
+		}
 }
 
 #include "Algorithms/Graphs/floyd_warshall.h"
 TEST_CASE("Floyd Warshall") {
-	REQUIRE("TO DO" == "");
+	Graph g(4, false);
+	g.connect(0, Edge(2, -2));
+	g.connect(1, Edge(2, 3));
+	g.connect(1, Edge(0, 4));
+	g.connect(2, Edge(3, 2));
+	g.connect(3, Edge(1, -1));
+	
+	int dist[MAX_V][MAX_V];
+	floydWarshall(g, dist);
+	
+	int expected[4][4] = { {0, -1, -2, 0 }, {4, 0, 2, 4}, {5, 1, 0, 2}, {3, -1, 1, 0}};
+
+	FOR(i, 0, g.V)
+		FOR(j, 0, g.V)
+			REQUIRE(dist[i][j] == expected[i][j]);
 }
 
 #include "Data_Structures/sparse_table.h"
@@ -274,87 +316,97 @@ TEST_CASE("Sparse Table") {
 
 #include "Algorithms/Graphs/lowest_common_ancestor.h"
 TEST_CASE("Lowest Common Ancestor") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Graphs/maximum_bipartite_matching.h"
 TEST_CASE("Maximum Bipartite Matching") {
-	REQUIRE("TO DO" == "");
+	Graph g(10, false);
+	g.connect(0, Edge(5));
+	g.connect(0, Edge(6));
+	g.connect(1, Edge(5));
+	g.connect(2, Edge(6));
+	g.connect(3, Edge(7));
+	g.connect(3, Edge(8));
+	g.connect(3, Edge(9));
+	g.connect(4, Edge(9));
+
+	REQUIRE(maxBipartiteMatching(g, 5) == 4);
 }
 
 #include "Algorithms/Graphs/minimum_spanning_tree.h"
 TEST_CASE("Minimum Spanning Tree") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Graphs/edmonds_karp.h"
 TEST_CASE("Edmonds Karp") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Graphs/strongly_connected_components.h"
 TEST_CASE("Strongly Connected Components") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Graphs/tree_hash.h"
 TEST_CASE("Tree Hash") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Graphs/tree_height_for_each_root.h"
 TEST_CASE("Tree Height for Each Root") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Mathematics/binomial_coefficients.h"
 TEST_CASE("Binomial Coefficients") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Mathematics/catalan_numbers.h"
 TEST_CASE("Catalan Numbers") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Mathematics/cycle_finding.h"
 TEST_CASE("Cycle Finding") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Mathematics/modpow.h"
 TEST_CASE("ModPow") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Mathematics/euclid.h"
 TEST_CASE("Euclid") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Mathematics/extended_euclidean.h"
 TEST_CASE("Extended Euclidean") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Mathematics/factmod.h"
 TEST_CASE("FactMod") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Mathematics/fast_exponentiation.h"
 TEST_CASE("Fast Exponentiation") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Mathematics/matrices.h"
 TEST_CASE("Matrices") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Mathematics/fibonacci.h"
 TEST_CASE("Fibonacci") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/mathematics/nth_permutation.h"
@@ -369,27 +421,27 @@ TEST_CASE("Nth Permutation") {
 
 #include "Algorithms/Mathematics/primes.h"
 TEST_CASE("Primes") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Ad_hoc/longest_increasing_subsequence.h"
 TEST_CASE("Longest Increasing Subsequence") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Ad_hoc/shunting_yard.h"
 TEST_CASE("Shunting Yard") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Strings/edit_distance.h"
 TEST_CASE("Edit Distance") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Strings/longest_common_subsequence.h"
 TEST_CASE("Longest Common Subsequence") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Algorithms/Strings/string_matching.h"
@@ -404,12 +456,12 @@ TEST_CASE("String Matching") {
 
 #include "Algorithms/Strings/subsequence_counter.h"
 TEST_CASE("Subsequence Counter") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Data_Structures/balanced_binary_search_tree.h"
 TEST_CASE("Balanced Binary Search Tree") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Data_Structures/binary_heap.h"
@@ -432,55 +484,55 @@ TEST_CASE("Binary Heap") {
 
 #include "Data_Structures/fenwick_tree.h"
 TEST_CASE("Fenwick Tree") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Data_Structures/interval_tree.h"
 TEST_CASE("Interval Tree") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Data_Structures/matrix_graph.h"
 TEST_CASE("Matrix Graph") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Data_Structures/segment_tree.h"
 TEST_CASE("Segment Tree") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Data_Structures/suffix_array.h"
 TEST_CASE("Suffix Array") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Data_Structures/trie.h"
 TEST_CASE("Trie") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Data_Structures/Geometry/point.h"
 TEST_CASE("Point") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Data_Structures/Geometry/vectors.h"
 TEST_CASE("Vectors") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Data_Structures/Geometry/lines.h"
 TEST_CASE("Line") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Data_Structures/Geometry/polygons.h"
 TEST_CASE("Polygons") {
-	REQUIRE("TO DO" == "");
+	
 }
 
 #include "Data_Structures/Geometry/triangles.h"
 TEST_CASE("Triangles") {
-	REQUIRE("TO DO" == "");
+	
 }
