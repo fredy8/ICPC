@@ -316,7 +316,21 @@ TEST_CASE("Sparse Table") {
 
 #include "Algorithms/Graphs/lowest_common_ancestor.h"
 TEST_CASE("Lowest Common Ancestor") {
-	
+	Graph g(7, true);
+	g.connect(0, Edge(1));
+	g.connect(0, Edge(2));
+	g.connect(1, Edge(3));
+	g.connect(1, Edge(4));
+	g.connect(2, Edge(5));
+	g.connect(2, Edge(6));
+	LCA lca(g, 0);
+	REQUIRE(lca.query(0, 2) == 0);
+	REQUIRE(lca.query(0, 6) == 0);
+	REQUIRE(lca.query(1, 2) == 0);
+	REQUIRE(lca.query(2, 5) == 2);
+	REQUIRE(lca.query(5, 6) == 2);
+	REQUIRE(lca.query(3, 6) == 0);
+	REQUIRE(lca.query(1, 3) == 1);
 }
 
 #include "Algorithms/Graphs/maximum_bipartite_matching.h"
@@ -376,7 +390,10 @@ TEST_CASE("Cycle Finding") {
 
 #include "Algorithms/Mathematics/modpow.h"
 TEST_CASE("ModPow") {
-	
+	REQUIRE(modpow(17, 23, 1000007) == 373271); 
+	REQUIRE(modpow(23, 32, 423412) == 134905); 
+	REQUIRE(modpow(25, 14, 1000000009) == 343016784); 
+	REQUIRE(modpow(13, 6, 293847) == 125257); 
 }
 
 #include "Algorithms/Mathematics/euclid.h"
@@ -391,12 +408,17 @@ TEST_CASE("Extended Euclidean") {
 
 #include "Algorithms/Mathematics/factmod.h"
 TEST_CASE("FactMod") {
-	
+	REQUIRE(factmod(20, 21039) == 11976);	
+	REQUIRE(factmod(30, 230847902) == 5212186);	
+	REQUIRE(factmod(45, 826341) == 765387);	
 }
 
 #include "Algorithms/Mathematics/fast_exponentiation.h"
 TEST_CASE("Fast Exponentiation") {
-	
+	REQUIRE(fastPow(12, 4) == (int)(round(pow(12.0, 4.0))));	
+	REQUIRE(fastPow(4, 9) == (int)(round(pow(4.0, 9.0))));	
+	REQUIRE(fastPow(6, 6) == (int)(round(pow(6.0, 6.0))));	
+	REQUIRE(fastPow(3, 17) == (int)(round(pow(3.0, 17.0))));	
 }
 
 #include "Algorithms/Mathematics/matrices.h"
@@ -426,7 +448,11 @@ TEST_CASE("Primes") {
 
 #include "Algorithms/Ad_hoc/longest_increasing_subsequence.h"
 TEST_CASE("Longest Increasing Subsequence") {
-	
+	int arr[10] = { 4, -2, -2, 0, 5, 2, 8, -9, 3, 7 };
+	vi lis = longestIncreasingSubsequence(vi(arr, arr+10));
+	REQUIRE(lis.size() == 6);
+	int expected[6] = { -2, -2, 0, 2, 3, 7 };
+	REQUIRE(lis == vi(expected, expected+6));
 }
 
 #include "Algorithms/Ad_hoc/shunting_yard.h"
@@ -436,12 +462,15 @@ TEST_CASE("Shunting Yard") {
 
 #include "Algorithms/Strings/edit_distance.h"
 TEST_CASE("Edit Distance") {
-	
+	string a = "edit_distance", b = "e.ditdisTancE";
+	REQUIRE(editDistance(a, b) == 4);
 }
 
 #include "Algorithms/Strings/longest_common_subsequence.h"
 TEST_CASE("Longest Common Subsequence") {
-	
+	string a = "XMJYAUZ";
+	string b = "MZJAWXU";
+	REQUIRE("MJAU" == LCS(a, b));
 }
 
 #include "Algorithms/Strings/string_matching.h"
@@ -484,7 +513,29 @@ TEST_CASE("Binary Heap") {
 
 #include "Data_Structures/fenwick_tree.h"
 TEST_CASE("Fenwick Tree") {
-	
+	FenwickTree ft(5);
+	ft.add(1, 1);
+	ft.add(2, 5);
+	ft.add(3, 4);
+	ft.add(4, -1);
+	REQUIRE(ft.query(1, 4) == 9);
+	REQUIRE(ft.query(4, 1) == 9);
+	REQUIRE(ft.query(1, 3) == 10);
+	REQUIRE(ft.query(2, 3) == 9);
+	ft.add(3, 2);
+	REQUIRE(ft.query(2, 4) == 10);
+
+	FenwickTree2D ft2(4, 4);
+	REQUIRE(ft2.query(1, 1, 3, 3) == 0);
+	ft2.add(1, 1, 4);
+	ft2.add(2, 3, -1);
+	ft2.add(3, 1, 2);
+	REQUIRE(ft2.query(1, 1, 3, 3) == 5);
+	REQUIRE(ft2.query(3, 3, 1, 1) == 5);
+	REQUIRE(ft2.query(2, 2, 3, 3) == -1);
+	REQUIRE(ft2.query(2, 1, 3, 3) == 1);
+	ft2.add(1, 1, -7);
+	REQUIRE(ft2.query(1, 1, 3, 3) == -2);
 }
 
 #include "Data_Structures/interval_tree.h"
@@ -494,7 +545,28 @@ TEST_CASE("Interval Tree") {
 
 #include "Data_Structures/matrix_graph.h"
 TEST_CASE("Matrix Graph") {
-	
+	MatrixGraph g(4, true);
+	g.connect(1, 3, Edge(2));
+	g.connect(1, 2, Edge(5));
+	Edge expected[4][4] = { { Edge(0), Edge(0), Edge(0), Edge(0)},  { Edge(0), Edge(0), Edge(5), Edge(2)},  { Edge(0), Edge(5), Edge(0), Edge(0)},  { Edge(2), Edge(0), Edge(0), Edge(0)} };
+	REQUIRE(g.edges.size() == 4);
+	FOR(cv, 0, g.V) {
+		REQUIRE(g.edges[cv].size() == 4);
+		FOR(to, 0, g.V)
+			REQUIRE(g.edges[cv][to].weight == expected[cv][to].weight);
+	}
+
+	MatrixGraph g2(4, false);
+	g.connect(1, 3, Edge(2));
+	g.connect(1, 2, Edge(5));
+	Edge expected2[4][4] = { { Edge(0), Edge(0), Edge(0), Edge(0)},  { Edge(0), Edge(0), Edge(5), Edge(2)},  { Edge(0), Edge(0), Edge(0), Edge(0)},  { Edge(0), Edge(0), Edge(0), Edge(0)} };
+	REQUIRE(g2.edges.size() == 4);
+	FOR(cv, 0, g2.V) {
+		REQUIRE(g2.edges[cv].size() == 4);
+		FOR(to, 0, g2.V)
+			REQUIRE(g2.edges[cv][to].weight == expected2[cv][to].weight);
+	}
+
 }
 
 #include "Data_Structures/segment_tree.h"

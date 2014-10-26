@@ -8,8 +8,8 @@ struct MatrixGraph {
 	MatrixGraph(int v, bool undirected) : V(v), undirected(undirected) {
 		edges.assign(V, vector<Edge>(V, Edge(0)));
 	}
-	void connect(int from, int to, int weight = 1) {
-		edges[from][to].weight = weight;
-		if(undirected) edges[to][from].weight = weight;
+	void connect(int from, int to, Edge edge = Edge(1)) {
+		edges[from][to] = edge;
+		if(undirected) edges[to][from] = edge;
 	}
 };
