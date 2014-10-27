@@ -365,12 +365,46 @@ TEST_CASE("Strongly Connected Components") {
 
 #include "Algorithms/Graphs/tree_hash.h"
 TEST_CASE("Tree Hash") {
+	int arr1[] = { 2, 3, 4 };
+	int arr2[] = { 5 };
+	int arr3[] = { 6, 7 };
+	int arr4[] = { };
+	vi tree[] = { vi(), vi(arr1, arr1+3), vi(arr2, arr2+1), vi(arr3, arr3+2), vi(), vi(), vi(), vi() };
+	vector<vi> t1(tree, tree+8);
+
+	int arr12[] = { 2, 3, 4 };
+	int arr22[] = { 5 };
+	int arr32[] = { 6 };
+	int arr42[] = { 7 };
+	vi tree2[] = { vi(), vi(arr12, arr12+3), vi(arr22, arr22+1), vi(arr32, arr32+1), vi(arr42, arr42+1), vi(), vi(), vi() };
+	vector<vi> t2(tree2, tree2+8);
 	
+	int arr13[] = { 4, 2, 3 };
+	int arr23[] = { };
+	int arr33[] = { 5 };
+	int arr43[] = { 7, 6 };
+	vi tree3[] = { vi(), vi(arr13, arr13+3), vi(arr23, arr23+0), vi(arr33, arr33+1), vi(arr43, arr43+2), vi(), vi(), vi() };
+	vector<vi> t3(tree3, tree3+8);
+
+	REQUIRE(hs(t1, 1) == hs(t3, 1));
+	REQUIRE(hs(t1, 1) != hs(t2, 1));
 }
 
 #include "Algorithms/Graphs/tree_height_for_each_root.h"
 TEST_CASE("Tree Height for Each Root") {
-	
+	Graph g(7, true);
+	g.connect(0, Edge(1));
+	g.connect(0, Edge(2));
+	g.connect(1, Edge(3));
+	g.connect(1, Edge(4));
+	g.connect(2, Edge(5));
+	g.connect(2, Edge(6));
+
+	vii heights;
+	getLongestPath(g, heights);
+	int expected[] = { 3, 4, 4, 5, 5, 5, 5 };
+	FOR(i, 0, g.V)
+		REQUIRE(heights[i].second == expected[i]);
 }
 
 #include "Algorithms/Mathematics/binomial_coefficients.h"
@@ -421,9 +455,73 @@ TEST_CASE("Fast Exponentiation") {
 	REQUIRE(fastPow(3, 17) == (int)(round(pow(3.0, 17.0))));	
 }
 
+bool EQ(double a, double b) {
+	return fabs(a-b) < 1e-7;
+}
+
 #include "Algorithms/Mathematics/matrices.h"
 TEST_CASE("Matrices") {
+	Matrix id = identity(3);
+	FOR(i, 0, 3)
+		FOR(j, 0, 3)
+			REQUIRE(EQ(id[i][j], (i == j)));
 	
+	Matrix mult = multiply(id, 4);
+	FOR(i, 0, 3)
+		FOR(j, 0, 3) {
+			REQUIRE(EQ(mult[i][j], 4*(i == j)));
+		}
+	
+	Matrix a = CREATE(3, 2);
+	Matrix b = CREATE(2, 3);
+	a[0][0] = 3;
+	a[1][0] = 2;
+	a[2][0] = 5;
+	a[0][1] = 0;
+	a[1][1] = 2;
+	a[2][1] = 7;
+	
+	b[0][0] = 2;
+	b[1][0] = 6;
+	b[0][1] = 3;
+	b[1][1] = -1;
+	b[0][2] = 1;
+	b[1][2] = 8;
+
+	Matrix c = CREATE(3, 3);
+	c[0][0] = 6;
+	c[1][0] = 16;
+	c[2][0] = 52;
+	c[0][1] = 9;
+	c[1][1] = 4;
+	c[2][1] = 8;
+	c[0][2] = 3;
+	c[1][2] = 18;
+	c[2][2] = 61;
+
+	Matrix d = multiply(a, b);
+	FOR(i, 0, 3)
+		FOR(j, 0, 3)
+			REQUIRE(EQ(c[i][j], d[i][j]));
+
+	Matrix e = CREATE(2, 2);
+	e[0][0] = 3;
+	e[0][1] = 0;
+	e[1][0] = 2;
+	e[1][1] = 2;
+
+	Matrix p = pow(e, 3);
+	Matrix r = CREATE(2, 2);
+	r[0][0] = 27;
+	r[0][1] = 0;
+	r[1][0] = 38;
+	r[1][1] = 8;
+
+	FOR(i, 0, 2)
+		FOR(j, 0, 2)
+			REQUIRE(EQ(r[i][j], p[i][j]));
+
+	//TODO gauss jordan and rref	
 }
 
 #include "Algorithms/Mathematics/fibonacci.h"
