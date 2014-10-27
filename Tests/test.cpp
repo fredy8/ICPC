@@ -211,7 +211,7 @@ TEST_CASE("Topological Sort") {
 	g.connect(1, Edge(5));
 	g.connect(4, Edge(5));
 	vi ts = topologicalSort(g);
-#define find(a) (find(ts.begin(), ts.end(), (a)))
+	#define find(a) (find(ts.begin(), ts.end(), (a)))
 	REQUIRE(find(0) < find(1));
 	REQUIRE(find(0) < find(4));
 	REQUIRE(find(3) < find(1));
@@ -220,7 +220,7 @@ TEST_CASE("Topological Sort") {
 	REQUIRE(find(1) < find(2));
 	REQUIRE(find(1) < find(7));
 	REQUIRE(find(4) < find(5));
-#undef find
+	#undef find
 }
 
 #include "Algorithms/Graphs/DAGs/shortest-longest_path.h"
@@ -353,9 +353,43 @@ TEST_CASE("Minimum Spanning Tree") {
 	
 }
 
+#include "Data_Structures/matrix_graph.h"
+TEST_CASE("Matrix Graph") {
+	MatrixGraph g(4, true);
+	g.connect(1, 3, Edge(2));
+	g.connect(1, 2, Edge(5));
+	Edge expected[4][4] = { { Edge(0), Edge(0), Edge(0), Edge(0)},  { Edge(0), Edge(0), Edge(5), Edge(2)},  { Edge(0), Edge(5), Edge(0), Edge(0)},  { Edge(2), Edge(0), Edge(0), Edge(0)} };
+	REQUIRE(g.edges.size() == 4);
+	FOR(cv, 0, g.V) {
+		REQUIRE(g.edges[cv].size() == 4);
+		FOR(to, 0, g.V)
+			REQUIRE(g.edges[cv][to].weight == expected[cv][to].weight);
+	}
+
+	MatrixGraph g2(4, false);
+	g.connect(1, 3, Edge(2));
+	g.connect(1, 2, Edge(5));
+	Edge expected2[4][4] = { { Edge(0), Edge(0), Edge(0), Edge(0)},  { Edge(0), Edge(0), Edge(5), Edge(2)},  { Edge(0), Edge(0), Edge(0), Edge(0)},  { Edge(0), Edge(0), Edge(0), Edge(0)} };
+	REQUIRE(g2.edges.size() == 4);
+	FOR(cv, 0, g2.V) {
+		REQUIRE(g2.edges[cv].size() == 4);
+		FOR(to, 0, g2.V)
+			REQUIRE(g2.edges[cv][to].weight == expected2[cv][to].weight);
+	}
+}
+
 #include "Algorithms/Graphs/edmonds_karp.h"
 TEST_CASE("Edmonds Karp") {
-	
+	MatrixGraph g(6, false);
+	g.connect(0, 1, Edge(3));
+	g.connect(0, 2, Edge(3));
+	g.connect(1, 2, Edge(2));
+	g.connect(1, 3, Edge(3));
+	g.connect(2, 4, Edge(2));
+	g.connect(3, 4, Edge(4));
+	g.connect(3, 5, Edge(2));
+	g.connect(4, 5, Edge(3));
+	REQUIRE(maxFlow(g, 0, 5) == 5);
 }
 
 #include "Algorithms/Graphs/strongly_connected_components.h"
@@ -610,7 +644,19 @@ TEST_CASE("Subsequence Counter") {
 
 #include "Data_Structures/balanced_binary_search_tree.h"
 TEST_CASE("Balanced Binary Search Tree") {
-	
+	SplayTree<int> st;
+	REQUIRE(!st.contains(5));
+	st.insert(5);
+	REQUIRE(st.contains(5));
+	st.insert(3);
+	st.insert(8);
+	st.insert(4);
+	st.insert(1);
+	REQUIRE(!st.contains(0));
+	REQUIRE(st.contains(1));
+	REQUIRE(st.contains(3));
+	st.erase(3);
+	REQUIRE(!st.contains(3));
 }
 
 #include "Data_Structures/binary_heap.h"
@@ -661,32 +707,6 @@ TEST_CASE("Fenwick Tree") {
 #include "Data_Structures/interval_tree.h"
 TEST_CASE("Interval Tree") {
 	
-}
-
-#include "Data_Structures/matrix_graph.h"
-TEST_CASE("Matrix Graph") {
-	MatrixGraph g(4, true);
-	g.connect(1, 3, Edge(2));
-	g.connect(1, 2, Edge(5));
-	Edge expected[4][4] = { { Edge(0), Edge(0), Edge(0), Edge(0)},  { Edge(0), Edge(0), Edge(5), Edge(2)},  { Edge(0), Edge(5), Edge(0), Edge(0)},  { Edge(2), Edge(0), Edge(0), Edge(0)} };
-	REQUIRE(g.edges.size() == 4);
-	FOR(cv, 0, g.V) {
-		REQUIRE(g.edges[cv].size() == 4);
-		FOR(to, 0, g.V)
-			REQUIRE(g.edges[cv][to].weight == expected[cv][to].weight);
-	}
-
-	MatrixGraph g2(4, false);
-	g.connect(1, 3, Edge(2));
-	g.connect(1, 2, Edge(5));
-	Edge expected2[4][4] = { { Edge(0), Edge(0), Edge(0), Edge(0)},  { Edge(0), Edge(0), Edge(5), Edge(2)},  { Edge(0), Edge(0), Edge(0), Edge(0)},  { Edge(0), Edge(0), Edge(0), Edge(0)} };
-	REQUIRE(g2.edges.size() == 4);
-	FOR(cv, 0, g2.V) {
-		REQUIRE(g2.edges[cv].size() == 4);
-		FOR(to, 0, g2.V)
-			REQUIRE(g2.edges[cv][to].weight == expected2[cv][to].weight);
-	}
-
 }
 
 #include "Data_Structures/segment_tree.h"

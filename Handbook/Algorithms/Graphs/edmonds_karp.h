@@ -1,4 +1,4 @@
-int augment(Graph &g, int flow, vi &parent, int source, int cv, int minEdge) {
+int augment(MatrixGraph &g, int flow, vi &parent, int source, int cv, int minEdge) {
 	if(cv == source)
 		return minEdge;
 	if(parent[cv] != -1) {
@@ -10,7 +10,7 @@ int augment(Graph &g, int flow, vi &parent, int source, int cv, int minEdge) {
 }
 
 //O(V*E^2)
-int maxFlow(Graph &g, int source, int sink) {
+int maxFlow(MatrixGraph &g, int source, int sink) {
 	int mf = 0, flow = -1;
 	while(flow) {
 		vi distanceTo(g.V, INF);
