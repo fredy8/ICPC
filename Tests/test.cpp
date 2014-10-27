@@ -6,7 +6,7 @@
 #include "Algorithms/Sorting/quicksort.h"
 TEST_CASE("quicksort") {
 	int arr[10] = { 4, -2, 3, 0, 5, 2, 8, -9, 3, 7 };
-	int sorted[10] = { -9, -2, 0, 2, 3, 3, 4, 5, 7, 8 }; 
+	int sorted[10] = { -9, -2, 0, 2, 3, 3, 4, 5, 7, 8 };
 	quickSort(arr, 0, 9);
 	for(int i = 0; i < 10; i++)
 		REQUIRE(arr[i] == sorted[i]);
@@ -15,7 +15,7 @@ TEST_CASE("quicksort") {
 #include "Algorithms/Sorting/mergesort.h"
 TEST_CASE("mergesort") {
 	int arr[10] = { 4, -2, 3, 0, 5, 2, 8, -9, 3, 7 };
-	int sorted[10] = { -9, -2, 0, 2, 3, 3, 4, 5, 7, 8 }; 
+	int sorted[10] = { -9, -2, 0, 2, 3, 3, 4, 5, 7, 8 };
 	int inversions = mergeSort(arr, 0, 9);
 	FOR(i, 0, 10)
 		REQUIRE(arr[i] == sorted[i]);
@@ -24,7 +24,7 @@ TEST_CASE("mergesort") {
 
 #include "Algorithms/Search/binary_search.h"
 TEST_CASE("binarySearch") {
-	int sorted[10] = { -9, -2, 0, 2, 3, 3, 4, 5, 7, 8 }; 
+	int sorted[10] = { -9, -2, 0, 2, 3, 3, 4, 5, 7, 8 };
 	REQUIRE(binarySearch(sorted, 4, 0, 9) == 6);
 	REQUIRE(binarySearch(sorted, -1, 0, 9) == -1);
 	REQUIRE(binarySearch(sorted, 3, 0, 9, UPPERBOUND) == 5);
@@ -45,9 +45,9 @@ TEST_CASE("rangeOr") {
 
 #include "Algorithms/Ad_hoc/dates.h"
 TEST_CASE("dates") {
-	int dayDif = toJulian(21, 10, 2014) - toJulian(5, 2, 1994); 
+	int dayDif = toJulian(21, 10, 2014) - toJulian(5, 2, 1994);
 	REQUIRE(dayDif == 7563);
-	int dayOfWeek = toJulian(5, 2, 1994)%7; 
+	int dayOfWeek = toJulian(5, 2, 1994)%7;
 	REQUIRE(dayOfWeek == 5);
 	REQUIRE(isLeap(2000) == true);
 	REQUIRE(isLeap(1900) == false);
@@ -144,7 +144,7 @@ TEST_CASE("Union Find Disjoint Sets") {
 	REQUIRE(ds.connected(0, 1) == true);
 	REQUIRE(ds.connected(2, 1) == true);
 	REQUIRE(ds.connected(0, 3) == false);
-	
+
 	UnionFindDS2 ds2(4);
 	ds2.connect(0, 2);
 	ds2.connect(2, 1);
@@ -190,7 +190,7 @@ TEST_CASE("Dijkstra") {
 	g.connect(0, Edge(2, 1));
 	g.connect(2, Edge(3, 1));
 	g.connect(3, Edge(4, 4));
-	
+
 	vi dist = dijkstra(g, 0);
 	REQUIRE(dist[0] == 0);
 	REQUIRE(dist[1] == 5);
@@ -247,7 +247,7 @@ TEST_CASE("Shortest Path in a DAG") {
 
 #include "Algorithms/Graphs/edge_property_check.h"
 TEST_CASE("Edge Property Check") {
-	
+
 }
 
 #include "Algorithms/Graphs/eulerian_path.h"
@@ -291,10 +291,10 @@ TEST_CASE("Floyd Warshall") {
 	g.connect(1, Edge(0, 4));
 	g.connect(2, Edge(3, 2));
 	g.connect(3, Edge(1, -1));
-	
+
 	int dist[MAX_V][MAX_V];
 	floydWarshall(g, dist);
-	
+
 	int expected[4][4] = { {0, -1, -2, 0 }, {4, 0, 2, 4}, {5, 1, 0, 2}, {3, -1, 1, 0}};
 
 	FOR(i, 0, g.V)
@@ -350,7 +350,7 @@ TEST_CASE("Maximum Bipartite Matching") {
 
 #include "Algorithms/Graphs/minimum_spanning_tree.h"
 TEST_CASE("Minimum Spanning Tree") {
-	
+
 }
 
 #include "Data_Structures/matrix_graph.h"
@@ -394,7 +394,7 @@ TEST_CASE("Edmonds Karp") {
 
 #include "Algorithms/Graphs/strongly_connected_components.h"
 TEST_CASE("Strongly Connected Components") {
-	
+
 }
 
 #include "Algorithms/Graphs/tree_hash.h"
@@ -412,7 +412,7 @@ TEST_CASE("Tree Hash") {
 	int arr42[] = { 7 };
 	vi tree2[] = { vi(), vi(arr12, arr12+3), vi(arr22, arr22+1), vi(arr32, arr32+1), vi(arr42, arr42+1), vi(), vi(), vi() };
 	vector<vi> t2(tree2, tree2+8);
-	
+
 	int arr13[] = { 4, 2, 3 };
 	int arr23[] = { };
 	int arr33[] = { 5 };
@@ -443,60 +443,60 @@ TEST_CASE("Tree Height for Each Root") {
 
 #include "Algorithms/Mathematics/binomial_coefficients.h"
 TEST_CASE("Binomial Coefficients") {
-	REQUIRE(nCr(20, 5) == 15504);	
-	REQUIRE(nCr(61, 30) == 232714176627630544);	
-	REQUIRE(nCr(1, 1) == 1);	
-	REQUIRE(nCr(43, 2) == 903);	
-	
+	REQUIRE(nCr(20, 5) == 15504);
+	REQUIRE(nCr(61, 30) == 232714176627630544);
+	REQUIRE(nCr(1, 1) == 1);
+	REQUIRE(nCr(43, 2) == 903);
+
 	buildPascal();
-	
-	REQUIRE(pascal[20][5] == 15504);	
-	REQUIRE(pascal[61][30] == 232714176627630544);	
-	REQUIRE(pascal[1][1] == 1);	
-	REQUIRE(pascal[43][2] == 903);	
+
+	REQUIRE(pascal[20][5] == 15504);
+	REQUIRE(pascal[61][30] == 232714176627630544);
+	REQUIRE(pascal[1][1] == 1);
+	REQUIRE(pascal[43][2] == 903);
 }
 
 #include "Algorithms/Mathematics/catalan_numbers.h"
 TEST_CASE("Catalan Numbers") {
-	
+
 }
 
 #include "Algorithms/Mathematics/cycle_finding.h"
 TEST_CASE("Cycle Finding") {
-	
+
 }
 
 #include "Algorithms/Mathematics/modpow.h"
 TEST_CASE("ModPow") {
-	REQUIRE(modpow(17, 23, 1000007) == 373271); 
-	REQUIRE(modpow(23, 32, 423412) == 134905); 
-	REQUIRE(modpow(25, 14, 1000000009) == 343016784); 
-	REQUIRE(modpow(13, 6, 293847) == 125257); 
+	REQUIRE(modpow(17, 23, 1000007) == 373271);
+	REQUIRE(modpow(23, 32, 423412) == 134905);
+	REQUIRE(modpow(25, 14, 1000000009) == 343016784);
+	REQUIRE(modpow(13, 6, 293847) == 125257);
 }
 
 #include "Algorithms/Mathematics/euclid.h"
 TEST_CASE("Euclid") {
-	
+
 }
 
 #include "Algorithms/Mathematics/extended_euclidean.h"
 TEST_CASE("Extended Euclidean") {
-	
+
 }
 
 #include "Algorithms/Mathematics/factmod.h"
 TEST_CASE("FactMod") {
-	REQUIRE(factmod(20, 21039) == 11976);	
-	REQUIRE(factmod(30, 230847902) == 5212186);	
-	REQUIRE(factmod(45, 826341) == 765387);	
+	REQUIRE(factmod(20, 21039) == 11976);
+	REQUIRE(factmod(30, 230847902) == 5212186);
+	REQUIRE(factmod(45, 826341) == 765387);
 }
 
 #include "Algorithms/Mathematics/fast_exponentiation.h"
 TEST_CASE("Fast Exponentiation") {
-	REQUIRE(fastPow(12, 4) == (int)(round(pow(12.0, 4.0))));	
-	REQUIRE(fastPow(4, 9) == (int)(round(pow(4.0, 9.0))));	
-	REQUIRE(fastPow(6, 6) == (int)(round(pow(6.0, 6.0))));	
-	REQUIRE(fastPow(3, 17) == (int)(round(pow(3.0, 17.0))));	
+	REQUIRE(fastPow(12, 4) == (int)(round(pow(12.0, 4.0))));
+	REQUIRE(fastPow(4, 9) == (int)(round(pow(4.0, 9.0))));
+	REQUIRE(fastPow(6, 6) == (int)(round(pow(6.0, 6.0))));
+	REQUIRE(fastPow(3, 17) == (int)(round(pow(3.0, 17.0))));
 }
 
 bool EQ(double a, double b) {
@@ -509,13 +509,13 @@ TEST_CASE("Matrices") {
 	FOR(i, 0, 3)
 		FOR(j, 0, 3)
 			REQUIRE(EQ(id[i][j], (i == j)));
-	
+
 	Matrix mult = multiply(id, 4);
 	FOR(i, 0, 3)
 		FOR(j, 0, 3) {
 			REQUIRE(EQ(mult[i][j], 4*(i == j)));
 		}
-	
+
 	Matrix a = CREATE(3, 2);
 	Matrix b = CREATE(2, 3);
 	a[0][0] = 3;
@@ -524,7 +524,7 @@ TEST_CASE("Matrices") {
 	a[0][1] = 0;
 	a[1][1] = 2;
 	a[2][1] = 7;
-	
+
 	b[0][0] = 2;
 	b[1][0] = 6;
 	b[0][1] = 3;
@@ -565,7 +565,7 @@ TEST_CASE("Matrices") {
 		FOR(j, 0, 2)
 			REQUIRE(EQ(r[i][j], p[i][j]));
 
-	//TODO gauss jordan and rref	
+	//TODO gauss jordan and rref
 }
 
 #include "Algorithms/Mathematics/fibonacci.h"
@@ -576,7 +576,7 @@ TEST_CASE("Fibonacci") {
 	REQUIRE(EQ(fibn(6), 13));
 	REQUIRE(EQ(fibn(9), 55));
 	REQUIRE(EQ(fibn(35), 14930352));
-	
+
 	REQUIRE(EQ(fibonacci(0), 1));
 	REQUIRE(EQ(fibonacci(1), 1));
 	REQUIRE(EQ(fibonacci(2), 2));
@@ -597,7 +597,15 @@ TEST_CASE("Nth Permutation") {
 
 #include "Algorithms/Mathematics/primes.h"
 TEST_CASE("Primes") {
-	
+	buildPrimesList();
+	REQUIRE(primesList.size() == 78498);
+	REQUIRE(primesList[1000] == 7919);
+	REQUIRE(primesList[50000] == 611953);
+	vii pf = primeFactorization(871177109);
+	REQUIRE(pf.size() == 4);
+	REQUIRE(pf[3].first == 7919);
+	vi div = divisors(871177109);
+	REQUIRE(div[13] == 11933933);
 }
 
 #include "Algorithms/Ad_hoc/longest_increasing_subsequence.h"
@@ -611,7 +619,7 @@ TEST_CASE("Longest Increasing Subsequence") {
 
 #include "Algorithms/Ad_hoc/shunting_yard.h"
 TEST_CASE("Shunting Yard") {
-	
+
 }
 
 #include "Algorithms/Strings/edit_distance.h"
@@ -639,7 +647,7 @@ TEST_CASE("String Matching") {
 
 #include "Algorithms/Strings/subsequence_counter.h"
 TEST_CASE("Subsequence Counter") {
-	
+
 }
 
 #include "Data_Structures/balanced_binary_search_tree.h"
@@ -706,45 +714,45 @@ TEST_CASE("Fenwick Tree") {
 
 #include "Data_Structures/interval_tree.h"
 TEST_CASE("Interval Tree") {
-	
+
 }
 
 #include "Data_Structures/segment_tree.h"
 TEST_CASE("Segment Tree") {
-	
+
 }
 
 #include "Data_Structures/suffix_array.h"
 TEST_CASE("Suffix Array") {
-	
+
 }
 
 #include "Data_Structures/trie.h"
 TEST_CASE("Trie") {
-	
+
 }
 
 #include "Data_Structures/Geometry/point.h"
 TEST_CASE("Point") {
-	
+
 }
 
 #include "Data_Structures/Geometry/vectors.h"
 TEST_CASE("Vectors") {
-	
+
 }
 
 #include "Data_Structures/Geometry/lines.h"
 TEST_CASE("Line") {
-	
+
 }
 
 #include "Data_Structures/Geometry/polygons.h"
 TEST_CASE("Polygons") {
-	
+
 }
 
 #include "Data_Structures/Geometry/triangles.h"
 TEST_CASE("Triangles") {
-	
+
 }

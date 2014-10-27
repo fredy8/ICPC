@@ -4,8 +4,8 @@ void buildSieve() {
 	sieve.set();
 	sieve[0] = sieve[1] = 0;
 	int root = sqrt(SIZE);
-	FOR(i, 2, SIZE)
-		if (sieve[i] && i <= root)
+	FOR(i, 2, root+1)
+		if (sieve[i])
 			for(int j = i*i; j < SIZE; j+=i)
 				sieve[j] = 0;
 }
@@ -20,9 +20,9 @@ void buildPrimesList() {
 			primesList.pb(i);
 }
 
-vii primeFactorization(long long N) {
+vii primeFactorization(int N) {
 	vii factors;
-	long long idx = 0, pf = primesList[0];
+	int idx = 0, pf = primesList[0];
 	while(pf*pf <= N) {
 		while(N%pf==0) {
 			N /= pf;
@@ -37,7 +37,7 @@ vii primeFactorization(long long N) {
 	return factors;
 }
 
-void getDivisors(vii pf, long long d, int index, vi &div)
+void getDivisors(vii pf, int d, int index, vi &div)
 {
 	if (index == pf.size()) {
 		div.pb(d);
@@ -50,7 +50,7 @@ void getDivisors(vii pf, long long d, int index, vi &div)
 	return;
 }
 
-vi divisors(int N) {
+vi divisors(ll N) {
 	vii pf = primeFactorization(N);
 	vi div;
 	getDivisors(pf, 1ll, 0, div);
@@ -58,7 +58,7 @@ vi divisors(int N) {
 	return div;
 }
 
-bool isPrime(long long n) {
+bool isPrime(int n) {
 	if(n < 2) return false;
 	if(n == 2 || n == 3) return true;
 	if(!(n&1 && n%3)) return false;
