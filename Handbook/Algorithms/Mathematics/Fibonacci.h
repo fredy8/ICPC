@@ -1,15 +1,9 @@
-long long fibn(int n) { //max 91
+int fibn(int n) { //max 91
 	double goldenRatio = (1+sqrt(5))/2;
 	return round((pow(goldenRatio, n+1) - pow(1-goldenRatio, n+1))/sqrt(5));
 }
 
-long long fib[92];
-void buildFibonacci() {
-	fib[0] = fib[1] = 1;
-	for(int i=2; i<=100; i++) fib[i] = fib[i-2] + fib[i-1];
-}
-
-long long fibonacci(int n) {
+int fibonacci(int n) {
 	Matrix m = CREATE(2, 2);
 	m[0][0] = 1, m[0][1] = 1, m[1][0] = 1, m[1][1] = 0;
 	Matrix fib0 = CREATE(2, 1);

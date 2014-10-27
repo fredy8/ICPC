@@ -409,7 +409,17 @@ TEST_CASE("Tree Height for Each Root") {
 
 #include "Algorithms/Mathematics/binomial_coefficients.h"
 TEST_CASE("Binomial Coefficients") {
+	REQUIRE(nCr(20, 5) == 15504);	
+	REQUIRE(nCr(61, 30) == 232714176627630544);	
+	REQUIRE(nCr(1, 1) == 1);	
+	REQUIRE(nCr(43, 2) == 903);	
 	
+	buildPascal();
+	
+	REQUIRE(pascal[20][5] == 15504);	
+	REQUIRE(pascal[61][30] == 232714176627630544);	
+	REQUIRE(pascal[1][1] == 1);	
+	REQUIRE(pascal[43][2] == 903);	
 }
 
 #include "Algorithms/Mathematics/catalan_numbers.h"
@@ -526,7 +536,19 @@ TEST_CASE("Matrices") {
 
 #include "Algorithms/Mathematics/fibonacci.h"
 TEST_CASE("Fibonacci") {
+	REQUIRE(EQ(fibn(0), 1));
+	REQUIRE(EQ(fibn(1), 1));
+	REQUIRE(EQ(fibn(2), 2));
+	REQUIRE(EQ(fibn(6), 13));
+	REQUIRE(EQ(fibn(9), 55));
+	REQUIRE(EQ(fibn(35), 14930352));
 	
+	REQUIRE(EQ(fibonacci(0), 1));
+	REQUIRE(EQ(fibonacci(1), 1));
+	REQUIRE(EQ(fibonacci(2), 2));
+	REQUIRE(EQ(fibonacci(6), 13));
+	REQUIRE(EQ(fibonacci(9), 55));
+	REQUIRE(EQ(fibonacci(35), 14930352));
 }
 
 #include "Algorithms/mathematics/nth_permutation.h"
