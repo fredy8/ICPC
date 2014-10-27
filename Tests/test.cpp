@@ -600,7 +600,7 @@ TEST_CASE("Primes") {
 	buildPrimesList();
 	REQUIRE(primesList.size() == 78498);
 	REQUIRE(primesList[1000] == 7927);
-	REQUIRE(primesList[50000] == 611953);
+	REQUIRE(primesList[50000] == 611957);
 	vii pf = primeFactorization(871177109);
 	REQUIRE(pf.size() == 4);
 	REQUIRE(pf[3].first == 7919);
