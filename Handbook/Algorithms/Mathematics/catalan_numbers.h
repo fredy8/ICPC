@@ -7,5 +7,5 @@ int nthCatalan(int n) {
 }
 
 int nextCatalan(int n, int previous) {
-	return previous*2*(2*n+1)/(n+1);
+	return previous*2*(2*n+1)/(n+2);
 }

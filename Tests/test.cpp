@@ -458,7 +458,10 @@ TEST_CASE("Binomial Coefficients") {
 
 #include "Algorithms/Mathematics/catalan_numbers.h"
 TEST_CASE("Catalan Numbers") {
-
+    int catNum30 = 3814986502092304;
+    int catNum31 = 14544636039226909;
+    REQUIRE(nthCatalan(30) == catNum30);
+    REQUIRE(nextCatalan(30, catNum30) == catNum31);
 }
 
 #include "Algorithms/Mathematics/cycle_finding.h"
@@ -476,12 +479,9 @@ TEST_CASE("ModPow") {
 
 #include "Algorithms/Mathematics/euclid.h"
 TEST_CASE("Euclid") {
-
-}
-
-#include "Algorithms/Mathematics/extended_euclidean.h"
-TEST_CASE("Extended Euclidean") {
-
+    REQUIRE(gcd(234, 45352) == __gcd(234, 45352));
+    REQUIRE(34*mod_inverse(34, 98723)%98723 == 1);
+    REQUIRE(2342*mod_inverse(2342, 123973425)%123973425 == 1);
 }
 
 #include "Algorithms/Mathematics/factmod.h"
