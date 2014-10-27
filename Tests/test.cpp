@@ -647,7 +647,7 @@ TEST_CASE("String Matching") {
 
 #include "Algorithms/Strings/subsequence_counter.h"
 TEST_CASE("Subsequence Counter") {
-
+    REQUIRE(subseqCounter("00000000001111111111222222222233333333334444444444", "0000011111222223333344444") == 1016255020032);
 }
 
 #include "Data_Structures/balanced_binary_search_tree.h"
