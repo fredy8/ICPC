@@ -480,8 +480,10 @@ TEST_CASE("ModPow") {
 #include "Algorithms/Mathematics/euclid.h"
 TEST_CASE("Euclid") {
     REQUIRE(gcd(234, 45352) == __gcd(234, 45352));
-    REQUIRE(34*mod_inverse(34, 98723)%98723 == 1);
-    REQUIRE(2342*mod_inverse(2342, 123973425)%123973425 == 1);
+	int left = 34*mod_inverse(34, 98723)%98723; 
+    REQUIRE(left == 1);
+	left = 2342*mod_inverse(2342, 123973425)%123973425;
+    REQUIRE(left == 1);
 }
 
 #include "Algorithms/Mathematics/factmod.h"
