@@ -3,7 +3,7 @@ int fact(int n) {
 }
 
 int nthCatalan(int n) {
-	return 2*fact(n)/(pow(fact(n), 2)*(n+1));
+	return fact(2*n)/(pow(fact(n), 2)*(n+1));
 }
 
 int nextCatalan(int n, int previous) {
