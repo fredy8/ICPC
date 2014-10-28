@@ -458,15 +458,17 @@ TEST_CASE("Binomial Coefficients") {
 
 #include "Algorithms/Mathematics/catalan_numbers.h"
 TEST_CASE("Catalan Numbers") {
+    int catNum10 = 16796;
     int catNum30 = 3814986502092304;
     int catNum31 = 14544636039226909;
-    REQUIRE(nthCatalan(30) == catNum30);
+    REQUIRE(nthCatalan(10) == catNum10);
     REQUIRE(nextCatalan(30, catNum30) == catNum31);
 }
 
 #include "Algorithms/Mathematics/cycle_finding.h"
 TEST_CASE("Cycle Finding") {
-
+    ii ml = floydCycleFinding(4);
+    REQUIRE(ml == mp(0, 6));
 }
 
 #include "Algorithms/Mathematics/modpow.h"

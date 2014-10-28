@@ -1,4 +1,4 @@
-int f(int i) { return i; }
+int f(int i) { return (7*i+5)%12; }
 // x[i] = f(x[i-1])
 ii floydCycleFinding(int x0) {
 	int tortoise = f(x0), hare = f(f(x0));  //Encontrar el primer xi = x2i
