@@ -29,13 +29,19 @@ using namespace std; typedef long long ll; typedef pair<int, int> ii; typedef ve
 template <typename T>
 string toString(T n) { ostringstream ss; ss << n; return ss.str(); }
 
+string toBaseN(int num, int N) {
+	string converted = num ? "" : "0";
+	for(int div=abs(num); div; div /= N) {
+		int value = div % N;
+		converted = (char)(value + 33) + converted;
+	}
+	return converted;
+}
+
 template <typename T>
 T toNum(const string &Text) { istringstream ss(Text); T result; return ss >> result ? result : 0; }
 void printNum(int num) {
-    if(num > 999)
-        printf("0x%x", num);
-    else
-        printf("%d", num);
+    cout << toBaseN(num, 126-32);
 }
 
 
@@ -59,9 +65,8 @@ mint main() {
         //cnt++;
         t = (8*k+n) + d*64;
 
-        cout << "a[";
         printNum(t);
-        cout << "]=";
+        cout << ",";
         printNum(r);
         cout << ";";
     }
