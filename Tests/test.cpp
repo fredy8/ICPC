@@ -788,9 +788,48 @@ TEST_CASE("Interval Tree") {
 
 }
 
+#define LAZY
 #include "Data_Structures/segment_tree.h"
 TEST_CASE("Segment Tree") {
+	int arr[15] = { 23, 11, 91, -4, 31, 90, 10, 2, 0, 15, 40, 37, 101, 82, 14};
+	SegmentTree st(vi(arr, arr+15));
+	int queries[7][3] = {{0, 0, 14}, {1, 3, 8}, {0, 1, 9}, {1, 11, -20}, {0, 4, 14}, {1, 0, -30}, {0, 0, 1}};
+	FOR(i, 0, 7) {
+		int type = queries[i][0];
+		if(type == 0) {
+			int from = queries[i][1];
+			int to = queries[i][2];
+			int slow = 0;
+			FOR(i, from, to+1)
+				slow += arr[i];
+			REQUIRE(slow == st.query(from, to));
+		} else {
+			int pos = queries[i][1];
+			int val = queries[i][2];
+			arr[pos] = val;
+			st.pointUpdate(pos, val);
+		}
+	}
 
+	int rangeQueries[7][4] = {{0, 0, 14, 0}, {1, 3, 5, 8}, {0, 1, 9, 0}, {1, 11, 14, -20}, {0, 4, 14, 0}, {1, 0, 4, -30}, {0, 0, 1, 0}};
+	FOR(i, 0, 7) {
+		int type = rangeQueries[i][0];
+		if(type == 0) {
+			int from = rangeQueries[i][1];
+			int to = rangeQueries[i][2];
+			int slow = 0;
+			FOR(i, from, to+1)
+				slow += arr[i];
+			REQUIRE(slow == st.query(from, to));
+		} else {
+			int from = rangeQueries[i][1];
+			int to = rangeQueries[i][2];
+			int val = rangeQueries[i][3];
+			FOR(i, from, to+1)
+				arr[i] += val;
+			st.update(from, to, val);
+		}
+	}
 }
 
 #include "Data_Structures/suffix_array.h"
@@ -816,7 +855,23 @@ TEST_CASE("Suffix Array") {
 
 #include "Data_Structures/trie.h"
 TEST_CASE("Trie") {
-
+	Trie trie;
+	char abc[] = "abc";
+	char abd[] = "abd";
+	char ahg[] = "ahg";
+	char lmn[] = "lmn";
+	char a[] = "a";
+	char ab[] = "ab";
+	trie.insert(abc);
+	trie.insert(abc);
+	trie.insert(abd);
+	trie.insert(ahg);
+	trie.insert(lmn);
+	REQUIRE(trie.countWords(a) == 0);
+	REQUIRE(trie.countWords(abc) == 2);
+	REQUIRE(trie.countWords(abd) == 1);
+	REQUIRE(trie.countPrefix(a) == 4);
+	REQUIRE(trie.countPrefix(ab) == 3);
 }
 
 #include "Data_Structures/Geometry/point.h"
