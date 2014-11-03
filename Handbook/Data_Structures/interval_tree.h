@@ -9,8 +9,8 @@ class IntervalTree {
 			isLeaf = 0, key = k;
 			left = new Node(this), right = new Node(this);
 		}
-		Node(Node *p) : parent(p), isLeaf(1), area(0) {}
-		Node(int k, Node *p) : parent(p), area(0) { unLeaf(k); }
+		Node(Node *p) : parent(p), isLeaf(1), area(0), left(NULL), right(NULL) {}
+		Node(int k, Node *p) : parent(p), area(0), left(NULL), right(NULL) { unLeaf(k); }
 	};
 	Node *root;
 	void insert(Node *node, int key) {
