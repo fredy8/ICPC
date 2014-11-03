@@ -1,3 +1,11 @@
+/*
+3 6 
+2 1 2 4 0 4 
+4 3 
+2 0 3 2 0 2 
+0 0
+*/
+
 #include <algorithm>
 #include <bitset>
 #include <cmath>
