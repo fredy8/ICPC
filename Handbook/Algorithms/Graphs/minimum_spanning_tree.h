@@ -16,6 +16,7 @@ vi kruskal(vii &edges, int weight[], int V) {
 
 Graph* comparator2;
 struct Compare { bool operator()(ii a, ii b) { return comparator2->edges[a.first][a.second].weight > comparator2->edges[b.first][b.second].weight;} };
+//Returns a list of edges (node, indexOfEdge)
 vii prim(Graph &g) {
 	vi visited(g.V, 0);
 	visited[0] = 1;

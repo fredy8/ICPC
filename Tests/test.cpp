@@ -350,7 +350,51 @@ TEST_CASE("Maximum Bipartite Matching") {
 
 #include "Algorithms/Graphs/minimum_spanning_tree.h"
 TEST_CASE("Minimum Spanning Tree") {
+	vii edges;
+	int weight[9];
+	edges.pb(ii(0, 1)); weight[0] = 1; 
+	edges.pb(ii(0, 3)); weight[1] = 5; 
+	edges.pb(ii(0, 4)); weight[2] = 3; 
+	edges.pb(ii(1, 3)); weight[3] = 5; 
+	edges.pb(ii(1, 4)); weight[4] = 2; 
+	edges.pb(ii(2, 4)); weight[5] = 4; 
+	edges.pb(ii(2, 5)); weight[6] = 5; 
+	edges.pb(ii(3, 4)); weight[7] = 4; 
+	edges.pb(ii(4, 5)); weight[8] = 7; 
 
+	vi mst = kruskal(edges, weight, 6);
+	REQUIRE(find(mst.begin(), mst.end(), 0) != mst.end());
+	REQUIRE(find(mst.begin(), mst.end(), 1) == mst.end());
+	REQUIRE(find(mst.begin(), mst.end(), 2) == mst.end());
+	REQUIRE(find(mst.begin(), mst.end(), 3) == mst.end());
+	REQUIRE(find(mst.begin(), mst.end(), 4) != mst.end());
+	REQUIRE(find(mst.begin(), mst.end(), 5) != mst.end());
+	REQUIRE(find(mst.begin(), mst.end(), 6) != mst.end());
+	REQUIRE(find(mst.begin(), mst.end(), 7) != mst.end());
+	REQUIRE(find(mst.begin(), mst.end(), 8) == mst.end());
+
+	Graph g(6, true);
+	g.connect(0, Edge(1, 1));
+	g.connect(0, Edge(3, 5));
+	g.connect(0, Edge(4, 3));
+	g.connect(1, Edge(3, 5));
+	g.connect(1, Edge(4, 2));
+	g.connect(2, Edge(4, 4));
+	g.connect(2, Edge(5, 5));
+	g.connect(3, Edge(4, 4));
+	g.connect(4, Edge(5, 7));
+
+	vii mst2 = prim(g);
+	#define IN_MST(a, b) ((find(mst2.begin(), mst2.end(), ii(a, b)) != mst2.end()) ^ (find(mst2.begin(), mst2.end(), ii(g.edges[a][b].to, g.edges[a][b].backEdge)) != mst2.end()))
+	REQUIRE(IN_MST(0, 0)); 
+	REQUIRE(!IN_MST(0, 1)); 
+	REQUIRE(!IN_MST(0, 2)); 
+	REQUIRE(!IN_MST(1, 1)); 
+	REQUIRE(IN_MST(1, 2));
+	REQUIRE(IN_MST(2, 0));
+	REQUIRE(IN_MST(2, 1)); 
+	REQUIRE(IN_MST(3, 2)); 
+	REQUIRE(!IN_MST(4, 4)); 
 }
 
 #include "Data_Structures/matrix_graph.h"
@@ -394,7 +438,30 @@ TEST_CASE("Edmonds Karp") {
 
 #include "Algorithms/Graphs/strongly_connected_components.h"
 TEST_CASE("Strongly Connected Components") {
+	Graph g(8, false);
+	g.connect(0, Edge(1));
+	g.connect(1, Edge(2));
+	g.connect(2, Edge(3));
+	g.connect(3, Edge(4));
+	g.connect(4, Edge(5));
+	g.connect(5, Edge(6));
+	g.connect(7, Edge(0));
+	g.connect(1, Edge(7));
+	g.connect(1, Edge(6));
+	g.connect(2, Edge(5));
+	g.connect(3, Edge(2));
+	g.connect(4, Edge(3));
+	g.connect(6, Edge(5));
+	g.connect(7, Edge(6));
 
+	vi components = stronglyConnectedComponents(g);
+	REQUIRE(components[0] == components[1]);
+	REQUIRE(components[1] == components[7]);
+	REQUIRE(components[2] == components[3]);
+	REQUIRE(components[3] == components[4]);
+	REQUIRE(components[5] == components[6]);
+	REQUIRE(components[1] != components[2]);
+	REQUIRE(components[4] != components[5]);
 }
 
 #include "Algorithms/Graphs/tree_hash.h"
@@ -468,7 +535,7 @@ TEST_CASE("Catalan Numbers") {
 #include "Algorithms/Mathematics/cycle_finding.h"
 TEST_CASE("Cycle Finding") {
     ii ml = floydCycleFinding(4);
-    REQUIRE(ml == mp(0, 6));
+    REQUIRE(ml == mp(int(0), int(6)));
 }
 
 #include "Algorithms/Mathematics/modpow.h"
@@ -728,7 +795,23 @@ TEST_CASE("Segment Tree") {
 
 #include "Data_Structures/suffix_array.h"
 TEST_CASE("Suffix Array") {
-
+	char str[] = "abcabacba$";
+	buildSA(str, 10);
+	int expected[] = { 9, 8, 3, 0, 5, 7, 4, 1, 2, 6 };
+	FOR(i, 0, 10)
+		REQUIRE(SA[i] == expected[i]);
+	
+	buildLCP(str, 10);
+	int expected2[] = { 0, 0, 1, 2, 1, 0, 2, 1, 0, 1 }; 
+	FOR(i, 0, 10)
+		REQUIRE(LCP[i] == expected2[i]);
+	
+	char pattern[] = "ab";
+	ii matches = findPattern(str, 10, pattern, 2);
+	FOR(i, matches.first, matches.second + 1) {
+		REQUIRE((str+SA[i])[0] == 'a');
+		REQUIRE((str+SA[i])[1] == 'b');
+	}
 }
 
 #include "Data_Structures/trie.h"
