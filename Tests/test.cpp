@@ -885,10 +885,10 @@ TEST_CASE("Trie") {
 TEST_CASE("Point") {
     Point A(5, 5), B, C, D(-5, -5), E(5, -5);
     B = rotate(A, 180);
-    C = rotate(A, 90);
+    C = rotate(A, -90);
     REQUIRE(B == D);
     REQUIRE(C == E);
-    REQUIRE(eq(angulo(B), 235));
+    REQUIRE(eq(angulo(B), 225));
     REQUIRE(eq(angulo(C), 315));
     REQUIRE(eq(dist(A, C), 10));
 }
