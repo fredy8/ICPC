@@ -182,7 +182,7 @@ TEST_CASE("Bellman Ford") {
 	REQUIRE(negCycle == true);
 }
 
-#include "Algorithms/Graphs/dijkstra.h"
+#include "Algorithms/Graphs/Dijkstra.h"
 TEST_CASE("Dijkstra") {
 	Graph g(5, true);
 	g.connect(0, Edge(1, 5));
@@ -538,7 +538,7 @@ TEST_CASE("Cycle Finding") {
     REQUIRE(ml == mp(int(0), int(6)));
 }
 
-#include "Algorithms/Mathematics/modpow.h"
+#include "Algorithms/Mathematics/ModPow.h"
 TEST_CASE("ModPow") {
 	REQUIRE(modpow(17, 23, 1000007) == 373271);
 	REQUIRE(modpow(23, 32, 423412) == 134905);
@@ -546,7 +546,7 @@ TEST_CASE("ModPow") {
 	REQUIRE(modpow(13, 6, 293847) == 125257);
 }
 
-#include "Algorithms/Mathematics/euclid.h"
+#include "Algorithms/Mathematics/Euclid.h"
 TEST_CASE("Euclid") {
     REQUIRE(gcd(234, 45352) == __gcd(234, 45352));
 	int left = 34*mod_inverse(34, 98723)%98723;
@@ -581,7 +581,7 @@ bool EQ(double a, double b) {
 	return fabs(a-b) < 1e-7;
 }
 
-#include "Algorithms/Mathematics/matrices.h"
+#include "Algorithms/Mathematics/Matrices.h"
 TEST_CASE("Matrices") {
 	Matrix id = identity(3);
 	FOR(i, 0, 3)
@@ -646,7 +646,7 @@ TEST_CASE("Matrices") {
 	//TODO gauss jordan and rref
 }
 
-#include "Algorithms/Mathematics/fibonacci.h"
+#include "Algorithms/Mathematics/Fibonacci.h"
 TEST_CASE("Fibonacci") {
 	REQUIRE(EQ(fibn(0), 1));
 	REQUIRE(EQ(fibn(1), 1));
@@ -663,7 +663,7 @@ TEST_CASE("Fibonacci") {
 	REQUIRE(EQ(fibonacci(35), 14930352));
 }
 
-#include "Algorithms/mathematics/nth_permutation.h"
+#include "Algorithms/Mathematics/nth_permutation.h"
 TEST_CASE("Nth Permutation") {
 	string seq = "013489";
 	string perm = seq;
@@ -673,7 +673,7 @@ TEST_CASE("Nth Permutation") {
 	} while(next_permutation(perm.begin(), perm.end()));
 }
 
-#include "Algorithms/Mathematics/primes.h"
+#include "Algorithms/Mathematics/Primes.h"
 TEST_CASE("Primes") {
 	buildPrimesList();
 	REQUIRE(primesList.size() == 78498);
@@ -743,6 +743,23 @@ TEST_CASE("Balanced Binary Search Tree") {
 	REQUIRE(st.contains(3));
 	st.erase(3);
 	REQUIRE(!st.contains(3));
+}
+
+#include "Data_Structures/interval_tree_sb.h"
+TEST_CASE("Balanced Interval Tree") {
+	IntervalSplayTree<int> st;
+	REQUIRE(!st.contains(ii(4,5)));
+	st.insert(ii(4,5));
+	REQUIRE(st.contains(ii(4,5)));
+	st.insert(ii(2,2));
+	st.insert(ii(8,15));
+	st.insert(ii(1,4));
+	st.insert(ii(14,20));
+	REQUIRE(!st.overlaps(ii(6,7)));
+	REQUIRE(st.overlaps(ii(6,8)));
+	REQUIRE(st.overlaps(ii(15,15)));
+	st.erase(ii(1,4));
+	REQUIRE(!st.overlaps(ii(3,3)));
 }
 
 #include "Data_Structures/binary_heap.h"
@@ -885,10 +902,10 @@ TEST_CASE("Trie") {
 TEST_CASE("Point") {
     Point A(5, 5), B, C, D(-5, -5), E(5, -5);
     B = rotate(A, 180);
-    C = rotate(A, 90);
+    C = rotate(A, -90);
     REQUIRE(B == D);
     REQUIRE(C == E);
-    REQUIRE(eq(angulo(B), 235));
+    REQUIRE(eq(angulo(B), 225));
     REQUIRE(eq(angulo(C), 315));
     REQUIRE(eq(dist(A, C), 10));
 }
