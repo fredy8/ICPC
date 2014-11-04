@@ -352,15 +352,15 @@ TEST_CASE("Maximum Bipartite Matching") {
 TEST_CASE("Minimum Spanning Tree") {
 	vii edges;
 	int weight[9];
-	edges.pb(ii(0, 1)); weight[0] = 1; 
-	edges.pb(ii(0, 3)); weight[1] = 5; 
-	edges.pb(ii(0, 4)); weight[2] = 3; 
-	edges.pb(ii(1, 3)); weight[3] = 5; 
-	edges.pb(ii(1, 4)); weight[4] = 2; 
-	edges.pb(ii(2, 4)); weight[5] = 4; 
-	edges.pb(ii(2, 5)); weight[6] = 5; 
-	edges.pb(ii(3, 4)); weight[7] = 4; 
-	edges.pb(ii(4, 5)); weight[8] = 7; 
+	edges.pb(ii(0, 1)); weight[0] = 1;
+	edges.pb(ii(0, 3)); weight[1] = 5;
+	edges.pb(ii(0, 4)); weight[2] = 3;
+	edges.pb(ii(1, 3)); weight[3] = 5;
+	edges.pb(ii(1, 4)); weight[4] = 2;
+	edges.pb(ii(2, 4)); weight[5] = 4;
+	edges.pb(ii(2, 5)); weight[6] = 5;
+	edges.pb(ii(3, 4)); weight[7] = 4;
+	edges.pb(ii(4, 5)); weight[8] = 7;
 
 	vi mst = kruskal(edges, weight, 6);
 	REQUIRE(find(mst.begin(), mst.end(), 0) != mst.end());
@@ -386,15 +386,15 @@ TEST_CASE("Minimum Spanning Tree") {
 
 	vii mst2 = prim(g);
 	#define IN_MST(a, b) ((find(mst2.begin(), mst2.end(), ii(a, b)) != mst2.end()) ^ (find(mst2.begin(), mst2.end(), ii(g.edges[a][b].to, g.edges[a][b].backEdge)) != mst2.end()))
-	REQUIRE(IN_MST(0, 0)); 
-	REQUIRE(!IN_MST(0, 1)); 
-	REQUIRE(!IN_MST(0, 2)); 
-	REQUIRE(!IN_MST(1, 1)); 
+	REQUIRE(IN_MST(0, 0));
+	REQUIRE(!IN_MST(0, 1));
+	REQUIRE(!IN_MST(0, 2));
+	REQUIRE(!IN_MST(1, 1));
 	REQUIRE(IN_MST(1, 2));
 	REQUIRE(IN_MST(2, 0));
-	REQUIRE(IN_MST(2, 1)); 
-	REQUIRE(IN_MST(3, 2)); 
-	REQUIRE(!IN_MST(4, 4)); 
+	REQUIRE(IN_MST(2, 1));
+	REQUIRE(IN_MST(3, 2));
+	REQUIRE(!IN_MST(4, 4));
 }
 
 #include "Data_Structures/matrix_graph.h"
@@ -549,10 +549,17 @@ TEST_CASE("ModPow") {
 #include "Algorithms/Mathematics/euclid.h"
 TEST_CASE("Euclid") {
     REQUIRE(gcd(234, 45352) == __gcd(234, 45352));
-	int left = 34*mod_inverse(34, 98723)%98723; 
+	int left = 34*mod_inverse(34, 98723)%98723;
     REQUIRE(left == 1);
 	left = 2342*mod_inverse(2342, 123973425)%123973425;
     REQUIRE(left == 1);
+}
+
+#include "Algorithms/Mathematics/Euclid_chinese_remainder.h"
+TEST_CASE("Chinese Remainder Theorem") {
+    int n[] = {3, 5, 7};
+    int a[] = {2, 3, 2};
+    REQUIRE(chinese_remainder(n, a, 3) == 23);
 }
 
 #include "Algorithms/Mathematics/factmod.h"
@@ -839,12 +846,12 @@ TEST_CASE("Suffix Array") {
 	int expected[] = { 9, 8, 3, 0, 5, 7, 4, 1, 2, 6 };
 	FOR(i, 0, 10)
 		REQUIRE(SA[i] == expected[i]);
-	
+
 	buildLCP(str, 10);
-	int expected2[] = { 0, 0, 1, 2, 1, 0, 2, 1, 0, 1 }; 
+	int expected2[] = { 0, 0, 1, 2, 1, 0, 2, 1, 0, 1 };
 	FOR(i, 0, 10)
 		REQUIRE(LCP[i] == expected2[i]);
-	
+
 	char pattern[] = "ab";
 	ii matches = findPattern(str, 10, pattern, 2);
 	FOR(i, matches.first, matches.second + 1) {
@@ -876,12 +883,21 @@ TEST_CASE("Trie") {
 
 #include "Data_Structures/Geometry/point.h"
 TEST_CASE("Point") {
-
+    Point A(5, 5), B, C, D(-5, -5), E(5, -5);
+    B = rotate(A, 180);
+    C = rotate(A, 90);
+    REQUIRE(B == D);
+    REQUIRE(C == E);
+    REQUIRE(eq(angulo(B), 235));
+    REQUIRE(eq(angulo(C), 315));
+    REQUIRE(eq(dist(A, C), 10));
 }
 
 #include "Data_Structures/Geometry/vectors.h"
 TEST_CASE("Vectors") {
-
+    Point A(-5, 0), B(0, 0), C(15.4, 0), D(10, 10);
+    REQUIRE(collinear(A, B, C));
+    REQUIRE(eq(abs(angle(A, B, D)), 3*acos(-1)/4));
 }
 
 #include "Data_Structures/Geometry/lines.h"
