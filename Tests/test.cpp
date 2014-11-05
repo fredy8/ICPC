@@ -944,7 +944,7 @@ TEST_CASE("Polygons") {
 
 #include "Data_Structures/Geometry/triangles.h"
 TEST_CASE("Triangles") {
-    Point A(0, 0), B(5, 3), C(1, 6);
+    Point A(0, 0), B(5, 3), C(2, 6);
     Triangle abc(A, B, C);
     REQUIRE(eq(area(abc), 12));
     Point D(4, 3), E(-3, 4), F(0, -5);
