@@ -3,6 +3,24 @@
 
 #include "Utility/header.h"
 
+#include "Data_Structures/interval_tree_sb.h"
+TEST_CASE("Balanced Interval Tree") {
+	IntervalSplayTree<int> st;
+	REQUIRE(!st.contains(ii(4,5)));
+	st.insert(ii(4,5));
+	REQUIRE(st.contains(ii(4,5)));
+	st.insert(ii(2,2));
+	st.insert(ii(8,15));
+	st.insert(ii(1,4));
+	st.insert(ii(14,20));
+	REQUIRE(!st.overlaps(ii(6,7)));
+	REQUIRE(st.overlaps(ii(6,8)));
+	REQUIRE(st.overlaps(ii(15,15)));
+	st.erase(ii(1,4));
+	REQUIRE(!st.overlaps(ii(3,3)));
+    REQUIRE(st.overlaps(ii(-90, 90)));
+}
+
 #include "Algorithms/Sorting/quicksort.h"
 TEST_CASE("quicksort") {
 	int arr[10] = { 4, -2, 3, 0, 5, 2, 8, -9, 3, 7 };
@@ -745,22 +763,6 @@ TEST_CASE("Balanced Binary Search Tree") {
 	REQUIRE(!st.contains(3));
 }
 
-#include "Data_Structures/interval_tree_sb.h"
-TEST_CASE("Balanced Interval Tree") {
-	IntervalSplayTree<int> st;
-	REQUIRE(!st.contains(ii(4,5)));
-	st.insert(ii(4,5));
-	REQUIRE(st.contains(ii(4,5)));
-	st.insert(ii(2,2));
-	st.insert(ii(8,15));
-	st.insert(ii(1,4));
-	st.insert(ii(14,20));
-	REQUIRE(!st.overlaps(ii(6,7)));
-	REQUIRE(st.overlaps(ii(6,8)));
-	REQUIRE(st.overlaps(ii(15,15)));
-	st.erase(ii(1,4));
-	REQUIRE(!st.overlaps(ii(3,3)));
-}
 
 #include "Data_Structures/binary_heap.h"
 TEST_CASE("Binary Heap") {
