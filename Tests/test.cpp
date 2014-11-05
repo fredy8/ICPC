@@ -245,11 +245,6 @@ TEST_CASE("Shortest Path in a DAG") {
 	REQUIRE(distance[7] == 1);
 }
 
-#include "Algorithms/Graphs/edge_property_check.h"
-TEST_CASE("Edge Property Check") {
-
-}
-
 #include "Algorithms/Graphs/eulerian_path.h"
 TEST_CASE("Eulerian Path") {
 	Graph g(6, true);
@@ -265,7 +260,6 @@ TEST_CASE("Eulerian Path") {
 	g.connect(3, Edge(5));
 	g.connect(4, Edge(5));
 	vi path = getEulerianPath(g, 0);
-	FORC(path, a) cout << *a << " "; cout << endl;
 	map<set<int>, int> m;
 	FOR(i, 1, path.size()) {
 		set<int> s;
