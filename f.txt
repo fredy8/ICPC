@@ -83,47 +83,49 @@ int rangeOR(int A, int B) {
 }
 $Handbook//Algorithms/Ad_hoc/shunting_yard.h$
 
-void output(string x) {
-    cout << x << " ";
+void output(ostream &out, string x) {
+    out << x << " ";
 }
-string readToken() {
+string readToken(istream &in) {
     string t; int c;
-    while((c = cin.peek()) != EOF) {
-        if(isalpha(c) || isdigit(c)) t.pb((char)c), cin.get();
+    while((c = in.peek()) != EOF) {
+        if(isalpha(c) || isdigit(c)) t.pb((char)c), in.get();
         else if(t != "") return t;
-        else {cin.get(); if(!isspace(c)) {t.pb(c); return t;}}
-    } return "";
+        else {in.get(); if(!isspace(c)) {t.pb((char)c); return t;}}
+    } return t;
 }
 
 #define LEFT 0
 #define RIGHT 1
 #define isOp(x) (prec.find(x) != prec.end())
-void shunting() {
+void shunting(istream &in, ostream &out) {
     string token;
     stack<string> ops;
     map<string, int> prec;
+    prec["^"] = 6;
     prec["*"] = prec["/"] = prec["%"] = 5;
     prec["+"] = prec["-"] = 4;
     map<string, int> assoc; // default 0
-    while((token = readToken()) != "") {
+    assoc["^"] = RIGHT;
+    while((token = readToken(in)) != "") {
         if(isOp(token)) {
-            while(!ops.empty() 
+            while(!ops.empty() && isOp(ops.top())
             && ((assoc[token] == LEFT && prec[token] <= prec[ops.top()]) 
-                 || prec[token] < prec[ops.top()]))
-                output(ops.top()), ops.pop();
+                 || (assoc[token] == RIGHT && prec[token] < prec[ops.top()])))
+                output(out, ops.top()), ops.pop();
             ops.push(token);
         } else if(token == "(") {
             ops.push(token);
         } else if(token == ")") {
             while(!ops.empty() && ops.top() != "(")
-                output(ops.top()), ops.pop();
+                output(out, ops.top()), ops.pop();
             // ops.empty() || ops.top() != "(" ====> MISMATCH
             ops.pop();
         } else // numbers vars
-            output(token);
+            output(out, token);
     }
     while(!ops.empty()) { // if ops.top() == ")"  || ops.top() == "(" =======> MISMATCH
-        output(ops.top()), ops.pop(); 
+        output(out, ops.top()), ops.pop(); 
     }
 }
 $Handbook//Algorithms/Ad_hoc/ShuntingYard.cpp$
@@ -349,12 +351,6 @@ void dfs2(Graph &g, list<int> &path, list<int>::iterator it, int cv) {
 			last = false;
 			edge->visited = 1;
 			g.edges[edge->to][edge->backEdge].visited = 1;
-			/*FORC(g.edges[edge->to], neighborEdge) {
-				if(neighborEdge->to == cv && !neighborEdge->visited) {
-					g.edges[edge->to][neighborEdge - g.edges[edge->to].begin()].visited = 1;
-					break;
-				}
-			}*/
 			dfs2(g, path, path.insert(it, cv), edge->to);
 		}
 	}
@@ -365,6 +361,8 @@ void dfs2(Graph &g, list<int> &path, list<int>::iterator it, int cv) {
 vi getEulerianPath(Graph &g/*undirected*/, int initial) {
 	list<int> path;
 	dfs2(g, path, path.begin(), initial);
+	if(g.edges[initial].size()%2 == 0)
+		path.pop_front();
 	vi p;
 	FORC(path, it)
 		p.pb(*it);
@@ -653,6 +651,18 @@ int mod_inverse(int a, int n) {
 	int d = extended_euclid(a, n, x, y);
 	if (d > 1) return -1;
 	return mod(x,n);
+}
+$Handbook//Algorithms/Mathematics/Euclid_chinese_remainder.h$
+// returns x = a_i (mod n_i)
+// n's must be pairwise coprimes
+int chinese_remainder(int *n, int *a, int len) {
+	int p, i, prod = 1, sum = 0;
+	for (i = 0; i < len; i++) prod *= n[i];
+	for (i = 0; i < len; i++) {
+		p = prod / n[i];
+		sum += a[i] * mod_inverse(p, n[i]) * p;
+	}
+	return sum % prod;
 }
 $Handbook//Algorithms/Mathematics/factmod.h$
 int factmod (int n, int p) {
@@ -977,7 +987,7 @@ string LCS(string a, string b) {
 }
 $Handbook//Algorithms/Strings/string_matching.h$
 vi buildTable(string& pattern) {
-	vi table(pattern.length());
+	vi table(pattern.length()+1);
 	int i = 0, j = -1, m = pattern.length();
 	table[0] = -1;
 	while(i < m) {
@@ -1039,10 +1049,9 @@ class SplayTree {
 	void erase(Node *node, K key) {
 		node = find(node, key);
 		if(node->key != key) return;
-		if(node == root && !node->left && !node->right) {
-			root = 0;
-			delete node;
-		} else if(node->left && node->right) {
+		if(node == root && !node->left && !node->right)
+			root = 0, delete node;
+		else if(node->left && node->right) {
 			Node *pred = node->left;
 			while(pred->right) pred = pred->right;
 			swap(node->key, pred->key);
@@ -1082,27 +1091,18 @@ class SplayTree {
 		while(root != node) {
 			if(node->parent->parent) {
 				if(LCHILD(node)) {
-					if(LCHILD(node->parent)) {
-						rightRotate(node->parent->parent);
-						rightRotate(node->parent);
-					} else {
-						rightRotate(node->parent);
-						leftRotate(node->parent);
-					}
+					if(LCHILD(node->parent))
+						rightRotate(node->parent->parent), rightRotate(node->parent);
+					else
+						rightRotate(node->parent), leftRotate(node->parent);
 				} else {
-					if(LCHILD(node->parent)) {
-						leftRotate(node->parent);
-						rightRotate(node->parent);
-					} else {
-						leftRotate(node->parent->parent);
-						leftRotate(node->parent);
-					}
+					if(LCHILD(node->parent))
+						leftRotate(node->parent), rightRotate(node->parent);
+					else
+						leftRotate(node->parent->parent), leftRotate(node->parent);
 				}
-			} else if(LCHILD(node)) {
-				rightRotate(node->parent);
-			} else {
-				leftRotate(node->parent);
-			}
+			} else if(LCHILD(node)) rightRotate(node->parent);
+			else leftRotate(node->parent);
 		}
 	}
 	void dealloc(Node *node) { if(node->left) dealloc(node->left); if(node->right) dealloc(node->right); delete node; }
@@ -1365,6 +1365,13 @@ double area(double a, double b, double c){
 	return sqrt(s*(s-a)*(s-b)*(s-c));
 }
 
+double area(const Triangle &T) {
+    double ab = dist(T.A, T.B);
+    double bc = dist(T.B, T.C);
+    double ca = dist(T.C, T.A);
+    return area(ab, bc, ca);
+}
+
 double rInCircle(double ab, double bc, double ca){
 	return area(ab, bc, ca) / (0.5 * perimeter(ab, bc, ca)); }
 
@@ -1384,7 +1391,8 @@ bool inCircle(Point p1, Point p2, Point p3, Point &ctr, double &r) {
 	return true;
 }
 
-Point circumcenter(Point A, Point B, Point C) {
+Point circumcenter(const Triangle &T) {
+    Point A = T.A, B = T.B, C = T.C;
 	double D = 2*(A.x*(B.y - C.y) + B.x*(C.y - A.y) + C.x*(A.y - B.y));
 	double AA = A.x*A.x + A.y*A.y, BB = B.x*B.x + B.y*B.y, CC = C.x*C.x + C.y*C.y;
 	return Point((AA*(B.y - C.y) + BB*(C.y - A.y) + CC*(A.y - B.y)) / D, (AA*(C.x - B.x) + BB*(A.x - C.x) + CC*(B.x - A.x)) / D);
@@ -1509,6 +1517,112 @@ public:
 	void erase(int interval, int a, int b) { erase(root, interval, a, b+1, -INF, INF); }
 	int getArea() { if(root) return root->area - 1; return 0; }
 };
+$Handbook//Data_Structures/interval_tree_sb.h$
+#ifndef LCHILD
+#define LCHILD(n) ((n)->parent->left == (n))
+#define _LCHILD(n) ((n)->parent->*left == (n))
+#endif
+#define FIX(n) (n ? (maxsec = max(maxsec, n->maxsec)) : 0)
+#define ICONTAINS(i, v) ((v) >= (i).first && (v) <= (i).second)
+#define IOVERLAPS(a, b) ((a).first <= (b).second && (a).second >= (b).first)
+template< typename T, typename Compare = less<pair<T, T> > >
+class IntervalSplayTree {
+    typedef pair<T, T> K;
+	Compare compare;
+	struct Node {
+		Node *left, *right, *parent;
+		K key;
+        T maxsec;
+		Node(K k, Node *p) : key(k), parent(p), left(0), right(0), maxsec(key.second) {}
+        void fix() {
+            T mx = maxsec; 
+            maxsec = key.second; 
+            FIX(left); FIX(right); 
+            if(maxsec != mx && parent) parent->fix();}
+     };
+	Node *root;
+	void insert(Node *node, K key) {
+		Node *parent = find(node, key);
+		if(parent->key == key) return;
+		(compare(key, parent->key) ? parent->left : parent->right) = new Node(key, parent);
+        parent->fix(); 
+	}
+	Node * find(Node *node, K key) {
+		if(key == node->key) { splay(node); return node; }
+		if(compare(key, node->key)) return node->left ? find(node->left, key) : node;
+		return node->right ? find(node->right, key) : node;
+	}
+	void erase(Node *node, K key) {
+		node = find(node, key);
+		if(node->key != key) return;
+		if(node == root && !node->left && !node->right) {
+			root = 0;
+			delete node;
+		} else if(node->left && node->right) {
+			Node *pred = node->left;
+			while(pred->right) pred = pred->right;
+			swap(node->key, pred->key);
+			if(pred != root) (LCHILD(pred) ? pred->parent->left : pred->parent->right) = pred->left ? pred->left : pred->right;
+			if(pred->left || pred->right) (pred->left ? pred->left : pred->right)->parent = pred->parent;
+            if(node->parent) pred->parent->fix();
+			delete pred;
+		} else {
+			if(node == root) root = node->left ? node->left : node->right;
+			else (LCHILD(node) ? node->parent->left : node->parent->right) = node->left ? node->left : node->right;
+			if(node->left || node->right) (node->left ? node->left : node->right)->parent = node->parent;
+            if(node->parent) node->parent->fix();
+			delete node;
+		}
+	}
+
+    void rotate(Node *parent, bool rleft) {
+        Node *Node::*left = &Node::left, *Node::*right = &Node::right;
+        if(!rleft) swap(left, right);
+		Node *child = parent->*right;
+		parent->*right = child->*left;
+		if(child->*left) (child->*left)->parent = parent;
+		child->parent = parent->parent;
+		if(!parent->parent) root = child;
+		else if(_LCHILD(parent)) parent->parent->*left = child;
+		else parent->parent->*right = child;
+		child->*left = parent;
+		parent->parent = child;
+        parent->fix();
+    }
+	void splay(Node *node) {
+		while(root != node) {
+			if(node->parent->parent) {
+                bool lcnode = LCHILD(node), lcparent = LCHILD(node->parent);
+                rotate(lcnode == lcparent ? node->parent->parent : node->parent, !lcnode);
+                rotate(node->parent, !lcparent);
+			} else rotate(node->parent, !LCHILD(node));
+		}
+	}
+	void dealloc(Node *node) { if(node->left) dealloc(node->left); if(node->right) dealloc(node->right); delete node; }
+public:
+	IntervalSplayTree() : root(0) {}
+	~IntervalSplayTree() { if(root) dealloc(root); }
+	void insert(K key) { if(root) insert(root, key); else root = new Node(key, 0); }
+	void erase(K key) { if(root) erase(root, key); }
+	bool contains(K key) { return root && find(root, key)->key == key; }
+    void search(Node *n, K p, set<K> &result) {
+     if (!n) return;
+     if (p.first > n->maxsec) return; // p > maxsec
+     if (n->left) search(n->left, p, result);
+     if (IOVERLAPS(n->key, p))result.insert(n->key);
+     if (p.second< n->key.first) return;
+     if (n->right) search(n->right, p, result);
+    }
+    set<K> intersections(K i) {
+        set<K> res; search(root, i, res);
+        return res;
+    }
+    bool overlaps(K i) {
+        return !intersections(i).empty();
+    }
+};
+
+
 $Handbook//Data_Structures/lists_graph.h$
 struct Edge {
 	int to, weight;
@@ -1647,6 +1761,78 @@ struct SparseTable {
 			return M[i][k];
 		return M[j-(1 << k)+1][k];
 	}
+};
+$Handbook//Data_Structures/splay_tree.h$
+#define LCHILD(n) ((n)->parent->left == (n))
+#define _LCHILD(n) ((n)->parent->*left == (n))
+template< typename K, typename Compare = less<K> >
+class SplayTree {
+	Compare compare;
+	struct Node {
+		Node *left, *right, *parent;
+		K key;
+		Node(K k, Node *p) : key(k), parent(p), left(0), right(0) {}
+	};
+	Node *root;
+	void insert(Node *node, K key) {
+		Node *parent = find(node, key);
+		if(parent->key == key) return;
+		(compare(key, parent->key) ? parent->left : parent->right) = new Node(key, parent);
+	}
+	Node * find(Node *node, K key) {
+		if(key == node->key) { splay(node); return node; }
+		if(compare(key, node->key)) return node->left ? find(node->left, key) : node;
+		return node->right ? find(node->right, key) : node;
+	}
+	void erase(Node *node, K key) {
+		node = find(node, key);
+		if(node->key != key) return;
+		if(node == root && !node->left && !node->right) {
+			root = 0;
+			delete node;
+		} else if(node->left && node->right) {
+			Node *pred = node->left;
+			while(pred->right) pred = pred->right;
+			swap(node->key, pred->key);
+			if(pred != root) (LCHILD(pred) ? pred->parent->left : pred->parent->right) = pred->left ? pred->left : pred->right;
+			if(pred->left || pred->right) (pred->left ? pred->left : pred->right)->parent = pred->parent;
+			delete pred;
+		} else {
+			if(node == root) root = node->left ? node->left : node->right;
+			else (LCHILD(node) ? node->parent->left : node->parent->right) = node->left ? node->left : node->right;
+			if(node->left || node->right) (node->left ? node->left : node->right)->parent = node->parent;
+			delete node;
+		}
+	}
+    void rotate(Node *parent, bool rleft) {
+        Node *Node::*left = &Node::left, *Node::*right = &Node::right;
+        if(!rleft) swap(left, right);
+		Node *child = parent->*right;
+		parent->*right = child->*left;
+		if(child->*left) (child->*left)->parent = parent;
+		child->parent = parent->parent;
+		if(!parent->parent) root = child;
+		else if(_LCHILD(parent)) parent->parent->*left = child;
+		else parent->parent->*right = child;
+		child->*left = parent;
+		parent->parent = child;
+    }
+	void splay(Node *node) {
+		while(root != node) {
+			if(node->parent->parent) {
+                bool lcnode = LCHILD(node), lcparent = LCHILD(node->parent);
+                rotate(lcnode == lcparent ? node->parent->parent : node->parent, !lcnode);
+                rotate(node->parent, !lcparent);
+			} else rotate(node->parent, !LCHILD(node));
+		}
+	}
+	void dealloc(Node *node) { if(node->left) dealloc(node->left); if(node->right) dealloc(node->right); delete node; }
+public:
+	SplayTree() : root(0) {}
+	~SplayTree() { if(root) dealloc(root); }
+	void insert(K key) { if(root) insert(root, key); else root = new Node(key, 0); }
+	void erase(K key) { if(root) erase(root, key); }
+	bool contains(K key) { return root && find(root, key)->key == key; }
 };
 $Handbook//Data_Structures/suffix_array.h$
 #define MAX_N 100010
@@ -1821,6 +2007,133 @@ struct UnionFindDS2 {
 	}
 };
 
+$Handbook//External/edmonds_graph_matching.h$
+struct edge {
+   int v, nx;
+};
+const int MAXN = 1000, MAXE = 2000;
+edge graph[MAXE];
+int last[MAXN], match[MAXN], px[MAXN], base[MAXN], N, edges;
+bool used[MAXN], blossom[MAXN], lused[MAXN];
+inline void add_edge(int u, int v) {
+   graph[edges] = (edge) {v, last[u]};
+   last[u] = edges++;
+   graph[edges] = (edge) {u, last[v]};
+   last[v] = edges++;
+}
+void mark_path(int v, int b, int children) {
+   while (base[v] != b) {
+      blossom[base[v]] = blossom[base[match[v]]] = true;
+      px[v] = children;
+      children = match[v];
+      v = px[match[v]];
+   }
+}
+int lca(int a, int b) {
+   memset(lused, 0, N);
+   while (1) {
+      lused[a = base[a]] = true;
+      if (match[a] == -1)
+         break;
+      a = px[match[a]];
+   }
+   while (1) {
+      b = base[b];
+      if (lused[b])
+         return b;
+      b = px[match[b]];
+   }
+}
+int find_path(int root) {
+   memset(used, 0, N);
+   memset(px, -1, sizeof(int) * N);
+   for (int i = 0; i < N; ++i)
+      base[i] = i;
+   used[root] = true;
+   queue<int> q;
+   q.push(root);
+   int v, e, to, i;
+   while (!q.empty()) {
+      v = q.front(); q.pop();
+      for (e = last[v]; e >= 0; e = graph[e].nx) {
+         to = graph[e].v;
+         if (base[v] == base[to] || match[v] == to)
+            continue;
+         if (to == root || (match[to] != -1 && px[match[to]] != -1)) {
+            int curbase = lca(v, to);
+            memset(blossom, 0, N);
+            mark_path(v, curbase, to);
+            mark_path(to, curbase, v);
+            for (i = 0; i < N; ++i)
+               if (blossom[base[i]]) {
+                  base[i] = curbase;
+                  if (!used[i]) {
+                     used[i] = true;
+                     q.push(i);
+                  }
+               }
+         } else if (px[to] == -1) {
+            px[to] = v;
+            if (match[to] == -1)
+               return to;
+            to = match[to];
+            used[to] = true;
+            q.push(to);
+         }
+      }
+   }
+   return -1;
+}
+void build_pre_matching() {
+   int u, e, v;
+   for (u = 0; u < N; ++u)
+      if (match[u] == -1)
+         for (e = last[u]; e >= 0; e = graph[e].nx) {
+            v = graph[e].v;
+            if (match[v] == -1) {
+               match[u] = v;
+               match[v] = u;
+               break;
+            }
+         }
+}
+void edmonds() {
+   memset(match, 0xff, sizeof(int) * N);
+   build_pre_matching();
+   int i, v, pv, ppv;
+   for (i = 0; i < N; ++i)
+      if (match[i] == -1) {
+         v = find_path(i);
+         while (v != -1) {
+            pv = px[v], ppv = match[pv];
+            match[v] = pv, match[pv] = v;
+            v = ppv;
+         }
+      }
+}
+$Handbook//External/roman_numerals.h$
+string fill(char c, int n) {
+	string s;
+	while(n--) s += c;
+	return s;
+}
+
+string toRoman(int n) {
+	if( n < 4 ) return fill( 'i', n );
+	if( n < 6 ) return fill( 'i', 5 - n ) + "v";
+	if( n < 9 ) return string( "v" ) + fill( 'i', n - 5 );
+	if( n < 11 ) return fill( 'i', 10 - n ) + "x";
+	if( n < 40 ) return fill( 'x', n / 10 ) + toRoman( n % 10 );
+	if( n < 60 ) return fill( 'x', 5 - n / 10 ) + 'l' + toRoman( n % 10 );
+	if( n < 90 ) return string( "l" ) + fill( 'x', n / 10 - 5 ) + toRoman( n % 10 );
+	if( n < 110 ) return fill( 'x', 10 - n / 10 ) + "c" + toRoman( n % 10 );
+	if( n < 400 ) return fill( 'c', n / 100 ) + toRoman( n % 100 );
+	if( n < 600 ) return fill( 'c', 5 - n / 100 ) + 'd' + toRoman( n % 100 );
+	if( n < 900 ) return string( "d" ) + fill( 'c', n / 100 - 5 ) + toRoman( n % 100 );
+	if( n < 1100 ) return fill( 'c', 10 - n / 100 ) + "m" + toRoman( n % 100 );
+	if( n < 4000 ) return fill( 'm', n / 1000 ) + toRoman( n % 1000 );
+	return "?";
+}
 $Handbook//Utility/fastio.h$
 const int BUFFSIZE = 10240;
 char BUFF[BUFFSIZE + 1], *ppp = BUFF;
@@ -1867,23 +2180,179 @@ typedef int mint;
 #define int ll
 using namespace std; typedef long long ll; typedef pair<int, int> ii; typedef vector<int> vi; typedef vector<ii> vii; typedef vector<vi> vvi;
 $Handbook//Utility/notes.cpp$
-//tokenize a string
-char str[100] = "jkans asjna asjnxa asmx", del[2] = " ";
-for(char *tk = strtok(str, del); tk; tk = strtok(0, del))
-	cout << tk << endl;
-
-Bipartite graphs:
-MVC = MCBM
-MIS = V - MCBM
-
 printf("%ld\n", strtol("222", 0, x)); //base x to long
-
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 regmatch_t matches[1];
 regcomp(&reg, pattern.c_str(), REG_EXTENDED|REG_ICASE);
 if(regexec(&reg, str.c_str(), 1, matches, 0) == 0)
 cout << "match" << endl;
 regfree(&reg);
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+template <typename T>
+string toString(T n) { ostringstream ss; ss << n; return ss.str(); }
 
+template <typename T>
+T toNum(const string &Text) { istringstream ss(Text); T result; return ss >> result ? result : 0; }
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+vector<int> v(3, 5); //init vector to {5, 5, 5}
+int arr[] = {2, 3, 4};
+vector<int> v(arr, arr+3); //init vector to array
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+int* it = lower_bound(arr, arr+N, searchValue/*optional: comparator (it must be the same comparator used to sort)*/)
+if(it == arr+N) cout << "not found" << endl;
+else cout << "found " << *it << " at index " << it-arr << endl;
+lower_bound: finds first that does not compare less than val.
+upper_bound: finds first that compares greater than val.
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+int arr[] = {1, 2, 3}
+reverse(arr, arr+N); //reverses the array, arr = {3, 2, 1}
+sort(arr+N, arr) //reverse sort
+partial_sort(arr, arr+k, arr+N) //partially sorts the array time: klog(N)
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+struct Point
+{
+	double x, y;
+	string id;
+};
+
+Point origin = {0, 0, "origin"};
+Point points[3] = {{3.4, 2.1, "myPoint1"},
+    {2.4, 7.2, "myPoint2"},
+    {4.1, 8.1, "myPoint3"}};
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+#include <algorithm>
+int arr[] = {0, 1, 2, 3, 4};
+next_permutation(arr, arr+5); //0, 1, 2, 4, 3
+next_permutation(arr, arr+5); //0, 1, 3, 2, 4
+prev_permutation(...)
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+#include <map>
+#include <set>
+//check if it contains an item
+myMap.count(item);
+mySet.count(item);
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+//When sorting small structs, for example:
+struct Team
+{
+	int goldMedals;
+	int silverMedals;
+	int bronzeMedals;
+};
+//sort by gold, then silver then bronze
+//instead of defining a comparison function, another way is to:
+
+typedef pair<int, pair<int, int> > Team;
+
+Team teams[10];
+teams[0] = make_pair(4, make_pair(2, 6));
+...
+
+sort(teams, teams + 10);
+//drawback: all variables will be sorted ascending or descending
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+#include <iomanip>
+cout << fixed << setprecision(3) << 23.2341 << endl; //23.234 //formats forever until changed
+cout.setwidth(8); //only for the next cout
+cout << 2355 << endl; //"2355" -> "    2355"
+cout.fill("-"); //forever until changed again
+cout << 2355 << endl; //"2355" -> "------2355"
+cout.setwidth(10);
+cout << left << 2355 << endl; //"2355" -> "2355------"
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+scanf:
+
+%d -> base10 int | %d+
+%o -> base8 int  | %d+
+%x -> base16 int | %d+
+%a -> base10 or base16 double | ex. 123, 34.24, 5464.324e+3, 53423E+2, 0x242.435, base16 if preceded by 0x
+%c -> char or array of chars | ex. scanf("%c", &mychar) -> 'a', scanf("%4c", mycharptr) -> "asdf" (\0 not included)
+%s -> string
+matching: scanf("abc%d", &myint) with input: "ab34 ascz24 abc345" would store 345 in myint, use %% to match %
+%*d means match an int but dont store it in a parameter
+%3d means match an integer but read only the 3 first characters
+%lld stores in a long long int %d matches int, more specifiers are:
+%le long double
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+class comparator
+{
+	bool operator()(int a, int b)
+	{
+		return a < b;
+	}
+}
+priority_queue<int, vector<int>, comparator> pq;
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+Bellman-Ford for solving system of inequalities of the type x_i - x_j <= c
+create a node for every x
+create a source node
+create a zero weight edge from s to every other node
+for every inequality x_i - x_j <= c, make an edge from i to j of weight c
+run bellman ford starting at s
+the value for x_i is d_i
+if there was a negative weight cycle, the system is inconsistent
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+max_element(arr, arr+N); //returns a pointer to the element
+min_element(arr, arr+N);
+
+//arrays must be sorted, can be used with set and map
+merge() //same as set union but allows duplicates
+set_union()//A + B
+set_intersection()//A intersection B
+set_difference()// A - B
+set_symmetric_difference() // A^B
+parameters: (begin1, end1, begin2, end2, begin_result); //returns a pointer to the end of the result, and the result is stored [begin_result to end_result)
+
+accumulate(arr, arr+N, (long long)0); //add all elements by default, function can be specified, 0 is the initial value
+double product = accumulate(all(v), double(1), multiplies<double>());
+//plus, minus, divides, modulus, negate, equal_to, custom functions implemented same way as priority queue comparator
+inner_product(all(v1), v2.begin(), 0); //scalar product [a, b, c].[d, e, f] = a*d + b*e + c*f
+for_each(vec.begin(), vec.end(), func); //calls func(i) for every element in [begin, end)
+nth_element (vec.begin(), vec.begin()+n, vec.end(), myfunction);
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+#include <ctype.h>
+isalpha(char c), isupper(char c) ,islower(char c), isdigit(char c), ispunct(char c), toupper(char c), tolower(char c)
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+In a bipartite graph, the size of the maximum independent set (or dominating set) = V-MCBM
+In a bipartite graph, the size of the min vertex cover = MCBM
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+char str[] = "abc. sdfksm sgfda afdex.. NJK- ,,   .  hb564567....";
+char * token = strtok(str, ". ");
+while (token != NULL)
+{
+    printf ("%s\n",token);
+    token = strtok (NULL, ". ");
+}
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+There are n^(n-2) spanning trees in a complete graph with n vertices
+A dearangement is a permutation of a set where all elements are in a different position than their original position
+der(n) = (n-1)*(der(n-1)+der(n-2)), der(0) = 1, der(1) = 0
+a finite sequence of natural numbers can be a degree sequence of a graph iff the sum is even and sum from i=1 to k of d_i < k*(k-1) for 1<=k<=n
+E - V - 2 = F where F is the number of faces in a planar graph
+The number of pieces in which a circle is divided if n points on its circumference are joined by chords with no three internally concurrent:
+g(n) = nCat4 + nCat2 + 1
+A = i+b/2-1 where A is the area of a polygon, i is the number of integer points on the polygon and b is the number of integer points on the boundary
+the number of spanning trees in complete a bipartite graph K(n, m) is m^(n-1) * n^(m-1)
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+//splitting by spaces
+istringstream iss(line);
+vector<string> tokens;
+copy(istream_iterator<string>(iss), istream_iterator<string>(), back_inserter<vector<string> >(tokens));
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+loop adjacent elements in a grid
+
+//8 de alrededor
+FOR(k, 0, 9)
+if(k != 4) {
+    ii next(i+k%2-1, j+k/3-1);
+}
+
+//arriba/abajo/der/izq: for(int k = 1; k < 9; k+=2)
+FOR(k, 0, 4) {
+	int k2 = k*2+1;
+	ii next(i+k2%2-1, j+k2/3-1);
+}
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 Primes less than 1000:
 2     3     5     7    11    13    17    19    23    29    31    37
 41    43    47    53    59    61    67    71    73    79    83    89
@@ -1899,12 +2368,6 @@ Primes less than 1000:
 751   757   761   769   773   787   797   809   811   821   823   827
 829   839   853   857   859   863   877   881   883   887   907   911
 919   929   937   941   947   953   967   971   977   983   991   997
-
-template <typename T>
-string toString(T n) { ostringstream ss; ss << n; return ss.str(); }
-
-template <typename T>
-T toNum(const string &Text) { istringstream ss(Text); T result; return ss >> result ? result : 0; }
 $Handbook//Utility/run.sh$
 clear;
 g++ $1 -op && python -c "import re;print(re.search(r'^/\*\n((?s).*)\*/',open('$1').read()).group(1))" | ./p;

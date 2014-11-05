@@ -809,11 +809,6 @@ TEST_CASE("Fenwick Tree") {
 	REQUIRE(ft2.query(1, 1, 3, 3) == -2);
 }
 
-#include "Data_Structures/interval_tree.h"
-TEST_CASE("Interval Tree") {
-
-}
-
 #define LAZY
 #include "Data_Structures/segment_tree.h"
 TEST_CASE("Segment Tree") {
