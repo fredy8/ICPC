@@ -1,5 +1,5 @@
 vi buildTable(string& pattern) {
-	vi table(pattern.length());
+	vi table(pattern.length()+1);
 	int i = 0, j = -1, m = pattern.length();
 	table[0] = -1;
 	while(i < m) {
