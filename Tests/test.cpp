@@ -709,7 +709,12 @@ TEST_CASE("Longest Increasing Subsequence") {
 
 #include "Algorithms/Ad_hoc/shunting_yard.h"
 TEST_CASE("Shunting Yard") {
+    string s("3 + 4 * 2 / (area - 5) ^ 2 ^ 3");
+    stringstream sin(s);
+    stringstream sout;
 
+    shunting(sin, sout);
+    REQUIRE(sout.str() == "3 4 2 * area 5 - 2 3 ^ ^ / + ");
 }
 
 #include "Algorithms/Strings/edit_distance.h"
