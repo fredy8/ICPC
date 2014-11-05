@@ -21,10 +21,9 @@ class SplayTree {
 	void erase(Node *node, K key) {
 		node = find(node, key);
 		if(node->key != key) return;
-		if(node == root && !node->left && !node->right) {
-			root = 0;
-			delete node;
-		} else if(node->left && node->right) {
+		if(node == root && !node->left && !node->right)
+			root = 0, delete node;
+		else if(node->left && node->right) {
 			Node *pred = node->left;
 			while(pred->right) pred = pred->right;
 			swap(node->key, pred->key);
@@ -64,27 +63,18 @@ class SplayTree {
 		while(root != node) {
 			if(node->parent->parent) {
 				if(LCHILD(node)) {
-					if(LCHILD(node->parent)) {
-						rightRotate(node->parent->parent);
-						rightRotate(node->parent);
-					} else {
-						rightRotate(node->parent);
-						leftRotate(node->parent);
-					}
+					if(LCHILD(node->parent))
+						rightRotate(node->parent->parent), rightRotate(node->parent);
+					else
+						rightRotate(node->parent), leftRotate(node->parent);
 				} else {
-					if(LCHILD(node->parent)) {
-						leftRotate(node->parent);
-						rightRotate(node->parent);
-					} else {
-						leftRotate(node->parent->parent);
-						leftRotate(node->parent);
-					}
+					if(LCHILD(node->parent))
+						leftRotate(node->parent), rightRotate(node->parent);
+					else
+						leftRotate(node->parent->parent), leftRotate(node->parent);
 				}
-			} else if(LCHILD(node)) {
-				rightRotate(node->parent);
-			} else {
-				leftRotate(node->parent);
-			}
+			} else if(LCHILD(node)) rightRotate(node->parent);
+			else leftRotate(node->parent);
 		}
 	}
 	void dealloc(Node *node) { if(node->left) dealloc(node->left); if(node->right) dealloc(node->right); delete node; }
