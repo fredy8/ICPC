@@ -1,4 +1,5 @@
 #define LCHILD(n) ((n)->parent->left == (n))
+#define _LCHILD(n) ((n)->parent->*left == (n))
 template< typename K, typename Compare = less<K> >
 class SplayTree {
 	Compare compare;
@@ -38,53 +39,26 @@ class SplayTree {
 			delete node;
 		}
 	}
-	void leftRotate(Node *parent) {
-		Node *child = parent->right;
-		parent->right = child->left;
-		if(child->left) child->left->parent = parent;
+    void rotate(Node *parent, bool rleft) {
+        Node *Node::*left = &Node::left, *Node::*right = &Node::right;
+        if(!rleft) swap(left, right);
+		Node *child = parent->*right;
+		parent->*right = child->*left;
+		if(child->*left) (child->*left)->parent = parent;
 		child->parent = parent->parent;
 		if(!parent->parent) root = child;
-		else if(LCHILD(parent)) parent->parent->left = child;
-		else parent->parent->right = child;
-		child->left = parent;
+		else if(_LCHILD(parent)) parent->parent->*left = child;
+		else parent->parent->*right = child;
+		child->*left = parent;
 		parent->parent = child;
-	}
-	void rightRotate(Node *parent) {
-		Node *child = parent->left;
-		parent->left = child->right;
-		if(child->right) child->right->parent = parent;
-		child->parent = parent->parent;
-		if(!parent->parent) root = child;
-		else if(!LCHILD(parent)) parent->parent->right = child;
-		else parent->parent->left = child;
-		child->right = parent;
-		parent->parent = child;
-	}
+    }
 	void splay(Node *node) {
 		while(root != node) {
 			if(node->parent->parent) {
-				if(LCHILD(node)) {
-					if(LCHILD(node->parent)) {
-						rightRotate(node->parent->parent);
-						rightRotate(node->parent);
-					} else {
-						rightRotate(node->parent);
-						leftRotate(node->parent);
-					}
-				} else {
-					if(LCHILD(node->parent)) {
-						leftRotate(node->parent);
-						rightRotate(node->parent);
-					} else {
-						leftRotate(node->parent->parent);
-						leftRotate(node->parent);
-					}
-				}
-			} else if(LCHILD(node)) {
-				rightRotate(node->parent);
-			} else {
-				leftRotate(node->parent);
-			}
+                bool lcnode = LCHILD(node), lcparent = LCHILD(node->parent);
+                rotate(lcnode == lcparent ? node->parent->parent : node->parent, !lcnode);
+                rotate(node->parent, !lcparent);
+			} else rotate(node->parent, !LCHILD(node));
 		}
 	}
 	void dealloc(Node *node) { if(node->left) dealloc(node->left); if(node->right) dealloc(node->right); delete node; }

@@ -746,7 +746,8 @@ TEST_CASE("Subsequence Counter") {
     REQUIRE(subseqCounter("00000000001111111111222222222233333333334444444444", "0000011111222223333344444") == 1016255020032);
 }
 
-#include "Data_Structures/balanced_binary_search_tree.h"
+//#include "Data_Structures/balanced_binary_search_tree.h"
+#include "Data_Structures/splay_tree.h"
 TEST_CASE("Balanced Binary Search Tree") {
 	SplayTree<int> st;
 	REQUIRE(!st.contains(5));
@@ -921,15 +922,35 @@ TEST_CASE("Vectors") {
 
 #include "Data_Structures/Geometry/lines.h"
 TEST_CASE("Line") {
-
+    Point A(0,0), B(4,0), C(0,4), D(4,4), E(5,0), F(2,2), G;
+    Line ab(A,B), cd(C,D), ae(A,E), ad(A,D), bc(B,C);
+    REQUIRE(areParallel(ab, cd));
+    REQUIRE(areSame(ab, ae));
+    REQUIRE(areIntersect(ad, bc, G));
+    REQUIRE(F == G);
+    REQUIRE(eq(distToLine(E, A, C, G), 5));
 }
 
 #include "Data_Structures/Geometry/polygons.h"
 TEST_CASE("Polygons") {
-
+    Polygon P;
+    Point A(0,0), B(1,0), C(1,1), D(0,1), E(-1,-1), F(.5, .5);
+    P.pb(A), P.pb(B), P.pb(C), P.pb(D), P.pb(E), P.pb(F);
+    REQUIRE(!isConvex(P));
+    Polygon ch = convexHull(P);
+    REQUIRE(eq(area(ch), 2));
+    REQUIRE(ch.size() == 5);
+    REQUIRE(inPolygon(F, ch));
+    //Polygon cut = (Point(0, 2), Point(2, -1), ch);
+    //REQUIRE(cut.size() == 5);
 }
 
 #include "Data_Structures/Geometry/triangles.h"
 TEST_CASE("Triangles") {
-
+    Point A(0, 0), B(5, 3), C(1, 6);
+    Triangle abc(A, B, C);
+    REQUIRE(eq(area(abc), 12));
+    Point D(4, 3), E(-3, 4), F(0, -5);
+    Triangle def(D, E, F);
+    REQUIRE(circumcenter(def) == A);
 }

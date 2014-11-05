@@ -12,6 +12,13 @@ double area(double a, double b, double c){
 	return sqrt(s*(s-a)*(s-b)*(s-c));
 }
 
+double area(const Triangle &T) {
+    double ab = dist(T.A, T.B);
+    double bc = dist(T.B, T.C);
+    double ca = dist(T.C, T.A);
+    return area(ab, bc, ca);
+}
+
 double rInCircle(double ab, double bc, double ca){
 	return area(ab, bc, ca) / (0.5 * perimeter(ab, bc, ca)); }
 
@@ -31,7 +38,8 @@ bool inCircle(Point p1, Point p2, Point p3, Point &ctr, double &r) {
 	return true;
 }
 
-Point circumcenter(Point A, Point B, Point C) {
+Point circumcenter(const Triangle &T) {
+    Point A = T.A, B = T.B, C = T.C;
 	double D = 2*(A.x*(B.y - C.y) + B.x*(C.y - A.y) + C.x*(A.y - B.y));
 	double AA = A.x*A.x + A.y*A.y, BB = B.x*B.x + B.y*B.y, CC = C.x*C.x + C.y*C.y;
 	return Point((AA*(B.y - C.y) + BB*(C.y - A.y) + CC*(A.y - B.y)) / D, (AA*(C.x - B.x) + BB*(A.x - C.x) + CC*(B.x - A.x)) / D);
