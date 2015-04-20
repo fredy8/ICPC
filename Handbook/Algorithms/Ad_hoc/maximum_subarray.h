@@ -7,3 +7,13 @@ int maximumSubarray(int numbers[], int N) {
 	}
 	return maxSoFar;
 }
+int maxCircularSum (int a[], int n) {
+   int max_kadane = maximumSubarray(a, n);
+   int max_wrap  =  0;
+   FOR(i, 0, n) {
+        max_wrap += a[i];
+        a[i] = -a[i];
+   }
+   max_wrap = max_wrap + maximumSubarray(a, n);
+   return (max_wrap > max_kadane)? max_wrap : max_kadane;
+}

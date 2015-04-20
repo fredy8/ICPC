@@ -24,7 +24,7 @@ Polygon convexHull(Polygon &P) {
 double area(const Polygon &P) {
 	double result = 0.0, x1, y1, x2, y2;
 	for (int i = 0; i < (int)P.size()-1; i++) {
-		x1 = P[i].x; x2 = P[i+1].x; 
+		x1 = P[i].x; x2 = P[i+1].x;
 		y1 = P[i].y; y2 = P[i+1].y;
 		result += (x1*y2-x2*y1);
 	}
@@ -52,13 +52,13 @@ bool inPolygon (Point pt, const Polygon &P) {
 }
 
 // tests whether or not a given polygon (in CW or CCW order) is simple
-bool IsSimple(const Polygon &p) {
+bool isSimple(const Polygon &p) {
   for (int i = 0; i < p.size(); i++) {
 	for (int k = i+1; k < p.size(); k++) {
 	  int j = (i+1) % p.size();
 	  int l = (k+1) % p.size();
 	  if (i == l || j == k) continue;
-	  if (lineSegIntersect(p[i], p[j], p[k], p[l])) 
+	  if (lineSegIntersect(p[i], p[j], p[k], p[l]))
 		return false;
 	}
   }
