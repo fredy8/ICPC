@@ -1,0 +1,1 @@
+http://cs.ecs.baylor.edu/~hamerly/icpc/qualifier_2014/
