@@ -1,5 +1,4 @@
 /*
-1 2
 */
 #include <bits/stdc++.h>
 #define _ ios_base::sync_with_stdio(0), cin.tie(0), cin.tie(0), cout.tie(0), cout.precision(15);
@@ -12,9 +11,3 @@
 typedef int mint;
 #define int ll
 using namespace std; typedef long long ll; typedef pair<int, int> ii; typedef vector<int> vi; typedef vector<ii> vii; typedef vector<vi> vvi;
-
-mint main() { _
-	int a, b;
-	cin >> a >> b;
-	cout << a + b << endl;
-}
