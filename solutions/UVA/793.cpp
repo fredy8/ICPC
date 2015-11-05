@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <iostream>
 #include <queue>
+#include <list>
 #include <map>
 #include <numeric>
 #include <set>
@@ -14,63 +15,71 @@
 #include <stack>
 #include <utility>
 #include <vector>
-#include <cassert>
-#define INF 100000 // avoid overflow
+#include <cstdlib>
+#define _ ios_base::sync_with_stdio(0), cin.tie(0), cin.tie(0), cout.tie(0), cout.precision(15);
+#define INF 1000000000
 #define FOR(i, a, b) for(int i=int(a); i<int(b); i++)
-#define FORC(cont, it) for(auto it = (cont).begin(); it != (cont).end(); it++)
+#define FORC(cont, it) for(decltype((cont).begin()) it=(cont).begin(); it!=(cont).end(); it++)
 #define pb push_back
-using namespace std; typedef pair<int, int> ii; typedef vector<int> vi; typedef vector<ii> vii; typedef vector<vi> vvi;
+#define mp make_pair
+#define all(x) (x).begin(), (x).end()
+using namespace std; typedef long long ll; typedef pair<int, int> ii; typedef vector<int> vi; typedef vector<ii> vii; typedef vector<vi> vvi;
 
-// la descripcion del problema no decia que habia mas de un caso ni que habia
-// que leer el numero de casos al principio, ni que habia que imprimir
-// una linea entre los casos, lo descubri en los foros
+vi parent, _rank;
 
-struct UnionFindDS {
-    vi tree;
-    UnionFindDS(int n) { FOR(i, 0, n) tree.push_back(i); }
-    int root(int i) { return tree[i] == i ? i : tree[i] = root(tree[i]); }
-    bool connected(int i, int j) {return root(i) == root(j);}
-    void connect(int i, int j) { tree[root(i)] = tree[root(j)]; }
-};
-
-inline void ignores() {
-	while(isspace(cin.peek())) cin.ignore();
+int find(int n) {
+  if (n == parent[n]) return n;
+  return parent[n] = find(parent[n]);
 }
 
-int main() {
-	int cs; cin >> cs;
-	
-	while(cs--) {
-		int n; cin >> n;
-		
-		UnionFindDS net(n + 1);
-		
-		char x;
-		int i, j;
-		
-		int succ = 0, failed = 0;
-		
-		//if(!getline(cin, s)) goto skip;
-		
-		
-		while(ignores(), isalpha(cin.peek())) {
-			cin >> x >> i >> j;
-			if(x == 'c') {
-				net.connect(i, j);
-				
-				
-			} else if(x == 'q') {
-				if(net.connected(i, j))
-				//if(mat[i][j])
-					succ++;
-				else
-					failed++;
-			}
-		}
-		
-		cout << succ << "," << failed << endl;
-		
-		if(cs > 0)
-			cout << endl;
-	}
+void _union(int a, int b) {
+  int pa = find(a), pb = find(b);
+  if (pa == pb) {
+    return;
+  }
+
+  if (_rank[pa] > _rank[pb])
+    parent[pb] = pa;
+  else
+    parent[pa] = pb;
+
+  if (_rank[pa] == _rank[pb])
+    _rank[pb]++;
+}
+
+int main() { _
+  int TC;
+  cin >> TC;
+  int N;
+  string aux;
+  bool first = true;
+  while(TC--) {
+    if (!first) cout << endl;
+    first = false;
+    cin >> N;
+    getline(cin, aux);
+    parent.assign(N, 0), _rank.assign(N, 0);
+    FOR(i, 0, N) parent[i] = i;
+
+    int ans[2] = {0, 0};
+    string line;
+    while(getline(cin, line)) {
+      if (line == "") {
+        break;
+      }
+
+      char type;
+      int n1, n2;
+      istringstream iss(line);
+      iss >> type >> n1 >> n2;
+      n1--, n2--;
+      if (type == 'c') {
+        _union(n1, n2);
+      } else {
+        ans[find(n1) != find(n2)]++;
+      }
+    }
+
+    cout << ans[0] << "," << ans[1] << endl;
+  }
 }

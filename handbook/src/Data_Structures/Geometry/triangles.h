@@ -38,6 +38,8 @@ bool inCircle(Point p1, Point p2, Point p3, Point &ctr, double &r) {
 	return true;
 }
 
+double rCircumCircle(double ab, double bc, double ca) { return ab * bc * ca / (4.0 * area(ab, bc, ca)); }
+
 Point circumcenter(const Triangle &T) {
     Point A = T.A, B = T.B, C = T.C;
 	double D = 2*(A.x*(B.y - C.y) + B.x*(C.y - A.y) + C.x*(A.y - B.y));

@@ -1,4 +1,5 @@
 const double PI = 2*asin(1);
+
 bool eq(double a, double b) { return fabs(a-b) < EPS; }
 bool les(double a, double b) { return !eq(a, b) && a < b; }
 struct Point {
