@@ -1,3 +1,5 @@
+/* Lists Graph
+*/
 struct Edge {
 	int to, weight;
     int backEdge, strong, type, visited; //optional

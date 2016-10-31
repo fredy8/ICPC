@@ -3,7 +3,7 @@ struct HeavyLightDecomposition {
 	vi values, listIndex, posIndex, parent, treeSizes;
 	vector<SparseTable> sts;
 	LCA *lca;
-	HeavyLightDecomposition(Graph &g/*undirected connected acyclic*/, vi values) : values(values) {
+	HeavyLightDecomposition(Graph &g, vi values) : values(values) {
 		lca = new LCA(g, 0);
 		listIndex = posIndex = parent = treeSizes = vi(g.V, -1);
 		getTreeSizes(g, 0);
@@ -46,12 +46,9 @@ struct HeavyLightDecomposition {
 		int result = INF, left = from;
 		while(listIndex[left] != listIndex[anc]) {
 			result = min(result, values[lists[listIndex[left]][sts[listIndex[left]].query(0, posIndex[left])]]);
-			int head = lists[listIndex[left]][0];
 			left = parent[lists[listIndex[left]][0]];
 		}
 		posInAncestorList = posIndex[left];
 		return result;
 	}
 };
-
-

@@ -1,3 +1,5 @@
+/* Polygons
+*/
 typedef vector<Point> Polygon;
 
 ll cross(const Point &O, const Point &A, const Point &B) {
@@ -41,6 +43,7 @@ bool isConvex(const Polygon &P) {
 	return true;
 }
 
+// works for convex and concave
 bool inPolygon (Point pt, const Polygon &P) {
 	if((int)P.size() == 0) return false;
 	double sum = 0;
@@ -87,4 +90,57 @@ Polygon cutPolygon(Point a, Point b, const Polygon &Q) {
 	if (!P.empty() && !(P.back() == P.front()))
 		P.pb(P.front());
 	return P;
+}
+
+// only works for convex
+bool pointInPolygon(Polygon &p1, Point p) {
+  FOR(i, 0, p1.size() - 1)
+    if (cross(p1[i], p1[i+1], p) >= 0)
+      return false;
+  return true;
+}
+
+// polygons must be convex
+// returns polygon with size < 3 if there is no intersection
+Polygon intersection(Polygon &p1, Polygon &p2) {
+  set<Point> result;
+  FOR(i, 0, p1.size() - 1) {
+    if (pointInPolygon(p2, p1[i]))
+      result.insert(p1[i]);
+    FOR(j, 0, p2.size() - 1) {
+      Line l1 = Line(p1[i], p1[i+1]);
+      Line l2 = Line(p2[j], p2[j+1]);
+      vector<Point> ps1, ps2;
+      ps1.pb(p1[i]); ps1.pb(p1[i+1]);
+      ps2.pb(p2[j]); ps2.pb(p2[j+1]);
+      sort(ps1.begin(), ps1.end());
+      sort(ps2.begin(), ps2.end());
+      if (!areParallel(l1, l2)) {
+        Point intersect;
+        bool b = areIntersect(l1, l2, intersect);
+        if (b && checkPointInSegm(intersect, ps1[0], ps1[1]) && checkPointInSegm(intersect, ps2[0], ps2[1]))
+          result.insert(intersect);          
+      } else if (areSame(l1, l2)) {
+        if (ps1[1] >= ps2[0] && ps2[1] >= ps1[0]) {
+          vector<Point> ps3;
+          ps3.pb(ps1[0]); ps3.pb(ps1[1]); ps3.pb(ps2[0]); ps3.pb(ps2[1]);
+          sort(all(ps3));
+          result.insert(ps3[1]);
+          result.insert(ps3[2]);
+        }
+      }
+    }
+  }
+
+  FOR(i, 0, p2.size() - 1) {
+    if (pointInPolygon(p1, p2[i]))
+      result.insert(p2[i]);
+  }
+
+  if (result.size() <= 2) {
+    return Polygon(result.begin(), result.end());
+  }
+
+  Polygon p(result.begin(), result.end());
+  return convexHull(p);
 }

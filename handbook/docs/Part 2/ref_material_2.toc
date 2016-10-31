@@ -1,0 +1,37 @@
+\contentsline {section}{\numberline {1}Floyd Warshall}{4}
+\contentsline {section}{\numberline {2}Lists Graph}{4}
+\contentsline {section}{\numberline {3}Matrix Graph}{4}
+\contentsline {section}{\numberline {4}Union Find}{5}
+\contentsline {section}{\numberline {5}Interval Tree}{5}
+\contentsline {section}{\numberline {6}Splay Tree}{7}
+\contentsline {section}{\numberline {7}Divisors}{9}
+\contentsline {section}{\numberline {8}ModNCR}{9}
+\contentsline {section}{\numberline {9}Base Conversion}{10}
+\contentsline {section}{\numberline {10}Roman Numerals}{10}
+\contentsline {section}{\numberline {11}Fenwick Tree}{10}
+\contentsline {section}{\numberline {12}Tree Hash}{11}
+\contentsline {section}{\numberline {13}Bellman Ford}{11}
+\contentsline {section}{\numberline {14}Bit Manipulation}{12}
+\contentsline {section}{\numberline {15}Topological Sort}{12}
+\contentsline {section}{\numberline {16}Shortest Path in a DAG}{13}
+\contentsline {section}{\numberline {17}Edge Property Check}{13}
+\contentsline {section}{\numberline {18}Cycle Finding}{14}
+\contentsline {section}{\numberline {19}Fibbonacci}{14}
+\contentsline {section}{\numberline {20}Fast IO}{15}
+\contentsline {section}{\numberline {21}Binomial Coefficients}{15}
+\contentsline {section}{\numberline {22}FactMOD}{15}
+\contentsline {section}{\numberline {23}Range OR}{16}
+\contentsline {section}{\numberline {24}Longest Increasing Subsequence}{16}
+\contentsline {section}{\numberline {25}Longest Common Subsequence}{16}
+\contentsline {section}{\numberline {26}Maximum Subarray}{17}
+\contentsline {section}{\numberline {27}Subsequence Counter}{17}
+\contentsline {section}{\numberline {28}Edit Distance}{18}
+\contentsline {section}{\numberline {29}Quicksort}{18}
+\contentsline {section}{\numberline {30}Mergesort}{18}
+\contentsline {section}{\numberline {31}Fast Exponentiation}{19}
+\contentsline {section}{\numberline {32}Binary Search}{19}
+\contentsline {section}{\numberline {33}LCM}{20}
+\contentsline {section}{\numberline {34}Binary Heap}{20}
+\contentsline {section}{\numberline {35}Simplex}{20}
+\contentsline {section}{\numberline {36}Graph Cut Inference}{22}
+\contentsline {section}{\numberline {37}Notes}{25}

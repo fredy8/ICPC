@@ -1,3 +1,5 @@
+/* Triangle
+*/
 struct Triangle {
 	Point A, B, C;
 	Triangle() {}

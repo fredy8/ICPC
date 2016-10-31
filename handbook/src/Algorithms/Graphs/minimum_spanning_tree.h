@@ -1,3 +1,8 @@
+/* Kruskal
+O(ELogV)
+Finds a minimum spanning tree of a undirected graph.
+Returns the indices of the edges that are int the MST.
+*/
 int *comparator1;
 bool compare(int a, int b) { return comparator1[a] < comparator1[b]; }
 vi kruskal(vii &edges, int weight[], int V) {
@@ -14,9 +19,13 @@ vi kruskal(vii &edges, int weight[], int V) {
 	return minTree;
 }
 
+/* Prim
+O(ELogV)
+Finds a minimum spanning tree of a undirected graph.
+Returns a list of edges (node, indexOfEdge).
+*/
 Graph* comparator2;
 struct Compare { bool operator()(ii a, ii b) { return comparator2->edges[a.first][a.second].weight > comparator2->edges[b.first][b.second].weight;} };
-//Returns a list of edges (node, indexOfEdge)
 vii prim(Graph &g) {
 	vi visited(g.V, 0);
 	visited[0] = 1;

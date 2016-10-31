@@ -1,3 +1,8 @@
+/*
+O(V+E)
+return V where V[i].second contains the height of the tree if node i is the root.
+V[i].first contains the index of the next node in the longest path towards a leaf.
+*/
 int getLongestPathDown(Graph &g, int cv, vii &longestPathDown, vii &secondLongestPathDown, vi &parent) {
 	FORC(g.edges[cv], edge) {
 		if(edge->to != parent[cv]) {
@@ -14,7 +19,7 @@ int getLongestPathDown(Graph &g, int cv, vii &longestPathDown, vii &secondLonges
 	return longestPathDown[cv].second;
 }
 
-void getLongestPath(Graph &g /*unrooted tree*/, vii &longestPath) {
+void getLongestPath(Graph &g, vii &longestPath) {
 	longestPath.assign(g.V, ii(-1, 0));
 	vii longestPathDown(g.V, ii(-1, 1)), secondLongestPathDown(g.V, ii(-1, 1)), secondLongestPath(g.V, ii(-1, 0));
 	vi parent(g.V, -1);

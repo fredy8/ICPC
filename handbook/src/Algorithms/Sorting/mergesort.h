@@ -1,3 +1,5 @@
+/* Mergesort
+*/
 int merge(int array[], int low, int mid, int high) {
 	int inversions = 0;
 	int sorted[high-low+1];

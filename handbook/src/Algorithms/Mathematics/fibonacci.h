@@ -1,3 +1,5 @@
+/* Fibbonacci
+*/
 int fibn(int n) { //max 91
 	double goldenRatio = (1+sqrt(5))/2;
 	return round((pow(goldenRatio, n+1) - pow(1-goldenRatio, n+1))/sqrt(5));

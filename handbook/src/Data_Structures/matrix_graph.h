@@ -1,3 +1,5 @@
+/* Matrix Graph
+*/
 struct MatrixEdge {
 	int weight;
 	MatrixEdge(int weight = 1) : weight(weight) { }

@@ -1,3 +1,5 @@
+/* Quicksort
+*/
 void quickSort(int arr[], int left, int right) {
 	int pivot = arr[(left+right)/2];
 	int i = left, j = right;
