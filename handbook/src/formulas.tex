@@ -1,0 +1,92 @@
+\section{Formulas}
+
+\subsection{Catalan Numbers}
+
+$C_n = \frac{1}{n+1}{2n \choose n} = {2n \choose n} - {2n \choose n+1} = \frac{(2n)!}{(n+1)!n!} = \prod_{k=2}^n\frac{n+k}{k}, n \geq 0$\\
+\\
+$C_0 = 1, C_{n+1} = \frac{2(2n+1)}{n+2}C_n$
+
+\subsection{Law of Cosines}
+
+$c^2 = a^2 + b^2 - 2ab*cos(C)$
+
+\subsection{Law of Sines}
+
+$\frac{a}{sin(A)} = \frac{b}{sin(B)}$
+
+\subsection{Newton Raphson}
+
+$x_{n+1} = x_n - \frac{f(x_0)}{f^\prime(x_0)}$
+
+\subsection{Arithmetic Series}
+
+$\sum_{k=1}^{n} (a_1+(k-1)d) = na_1+\frac{1}{2}nd(n-1)$
+
+\subsection{Geometric Series}
+
+$\sum_{k=1}^nr^k = \frac{r(1-r^n)}{1-r}$\\
+\\
+$\sum_{k=1}^{\infty} r^k = \frac{r}{1-r}, |r| < 1$
+
+\subsection{Simpson's Rule}
+
+$\int_a^bf(x)dx \approx \frac{b-a}{6}(f(a) + 4f(\frac{a+b}{2}) + f(b))$
+
+\subsection{Stirling's Approximation}
+
+$n! \approx \sqrt{2{\pi}n}(\frac{n}{e})^n$\\
+\\
+$ln(n!) = n*ln(n) - n + \frac{ln(2n)}{2}$
+
+\subsection{Sum of Powers}
+
+$\sum_{k=1}^nk^2 = \frac{1}{6}n(n+1)(2n+1)$\\
+\\
+$\sum_{k=1}^nk^3 = (\sum_{k=1}^nk)^2 = (\frac{1}{2}n(n+1))^2$
+
+\subsection{Fermat's little Theorem}
+
+$a^p \equiv a\ (mod\ p)$ where p is prime\\
+\\
+$a^{p-1} \equiv 1\ (mod\ p)$ where p is prime and a is not divisible by p
+
+\subsection{Euler's Totient Function}
+
+$\phi(n) = n\Pi_{p|n}(1-\frac{1}{p})$ where p is prime
+
+\subsection{Euler's Theorem}
+
+$a^{\phi(n)} \equiv 1\ (mod\ n)$ where gcd(a, n) = 1
+
+\subsection{Convex Polygon Centroid}
+
+Given the polygon $P = A_1,A_2,...,A_n$\\
+let $a = (A_{k+1} - A_1)$, $k = 1,2,...,n-1$ (the edge vectors)\\
+let $C = A_1 + \frac{1}{3}(a_k + a_{k+1})$, $k = 1,2,...,n-2$ (the centroids of the triangles)\\
+let $w = \frac{1}{2}(a_k{\times}a_{k+1})$, $k = 1,2,...,n-2$ (the areas of the triangles)\\
+$centroid = \frac{\sum_{k=1}^{n-2}w_kC_k}{\sum_{k=1}^{n-2}w_k} = A_1 + \frac{1}{3}\frac{\sum_{k=1}^{n-2}(a_k+a_{k+1})(a_k{\times}a_{k+1})}{\sum_{k=1}^{n-2}(a_k{\times}a_{k+1})}$
+
+\subsection{Regular Polyhedron Volume}
+
+$volume = L^3$
+
+\subsection{Kirchoff Theorem}
+Let $D$ be the degree matrix of $G$\\
+Let $A$ be the adjaceny matrix of $G$\\
+Let $Q = D - A$\\
+Let $Q'$ be the matrix resulting from deleting any row and any column from $Q$\\
+The number of spanning trees in a graph is equal to the determinant of $Q'$\\
+\\
+There are $n^{n-2}$ spanning trees in a complete graph\\
+\\
+There are $m^{n-1}*n^{m-1}$ spanning trees in complete a bipartite graph
+
+\subsection{Derangements}
+
+A derangement is a permutation of a set where all elements are in a different position than their original position
+
+$der(n) = (n-1)*(der(n-1)+der(n-2)), der(0) = 1, der(1) = 0$
+
+\subsection{Planar Graph Faces}
+
+$F = E - V - 2$

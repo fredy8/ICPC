@@ -1,3 +1,9 @@
+/* Strongly Connected Components
+O(V+E)
+Partitions the vertices of a directed graph into strongly connected components.
+A strongly connected component is a subset of a graph where every vertex is reachable from every other vertex.
+Returns V where V_i is the index of the component of node i.
+*/
 vi low1, num1, components;
 int counter1, SCCindex;
 vector<bool> visited;
@@ -24,7 +30,7 @@ void dfs(Graph &g, int cv) {
 	}
 }
 
-vi stronglyConnectedComponents(Graph &g/*directed*/) {
+vi stronglyConnectedComponents(Graph &g) {
 	counter1 = 0, SCCindex = 0;
 	visited = vector<bool>(g.V, 0);
 	num1 = vi(g.V, -1), low1 = vi(g.V, 0), components = vi(g.V, 0);

@@ -1,3 +1,5 @@
+/* Binary Heap
+*/
 template <typename T>
 struct Heap {
 	vector<T> tree;

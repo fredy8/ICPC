@@ -1,21 +1,33 @@
-int augment(Graph &g, int cv, vi &match, vi &visited) {
-	if(visited[cv]) return 0;
-	visited[cv] = 1;
-	FORC(g.edges[cv], edge)
-		if(match[edge->to] == -1 || augment(g, match[edge->to], match, visited))
-			return match[edge->to] = cv, 1;
-	return 0;
-}
-
-//nodes in the left set must be nodes [0, left)
-//g must be unweighted directed bipartite graph
-//match[r] = l, where r belongs to R and l belongs to L
-int maxBipartiteMatching(Graph &g, int left) {
-	int MCBM = 0;
-	vi match(g.V, -1);
-	FOR(cv, 0, left) {
-		vi visited(left, 0);
-		MCBM += augment(g, cv, match, visited);
+struct MaxBipartiteMatching {
+	int L, R;
+	vvi edgesL;
+	vi visitedL, matchR, matchL, inCoverL, inCoverR;
+	MaxBipartiteMatching(int L, int R) : L(L), R(R) { edgesL.assign(L, vi()); }
+	void addEdge(int l, int r) { edgesL[l].pb(r); }
+	bool augment(int l) {
+		if (visitedL[l]) return 0;
+		visitedL[l] = 1;
+		for (auto r: edgesL[l])
+			if (matchR[r] == -1 || augment(matchR[r])) { matchR[r] = l; return 1; }
+		return 0;
 	}
-	return MCBM;
-}
+	int maxMatching() {
+		int ans = 0;
+		matchR.assign(R, -1), matchL.assign(L, -1);
+		for(int i = 0; i < L; i++)
+			visitedL.assign(L, 0), ans += augment(i);
+		for(int i = 0; i < R; i++) if (matchR[i] != -1) matchL[matchR[i]] = i;
+		return ans;
+	}
+	void augment2(int l) {
+		if (l == -1 || !inCoverL[l]) return;
+		inCoverL[l] = 0;
+		for (auto r: edgesL[l])
+			if (!inCoverR[r]) inCoverR[r] = 1, augment2(matchR[r]);
+	}
+	void minCover() { // assuming matching found
+		inCoverL.assign(L, 1), inCoverR.assign(R, 0);
+		for(int i = 0; i < L; i++)
+			if (matchL[i] == -1) augment2(i);
+	}
+};

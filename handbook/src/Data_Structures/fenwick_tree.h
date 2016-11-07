@@ -1,4 +1,6 @@
-//1 based indexing
+/* Fenwick Tree
+1 indexed not 0 indexed
+*/
 struct FenwickTree {
 	vi ft;
 	FenwickTree(int N) { ft.assign(N, 0); }

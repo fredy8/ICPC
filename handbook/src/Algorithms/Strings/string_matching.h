@@ -1,3 +1,7 @@
+/* KMP
+O(N+M)
+Searches for a pattern in a string
+*/
 vi buildTable(string& pattern) {
 	vi table(pattern.length()+1);
 	int i = 0, j = -1, m = pattern.length();

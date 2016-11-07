@@ -1,3 +1,9 @@
+/* Edmonds-Karp
+O(VE^2)
+Finds a the maxflow from source to sink of a directed graph.
+The weight of an edge denotes the capacity of the edge.
+The negative weight edges are the edges with flow.
+*/
 int augment(MatrixGraph &g, int flow, vi &parent, int source, int cv, int minEdge) {
 	if(cv == source)
 		return minEdge;
@@ -9,7 +15,6 @@ int augment(MatrixGraph &g, int flow, vi &parent, int source, int cv, int minEdg
 	return flow;
 }
 
-//O(V*E^2)
 int maxFlow(MatrixGraph &g, int source, int sink) {
 	int mf = 0, flow = -1;
 	while(flow) {

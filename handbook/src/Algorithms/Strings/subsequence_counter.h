@@ -1,4 +1,6 @@
-// Regresa cuantas veces subseq es subsequence de seq
+/* Subsequence Counter
+Regresa cuantas veces subseq es subsequence de seq
+*/
 int subseqCounter(string seq, string subseq) {
 	int n = seq.length(), m = subseq.length();
 	vi sub(m, 0);

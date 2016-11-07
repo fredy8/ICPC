@@ -1,3 +1,8 @@
+/* Sparse Table
+O(N*log(N)) construction
+O(1) queries
+Answers RMQ
+*/
 struct SparseTable {
 	vi A; vvi M;
 	int log2(int n) { int i=0; while(n >>= 1) i++; return i; }

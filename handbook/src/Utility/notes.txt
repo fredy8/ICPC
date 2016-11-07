@@ -1,0 +1,94 @@
+/* Notes
+*/
+printf("%ld\n", strtol("222", 0, x)); //base x to long
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+regmatch_t matches[1];
+regcomp(&reg, pattern.c_str(), REG_EXTENDED|REG_ICASE);
+if(regexec(&reg, str.c_str(), 1, matches, 0) == 0)
+cout << "match" << endl;
+regfree(&reg);
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+template <typename T>
+string toString(T n) { ostringstream ss; ss << n; return ss.str(); }
+template <typename T>
+T toNum(const string &Text) { istringstream ss(Text); T result; return ss >> result ? result : 0; }
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+lower_bound: finds first that does not compare less than val.
+upper_bound: finds first that compares greater than val.
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+do {} while(next_permutation(arr, arr+N));
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+scanf:
+%d -> base10 int | %d+
+%o -> base8 int  | %d+
+%x -> base16 int | %d+
+%a -> base10 or base16 double | ex. 123, 34.24, 5464.324e+3, 53423E+2, 0x242.435, base16 if preceded by 0x
+%c -> char or array of chars | ex. scanf("%c", &mychar) -> 'a', scanf("%4c", mycharptr) -> "asdf" (\0 not included)
+%s -> string
+matching: scanf("abc%d", &myint) with input: "ab34 ascz24 abc345" would store 345 in myint, use %% to match %
+%*d means match an int but dont store it in a parameter
+%3d means match an integer but read only the 3 first characters
+%lld stores in a long long int %d matches int, more specifiers are:
+%le long double
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+Bellman-Ford for solving system of inequalities of the type x_i - x_j <= c
+create a node for every x
+create a source node
+create a zero weight edge from s to every other node
+for every inequality x_i - x_j <= c, make an edge from i to j of weight c
+run bellman ford starting at s
+the value for x_i is d_i
+if there was a negative weight cycle, the system is inconsistent
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+In a bipartite graph, the size of the maximum independent set (or dominating set) = V-MCBM
+In a bipartite graph, the size of the min vertex cover = MCBM
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+char str[] = "abc. sdfksm sgfda afdex.. NJK- ,,   .  hb564567....";
+char * token = strtok(str, ". ");
+while (token != NULL) {
+    printf ("%s\n",token);
+    token = strtok (NULL, ". ");
+}
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+The number of pieces in which a circle is divided if n points on its circumference are joined by chords with no three internally concurrent:
+g(n) = nCat4 + nCat2 + 1
+A = i+b/2-1 where A is the area of a polygon, i is the number of integer points on the polygon and b is the number of integer points on the boundary
+the number of spanning trees in complete a bipartite graph K(n, m) is m^(n-1) * n^(m-1)
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+//splitting by spaces
+istringstream iss(line);
+vector<string> tokens;
+copy(istream_iterator<string>(iss), istream_iterator<string>(), back_inserter<vector<string> >(tokens));
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+Primes less than 1000:
+2     3     5     7    11    13    17    19    23    29    31    37
+41    43    47    53    59    61    67    71    73    79    83    89
+97   101   103   107   109   113   127   131   137   139   149   151
+157   163   167   173   179   181   191   193   197   199   211   223
+227   229   233   239   241   251   257   263   269   271   277   281
+283   293   307   311   313   317   331   337   347   349   353   359
+367   373   379   383   389   397   401   409   419   421   431   433
+439   443   449   457   461   463   467   479   487   491   499   503
+509   521   523   541   547   557   563   569   571   577   587   593
+599   601   607   613   617   619   631   641   643   647   653   659
+661   673   677   683   691   701   709   719   727   733   739   743
+751   757   761   769   773   787   797   809   811   821   823   827
+829   839   853   857   859   863   877   881   883   887   907   911
+919   929   937   941   947   953   967   971   977   983   991   997
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
+*X.find_by_order(1);
+X.order_of_key(-5);
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+Newton Rhapson - Find a root of a polynomial
+start with random x
+x_next = x - f(x)/f'(x)
+repeat until f(x) is zero
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+#define turnOffLastBit(S) ((S) & (S - 1))
+#define turnOnLastZero(S) ((S) | (S + 1))
+#define turnOffLastConsecutiveBits(S) ((S) & (S + 1))
+#define turnOnLastConsecutiveZeroes(S) ((S) | (S - 1))

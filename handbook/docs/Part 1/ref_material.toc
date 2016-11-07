@@ -1,0 +1,72 @@
+\contentsline {section}{\numberline {1}Header}{4}
+\contentsline {section}{\numberline {2}Graph Theory}{4}
+\contentsline {subsection}{\numberline {2.1}Strongly Connected Components}{4}
+\contentsline {subsection}{\numberline {2.2}Articulation Points}{5}
+\contentsline {subsection}{\numberline {2.3}Eulerian Path}{6}
+\contentsline {subsection}{\numberline {2.4}Max Bipartite Matching}{7}
+\contentsline {subsection}{\numberline {2.5}Edmonds-Karp}{7}
+\contentsline {subsection}{\numberline {2.6}Dinic}{8}
+\contentsline {subsection}{\numberline {2.7}Min Cost Max Flow}{10}
+\contentsline {subsection}{\numberline {2.8}PushRelabel}{12}
+\contentsline {subsection}{\numberline {2.9}Min Cost Matching}{14}
+\contentsline {subsection}{\numberline {2.10}Min Cut}{17}
+\contentsline {subsection}{\numberline {2.11}Edmonds Graph Matching}{18}
+\contentsline {subsection}{\numberline {2.12}Dijkstra}{20}
+\contentsline {subsection}{\numberline {2.13}Kruskal}{20}
+\contentsline {subsection}{\numberline {2.14}Prim}{21}
+\contentsline {subsection}{\numberline {2.15}All Nodes Longest Path to Leaf in Tree}{22}
+\contentsline {section}{\numberline {3}Number Theory}{23}
+\contentsline {subsection}{\numberline {3.1}Sieve of Atkin}{23}
+\contentsline {subsection}{\numberline {3.2}Sieve of Eratosthenes}{24}
+\contentsline {subsection}{\numberline {3.3}Extended Euclid}{24}
+\contentsline {subsection}{\numberline {3.4}Modular Linear Equation Solver}{25}
+\contentsline {subsection}{\numberline {3.5}Modular Inverse}{25}
+\contentsline {subsection}{\numberline {3.6}Chinese Remainder Theorem}{25}
+\contentsline {subsection}{\numberline {3.7}Miller-Rabin Primality Test}{26}
+\contentsline {subsection}{\numberline {3.8}isPrime}{27}
+\contentsline {subsection}{\numberline {3.9}GCD}{27}
+\contentsline {section}{\numberline {4}Strings}{27}
+\contentsline {subsection}{\numberline {4.1}Suffix Array}{27}
+\contentsline {subsection}{\numberline {4.2}Longest Common Prefix}{29}
+\contentsline {subsection}{\numberline {4.3}Linear Suffix Array}{30}
+\contentsline {subsection}{\numberline {4.4}Trie}{33}
+\contentsline {subsection}{\numberline {4.5}KMP}{34}
+\contentsline {section}{\numberline {5}Data Structures}{34}
+\contentsline {subsection}{\numberline {5.1}HeavyLightDecomposition}{34}
+\contentsline {subsection}{\numberline {5.2}KD-Tree}{36}
+\contentsline {subsection}{\numberline {5.3}Lowest Common Ancestor}{40}
+\contentsline {subsection}{\numberline {5.4}Sparse Table}{41}
+\contentsline {section}{\numberline {6}SegmentTree}{41}
+\contentsline {section}{\numberline {7}Geometry}{43}
+\contentsline {subsection}{\numberline {7.1}Point}{43}
+\contentsline {subsection}{\numberline {7.2}Vector}{44}
+\contentsline {subsection}{\numberline {7.3}Triangle}{45}
+\contentsline {subsection}{\numberline {7.4}Lines}{46}
+\contentsline {subsection}{\numberline {7.5}Circles}{47}
+\contentsline {subsection}{\numberline {7.6}Polygons}{47}
+\contentsline {subsection}{\numberline {7.7}Delaunay Triangulation}{50}
+\contentsline {section}{\numberline {8}Miscellaneous}{52}
+\contentsline {subsection}{\numberline {8.1}Fast Fourier Transform}{52}
+\contentsline {subsection}{\numberline {8.2}LatLong}{54}
+\contentsline {subsection}{\numberline {8.3}Matrices}{55}
+\contentsline {subsection}{\numberline {8.4}Dates}{57}
+\contentsline {subsection}{\numberline {8.5}Nth Permutation}{57}
+\contentsline {subsection}{\numberline {8.6}Shunting Yard}{57}
+\contentsline {section}{\numberline {9}Formulas}{58}
+\contentsline {subsection}{\numberline {9.1}Catalan Numbers}{58}
+\contentsline {subsection}{\numberline {9.2}Law of Cosines}{59}
+\contentsline {subsection}{\numberline {9.3}Law of Sines}{59}
+\contentsline {subsection}{\numberline {9.4}Newton Raphson}{59}
+\contentsline {subsection}{\numberline {9.5}Arithmetic Series}{59}
+\contentsline {subsection}{\numberline {9.6}Geometric Series}{59}
+\contentsline {subsection}{\numberline {9.7}Simpson's Rule}{59}
+\contentsline {subsection}{\numberline {9.8}Stirling's Approximation}{59}
+\contentsline {subsection}{\numberline {9.9}Sum of Powers}{59}
+\contentsline {subsection}{\numberline {9.10}Fermat's little Theorem}{59}
+\contentsline {subsection}{\numberline {9.11}Euler's Totient Function}{60}
+\contentsline {subsection}{\numberline {9.12}Euler's Theorem}{60}
+\contentsline {subsection}{\numberline {9.13}Convex Polygon Centroid}{60}
+\contentsline {subsection}{\numberline {9.14}Regular Polyhedron Volume}{60}
+\contentsline {subsection}{\numberline {9.15}Kirchoff Theorem}{60}
+\contentsline {subsection}{\numberline {9.16}Derangements}{60}
+\contentsline {subsection}{\numberline {9.17}Planar Graph Faces}{60}

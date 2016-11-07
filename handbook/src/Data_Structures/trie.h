@@ -1,3 +1,6 @@
+/* Trie
+Constructs a tree for storing strings
+*/
 #define ALPHABET_SIZE 52
 int getIndex(char c) {
 	if(c >= 'A' && c <= 'Z')

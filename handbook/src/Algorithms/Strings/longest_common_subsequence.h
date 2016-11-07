@@ -1,3 +1,5 @@
+/* Longest Common Subsequence
+*/
 string LCS(string a, string b) {
 	int n = a.length(), m = b.length();
 	int D[n][m];

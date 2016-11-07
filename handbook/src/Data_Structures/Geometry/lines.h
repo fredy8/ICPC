@@ -1,3 +1,5 @@
+/* Lines
+*/
 struct Line {
 	double a, b, c;
 	Line() : a(0), b(0), c(0) {}

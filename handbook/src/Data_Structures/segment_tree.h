@@ -1,73 +1,77 @@
-vi values;
-struct Node {
-	int sum;
-    Node() { init(); }
-	Node(int pos, int value) { init(); update(0, 0, 0, 0, value); }
-	void init() {
-		sum = 0;
-		#ifdef LAZY
-		lazy = 0; hasUpdates = false;
-		#endif
-	}
-	void update(int L, int R, int from, int to, int value) {
-		if(from > R || to < L) return;
-		sum += (min(to, R) - max(from, L) + 1)*value;
-	}
-    int ans() { return sum; }
-	Node operator+(Node &rNode) { return Node(0, sum + rNode.sum); }
-	#ifdef LAZY
-	int lazy; bool hasUpdates;
-	void storeUpdate(int value) { lazy += value; hasUpdates = true; }
-	void applyUpdates(int L, int R) { if(hasUpdates) update(L, R, L, R, lazy); lazy = 0; hasUpdates = false; } 
-	int getUpdates() { return lazy; }
-	#endif
-};
 struct SegmentTree {
-    vector<Node> tree;
-    Node query(int index, int L, int R, int from, int to) {
-		#ifdef LAZY
-		if(L != R && tree[index].hasUpdates) {
-			update(index*2, L, (L+R)/2, 0, values.size(), tree[index].getUpdates());
-			update(index*2+1, (L+R)/2+1, R, 0, values.size(), tree[index].getUpdates());
-		}
-		tree[index].applyUpdates(L, R);
-		#endif
-		if(L >= from && R <= to) return tree[index];
-        Node left, right;
-        bool queryL = false, queryR = false;
-        if(from <= (L+R)/2) left = query(index*2, L, (L+R)/2, from, to), queryL = true;
-        if(to >= (L+R)/2+1) right = query(index*2+1, (L+R)/2+1, R, from, to), queryR = true;
-		return !queryL ? right : (!queryR ? left : left + right);
+  vi t; int N;
+  SegmentTree(vi &values) {
+    N = values.size();
+    t.assign(N<<1, 0);
+    for(int i = 0; i < N; i++) t[i+N] = values[i];
+    for(int i = N-1; i; --i) t[i] = combine(t[i<<1], t[i<<1|1]);
+  }
+  int combine(int a, int b) { return a+b; }
+  void set(int index, int value) {
+    t[index+N] = value;
+    for(int i = (index+N)>>1; i; i >>= 1) t[i] = combine(t[i<<1], t[i<<1|1]);
+  }
+  int query(int from, int to) {
+    int ansL = 0, ansR = 0;
+    for(int l = N+from, r = N+to; l<r; l >>= 1, r >>= 1) {
+      if (l&1) ansL = combine(ansL, t[l++]);
+      if (r&1) ansR = combine(ansR, t[--r]);
     }
-	int query(int from, int to) { return query(1, 0, values.size()-1, from, to).ans(); }
-	#ifdef LAZY
-	void update(int index, int L, int R, int from, int to, int value) {
-        if (from > R || to < L) return;
-        if(L >= from && R <= to) { tree[index].storeUpdate(value); return; }
-		tree[index].update(L, R, from, to, value);
-        update(index*2, L, (L+R)/2, from, to, value);
-        update(index*2+1, (L+R)/2+1, R, from, to, value);
-	}
-	void update(int from, int to, int value) { update(1, 0, values.size()-1, from, to, value); }
-	#endif
- 	void pointUpdate(int index, int L, int R, int pos, int value) {
-        if (pos > R || pos < L) return;
-        if(L == R) { tree[index] = Node(pos, value); return; }
-        pointUpdate(index*2, L, (L+R)/2, pos, value);
-        pointUpdate(index*2+1, (L+R)/2+1, R, pos, value);
-        tree[index] = tree[index*2] + tree[index*2+1];
+    return combine(ansL, ansR);
+  }
+};
+
+struct LazySegmentTree {
+  vi t, d; int n, h;
+  LazySegmentTree(vi &values) {
+    n = values.size();
+    h = sizeof(int) * 8 - __builtin_clz(n);
+    t.assign(n<<1, 0), d.assign(n, 0);
+    for(int i = 0; i < N; i++) t[i+N] = values[i];
+    build(i+N, n<<1);
+  }
+  void calc(int p, int k) {
+    if (d[p] == 0) t[p] = t[p<<1] + t[p<<1|1];
+    else t[p] = d[p] * k;
+  }
+  void apply(int p, int value, int k) {
+    t[p] = value * k;
+    if (p < n) d[p] = value;
+  }
+  void push(int l, int r) {
+    int s = h, k = 1 << (h-1);
+    for (l += n, r += n-1; s > 0; --s, k >>= 1)
+      for (int i = l >> s; i <= r >> s; ++i) if (d[i]) {
+        apply(i<<1, d[i], k);
+        apply(i<<1|1, d[i], k);
+        d[i] = 0;
+      }
+  }
+  void build(int l, int r) {
+    int k = 2;
+    for (l += n, r += n-1; l; k <<= 1) {
+      l >>= 1, r >>= 1;
+      for (int i = r; i >= l; --i) calc(i, k);
     }
-    void pointUpdate(int i, int k) { values[i] = k; pointUpdate(1, 0, values.size()-1, i, k); }
-	void initialize(int index, int L, int R, int from, int to) {
-        if(L == R) { tree[index] = Node(L, values[L]); return; }
-        initialize(index*2, L, (L+R)/2, from, to);
-        initialize(index*2+1, (L+R)/2+1, R, from, to);
-        tree[index] = tree[index*2] + tree[index*2+1];
+  }
+  void modify(int l, int r, int value) {
+    if (value == 0) return;
+    push(l, l + 1); push(r - 1, r);
+    int l0 = l, r0 = r, k = 1;
+    for (l += n, r += n; l < r; l >>= 1, r >>= 1, k <<= 1) {
+      if (l&1) apply(l++, value, k);
+      if (r&1) apply(--r, value, k);
     }
-	SegmentTree(vi A) {
-        tree.clear();
-        tree.assign(2*(1<<(int(log(A.size())/log(2))+1)), Node());
-        values = vi(A.begin(), A.end());
-        initialize(1, 0, A.size()-1, 0, A.size()-1);
+    build(l0, l0 + 1);
+    build(r0 - 1, r0);
+  }
+  int query(int l, int r) {
+    push(l, l + 1); push(r - 1, r);
+    int res = 0;
+    for (l += n, r += n; l < r; l >>= 1, r >>= 1) {
+      if (l&1) res += t[l++];
+      if (r&1) res += t[--r];
     }
+    return res;
+  }
 };

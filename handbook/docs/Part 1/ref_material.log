@@ -1,0 +1,374 @@
+This is TeX, Version 3.14159265 (TeX Live 2015) (preloaded format=tex 2015.5.24)  12 MAY 2016 07:13
+**ref_material.tex
+(./ref_material.tex
+! Undefined control sequence.
+l.1 \documentclass
+                  [11pt, oneside]{article}
+? q
+OK, entering \batchmode...
+! Undefined control sequence.
+l.2 \usepackage
+               {geometry}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.3 \geometry
+             {letterpaper}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.5 \usepackage
+               {amssymb}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.6 \usepackage
+               {listings}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.8 \title
+          {Reference Material}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.9 \author
+           {HaKings}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.10 \date
+          {}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.12 \usepackage
+                {courier}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.13 \lstset
+            {basicstyle=\footnotesize\ttfamily,breaklines=true,language=c++,...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.13 \lstset{basicstyle=\footnotesize
+                                     \ttfamily,breaklines=true,language=c++,...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.13 \lstset{basicstyle=\footnotesize\ttfamily
+                                              ,breaklines=true,language=c++,...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (134.71861pt too wide) in paragraph at lines 12--14
+[]\tenrm courier ba-sic-style=,breaklines=true,language=c++,numbers=left,tabsiz
+e=4,stepnumber=1,framextopmargin=50pt,frame=bottomline |
+
+\hbox(6.94444+1.94444)x469.75499, glue set - 1.0
+.\hbox(0.0+0.0)x20.0
+.\tenrm c
+.\tenrm o
+.\tenrm u
+.\tenrm r
+.etc.
+
+! Undefined control sequence.
+l.15 \begin
+           {document}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.16 \maketitle
+               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.17 \newpage
+             
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.18 \tableofcontents
+                     
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.19 \newpage
+             
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.21 \section
+             {vimrc}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (26.63467pt too wide) in paragraph at lines 21--36
+[]\tenrm vimrc syn-tax on in-oremap jj <ESC> col-orscheme elflord set ai si sw=
+4 ts=4 set nu set backspace=start,indent,eol|
+
+\hbox(6.94444+1.94444)x469.75499, glue set - 1.0
+.\hbox(0.0+0.0)x20.0
+.\tenrm v
+.\tenrm i
+.\tenrm m
+.\tenrm r
+.etc.
+
+
+Overfull \hbox (25.46806pt too wide) in paragraph at lines 21--36
+\tenrm set clip-board=unnamed set ig-nore-case set smart-case set inc-search se
+t scrolloff=3 high-light linenr ctermbg=darkblue|
+
+\hbox(6.94444+1.94444)x469.75499, glue set - 1.0
+.\tenrm s
+.\tenrm e
+.\tenrm t
+.\glue 3.33333 plus 1.66666 minus 1.11111
+.\tenrm c
+.etc.
+
+! Undefined control sequence.
+l.37 \section
+             {Header}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.39 \begin
+           {lstlisting}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.40 #
+      include <bits/stdc++.h>
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in horizontal mode.
+l.41 #
+      define _ ios_base::sync_with_stdio(0), cin.tie(0), cin.tie(0), cout.ti...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+<to be read again> 
+                   _
+l.41 #define _
+               ios_base::sync_with_stdio(0), cin.tie(0), cin.tie(0), cout.ti...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! You can't use `macro parameter character #' in math mode.
+l.42 #
+      define INF 1000000000
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.43 #
+      define FOR(i, a, b) for(int i=int(a); i<int(b); i++)
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.44 #
+      define FORC(cont, it) for(decltype((cont).begin()) it=(cont).begin(); ...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.45 #
+      define pb push_back
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.46 #
+      define mp make_pair
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.47 #
+      define eb emplace_back
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.48 #
+      define fi first
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.49 #
+      define se second
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.50 #
+      define all(x) (x).begin(), (x).end()
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+<to be read again> 
+                   \end 
+l.52 \end
+         {lstlisting}
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (217.15854pt too wide) in paragraph at lines 39--52
+[]\tenrm lstlisting in-clude <bits/stdc++.h> de-fine $[]\teni os[]ase \tenrm ::
+ \teni sync[]ith[]tdio\tenrm (0)\teni ; cin:tie\tenrm (0)\teni ; cin:tie\tenrm 
+(0)\teni ; cout:tie\tenrm (0); \teni defineINF\tenrm 1000000000\teni defineFOR\
+tenrm (\teni i; a; b\tenrm )\teni for\tenrm (\teni inti \tenrm =|
+
+\hbox(7.5+2.5)x469.75499, glue set - 1.0
+.\hbox(0.0+0.0)x20.0
+.\tenrm l
+.\tenrm s
+.\tenrm t
+.\tenrm l
+.etc.
+
+
+Overfull \hbox (34.07442pt too wide) in paragraph at lines 39--52
+\teni int\tenrm (\teni a\tenrm ); \teni i < int\tenrm (\teni b\tenrm ); \teni i
+ \tenrm + +)\teni defineFORC\tenrm (\teni cont; it\tenrm )\teni for\tenrm (\ten
+i decltype\tenrm ((\teni cont\tenrm )\teni :begin\tenrm ())\teni it \tenrm = (\
+teni cont\tenrm )\teni :begin\tenrm (); \teni it\tenrm ! = (\teni cont\tenrm )\
+teni :end\tenrm (); \teni it \tenrm +|
+
+\hbox(7.5+2.5)x469.75499, glue set - 1.0
+.\teni i
+.\teni n
+.\teni t
+.\tenrm (
+.\teni a
+.etc.
+
+
+Overfull \hbox (318.15501pt too wide) in paragraph at lines 39--52
+\tenrm +)\teni definepbpush[]ackdefinempmake[]airdefineebemplace[]ackdefinefifi
+rstdefineseseconddefineall\tenrm (\teni x\tenrm )(\teni x\tenrm )\teni :begin\t
+enrm ()\teni ; \tenrm (\teni x\tenrm )\teni :end\tenrm ()\teni usingnamespacest
+d\tenrm ; \teni typedeflonglongll\tenrm ; \teni typedefpair <|
+
+\hbox(7.5+2.86108)x469.75499
+.\tenrm +
+.\tenrm )
+.\teni d
+.\teni e
+.\teni f
+.etc.
+
+ [1] )
+Output written on ref_material.dvi (1 page, 1860 bytes).

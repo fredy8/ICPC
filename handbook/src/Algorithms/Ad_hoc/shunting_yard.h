@@ -1,4 +1,6 @@
-
+/* Shunting Yard
+ For parsing mathematical expressions specified in infix notation
+*/
 void output(ostream &out, string x) {
     out << x << " ";
 }

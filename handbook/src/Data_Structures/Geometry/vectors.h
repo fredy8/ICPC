@@ -1,3 +1,5 @@
+/* Vector
+*/
 struct Vec {
 	double x, y, z;
 	Vec(double x, double y, double z) : x(x), y(y), z(z) {}

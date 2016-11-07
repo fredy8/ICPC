@@ -1,3 +1,7 @@
+/* Dijkstra
+O((V+E)logV)
+Finds the shortest path from source to every other vertex.
+*/
 vi dijkstra(Graph &g, int src) {
 	vi dist(g.V, INF);
 	dist[src] = 0;

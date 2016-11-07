@@ -1,3 +1,5 @@
+/* Edge Property Check
+*/
 #define UNVISITED 0 
 #define EXPLORED 1 //visited but not completed
 #define VISITED 2 //visited and completed

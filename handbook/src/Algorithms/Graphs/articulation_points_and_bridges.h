@@ -1,5 +1,9 @@
-//edges[from].back().backEdge = edges[aux].size() - 1; //add this to Graph.connect
-//edges[aux].back().backEdge = edges[from].size() - 1; //at the end, inside the if
+/* Articulation Points
+O(V+E)
+Finds all articulation points and bridges in a graph.
+An articulation point is a vertex whose removal would disconnect the graph.
+An bridge is a vertex whose removal disconnects the graph.
+*/
 vi low2, num2, parent, strongPoints;
 int counter2, root, rootChildren;
 void dfs1(Graph &g, int v) {
@@ -17,7 +21,7 @@ void dfs1(Graph &g, int v) {
 	}
 }
 
-vi articulationPointsAndBridges(Graph &g /*Undirected*/) {
+vi articulationPointsAndBridges(Graph &g) {
 	counter2 = 0;
 	num2 = vi(g.V, -1), low2 = vi(g.V, 0), parent = vi(g.V, -1), strongPoints = vi(g.V, 0);
 	FOR(i, 0, g.V)

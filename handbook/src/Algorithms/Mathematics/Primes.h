@@ -37,8 +37,7 @@ vii primeFactorization(int N) {
 	return factors;
 }
 
-void getDivisors(vii pf, int d, int index, vi &div)
-{
+void getDivisors(vii pf, int d, int index, vi &div) {
 	if (index == pf.size()) {
 		div.pb(d);
 		return;
