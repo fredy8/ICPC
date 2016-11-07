@@ -11,7 +11,7 @@ int lcm(int a, int b) {
 }
 
 // returns d = gcd(a,b); finds x,y such that d = ax + by
-int extended_euclid(int a, int b, int &x, int &y) {  
+int extended_euclid(int a, int b, int &x, int &y) {
 	int xx = y = 0;
 	int yy = x = 1;
 	while (b) {
@@ -34,6 +34,10 @@ vi modular_linear_equation_solver(int a, int b, int n) {
 			solutions.pb(mod(x + i*(n/d), n));
 	}
 	return solutions;
+}
+
+int mod(int a, int b) {
+	return ((a%b)+b)%b;
 }
 
 // computes b such that ab = 1 (mod n), returns -1 on failure
